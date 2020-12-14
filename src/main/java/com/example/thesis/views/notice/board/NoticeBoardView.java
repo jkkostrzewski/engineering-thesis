@@ -16,7 +16,6 @@ import org.springframework.security.access.annotation.Secured;
 @Route(value = NoticeBoardView.ROUTE, layout = MainView.class)
 @PageTitle("Notice board")
 @CssImport("./styles/views/notice/board/notice-board.css")
-@RouteAlias(value = "", layout = MainView.class)
 @Secured(NoticeBoardView.PRIVILEGE)
 public class NoticeBoardView extends VerticalLayout implements HasUrlParameter<String> {
     public static final String PRIVILEGE = "NOTICE_BOARD_VIEW_PRIVILEGE";

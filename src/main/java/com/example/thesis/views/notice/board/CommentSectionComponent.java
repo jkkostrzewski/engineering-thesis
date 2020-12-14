@@ -20,30 +20,8 @@ public class CommentSectionComponent extends VerticalLayout {
     public CommentSectionComponent(Notice notice, CommentService commentService, NoticeService noticeService) {
         setId("comment-section");
 
-        TextField joinDiscussion = new TextField("Leave a comment");
-        joinDiscussion.setId("comment-box");
-        joinDiscussion.addKeyDownListener(Key.ENTER, e -> {
-//            User user = new User();         //TODO TESTOWO - WYCIAGAC Z SYSTEMU JAKOS
-//            user.setFirstName("Test");
-//            user.setLastName("Test");
-
-//            Comment comment = new Comment(null, 0,  user, joinDiscussion.getValue());
-//            noticeService.addComment(notice, comment);
-//            commentService.addComment(comment);
-        });
-
-        Button addCommentButton = new Button("Add Comment");
-        addCommentButton.addClickListener(e -> {
-//            User user = new User();         //TODO TESTOWO - WYCIAGAC Z SYSTEMU JAKOS
-//            user.setFirstName("Test");
-//            user.setLastName("Test");
-//
-//            Comment comment = new Comment(null, 0,  user, joinDiscussion.getValue()); //tutaj będzie dodawanie do komentarza ojca więc nie może tu być null i 0 w parametrach
-//            noticeService.addComment(notice, comment);
-//            commentService.addComment(comment);
-        });
-
-        add(joinDiscussion, addCommentButton);
+        LeaveCommentComponent leaveCommentComponent = new LeaveCommentComponent();
+        add(leaveCommentComponent);
 
         Div commentsBox = new Div();
         commentsBox.setId("comments-box");
@@ -58,6 +36,8 @@ public class CommentSectionComponent extends VerticalLayout {
             commentsBox.add(commentComponent);
         }
         add(commentsBox);
+
+        this.setAlignItems(Alignment.CENTER);
     }
 //
 //    private String getCommentMargin(Comment comment) {
