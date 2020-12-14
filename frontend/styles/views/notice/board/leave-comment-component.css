@@ -1,0 +1,23 @@
+#leave-comment-component {
+
+}
+
+#inner-box {
+    background-color: #283b59;
+    margin: 0 auto;
+    align-items: center;
+    width: 65%;
+}
+
+#comment-box {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+
+#submit-button {
+    width: 8em;
+    float: right;
+    right: 0px;
+}

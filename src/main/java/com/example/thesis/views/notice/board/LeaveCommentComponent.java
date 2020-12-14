@@ -2,6 +2,7 @@ package com.example.thesis.views.notice.board;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 
@@ -14,6 +15,9 @@ public class LeaveCommentComponent extends VerticalLayout {
     public LeaveCommentComponent() {
         setId("leave-comment-component");
 
+        Div innerBox = new Div();
+        innerBox.setId("inner-box");
+
         commentBox = new TextArea();
         commentBox.setPlaceholder("Leave a comment...");
         commentBox.setId("comment-box");
@@ -22,6 +26,7 @@ public class LeaveCommentComponent extends VerticalLayout {
         submit.setId("submit-button");
         //TODO - add click listener add to repository and to commentsectioncomponent
 
-        add(commentBox, submit);
+        innerBox.add(commentBox, submit);
+        add(innerBox);
     }
 }
