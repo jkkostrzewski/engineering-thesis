@@ -2,6 +2,7 @@ package com.example.thesis.views.notice.board;
 
 import com.example.thesis.backend.ServiceResponse;
 import com.example.thesis.backend.notice.Notice;
+import com.example.thesis.backend.notice.NoticeBoardRepository;
 import com.example.thesis.backend.notice.NoticeService;
 import com.example.thesis.views.main.MainView;
 import com.vaadin.flow.component.Component;
@@ -46,8 +47,10 @@ import java.util.Iterator;
 public class AddNoticeView extends VerticalLayout {
 
     public static final String PRIVILEGE = "ADD_NOTICE_VIEW_PRIVILEGE";
-
     public static final String ROUTE = "add-notice";
+
+    @Autowired
+    private final NoticeBoardRepository noticeBoardRepository;
 
     private byte[] imageBytes;
     private TextField title;
@@ -58,7 +61,8 @@ public class AddNoticeView extends VerticalLayout {
     @Autowired
     private NoticeService noticeService;
 
-    public AddNoticeView() {
+    public AddNoticeView(NoticeBoardRepository noticeBoardRepository) {
+        this.noticeBoardRepository = noticeBoardRepository;
         setId("add-notice");
 
         title = new TextField("Title");
@@ -89,6 +93,8 @@ public class AddNoticeView extends VerticalLayout {
                                                           .title(title.getValue())
                                                           .body(body.getValue())
                                                           .image(imageBytes).build());
+
+//            NoticeBoard noticeBoard = noticeBoardRepository.      //TODO Add to specific notice board
 
             if (response.getStatus() == HttpStatus.OK) {
                 Notification.show("Upload has been successful");

@@ -1,0 +1,24 @@
+Czego brakuje na dzień 9.12.2020
+
+- Opcja dodania nowego piętra przez administratora - DONE (odświeżyć menu po lewej - DONE)
+- Widok przypisania roli administratora piętra dla użytkownika (panel administratora do przypisywania)
+- Poprawne dodanie komentarzy przy ogłoszeniach - 
+- Tworzenie zakładek dla poszczególnych pięter tylko dla konkretnych użytkowników - DONE
+- Ogłoszenia piętra - DONE
+
+- panel administracyjny administratora całego akademika
+- panel administracyjny piętrowego
+
+- dynamiczne przypisywanie privileges dla użytkowników
+
+- TŁUMACZENIE ELEMENTÓW NA POLSKI
+
+- Wszelakie drobne poprawki TODO we wszystkich klasach
+- Optymalizacja i refactoring!
+- Zweryfikowanie kolorystyki i ogólne ułożenie elementów
+
+
+BUGI:
+- przejście z noticeboarda na inny noticeboard powoduje ze menu sie nie zamyka - wynika to z faktu ze nie wywoluje sie metoda afterNavigation
+	z MainView dlatego ze jest to ten sam widok
+- w oknie nowego usera nie widać MainBoarda - (nie ma przypisanego na starcie głównego piętra)
