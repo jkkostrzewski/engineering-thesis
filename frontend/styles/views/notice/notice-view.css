@@ -1,0 +1,13 @@
+#notice-view-image {
+     width: 100%;
+     height: auto;  /* nie ma skalowania do tych samych proporcji ale skaluje się do mniejszych rozdzielczosci */
+}
+
+#notice-view-title {
+    font-size: 22px;
+    margin-bottom: 0;
+}
+
+#notice-view-date {
+    margin: 0;
+}
