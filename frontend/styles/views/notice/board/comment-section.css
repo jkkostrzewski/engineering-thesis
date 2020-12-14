@@ -1,14 +1,19 @@
-#comment-section {
+#comment-section {/*
     border-style: solid;
     margin: 0 auto;
     display: flex;
     align-items: center;
-    width: 80% !important;
+    width: 80% !important;*/
+
 }
 
 #comment-component {
-    border-style: solid;
+    background-color: #3b5987;
     width: 70% !important;
+    display: block;
+    margin-left: auto;  /* to change dynamically */
+    margin-right: auto;
+    margin-bottom: 0.5em;
 }
 
 #comments-box {

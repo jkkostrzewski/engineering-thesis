@@ -21,8 +21,8 @@ public class NoticeService {
         return new ServiceResponse<>(HttpStatus.OK, noticeRepository.save(notice));
     }
 
-    public ServiceResponse<Notice> addComment(Notice notice, Comment comment) {
-        notice.addComment(comment);
+    public ServiceResponse<Notice> addComment(Notice notice, ParentComment comment) {
+        notice.addParentComment(comment);
         return addNotice(notice);
     }
 

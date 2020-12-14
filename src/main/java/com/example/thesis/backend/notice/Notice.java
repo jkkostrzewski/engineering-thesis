@@ -1,6 +1,5 @@
 package com.example.thesis.backend.notice;
 
-import com.example.thesis.backend.floor.Floor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -37,10 +36,10 @@ public class Notice {
 //    private String[] tags;
 
     @OneToMany(fetch = EAGER, cascade = ALL)
-    private Collection<Comment> comments = new ArrayList<>();
+    private Collection<ParentComment> parentComments = new ArrayList<>();
 
-    public void addComment(Comment comment) {
-        comments.add(comment);
+    public void addParentComment(ParentComment comment) {
+        parentComments.add(comment);
     }
 }
 

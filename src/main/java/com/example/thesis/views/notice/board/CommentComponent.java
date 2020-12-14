@@ -2,6 +2,7 @@ package com.example.thesis.views.notice.board;
 
 import com.example.thesis.backend.notice.Comment;
 import com.example.thesis.backend.notice.CommentRepository;
+import com.example.thesis.backend.notice.ParentComment;
 import com.example.thesis.backend.security.auth.User;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
@@ -27,9 +28,14 @@ public class CommentComponent extends VerticalLayout {
         this.comment = comment;
         setId("comment-component");
 
+        if(!(comment instanceof ParentComment)) {
+            this.getStyle().set("margin-left", "10em auto");
+        }
+
         HorizontalLayout nameAndDate = new HorizontalLayout();
 
-        Paragraph fullName = new Paragraph(comment.getUser().getFullName());
+//        Paragraph fullName = new Paragraph(comment.getUser().getFullName());
+        Paragraph fullName = new Paragraph(comment instanceof ParentComment ? "PARENT COMMENT" : "REPLY");
         fullName.setId("full-name");
         nameAndDate.add(fullName);
 

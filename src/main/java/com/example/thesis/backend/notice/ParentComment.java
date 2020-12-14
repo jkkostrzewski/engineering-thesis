@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,11 +14,14 @@ import static javax.persistence.GenerationType.AUTO;
 @Entity
 @Data
 @NoArgsConstructor
-public class Comment {
+public class ParentComment extends Comment {
 
     @Id
     @GeneratedValue(strategy = AUTO)
     private long id;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<Comment> replies;
 
     @OneToOne
     private User user;
@@ -28,9 +30,12 @@ public class Comment {
 
     private String body;
 
-    public Comment(User user, Instant creationDate, String body) {
-        this.user = user;
-        this.creationDate = creationDate;
-        this.body = body;
+    public ParentComment(User user, Instant creationDate, String body) {
+        super(user, creationDate, body);
+        replies = new ArrayList<>();
+    }
+
+    public void addReply(Comment comment) {
+        replies.add(comment);
     }
 }
