@@ -29,7 +29,7 @@ public class CommentComponent extends VerticalLayout {
         setId("comment-component");
 
         if(!(comment instanceof ParentComment)) {
-            this.getStyle().set("margin-left", "10em auto");
+            setId("reply-comment-component");
         }
 
         HorizontalLayout nameAndDate = new HorizontalLayout();
@@ -46,11 +46,14 @@ public class CommentComponent extends VerticalLayout {
 //        }
 
         Paragraph creationDate = new Paragraph(getFormattedTime());
+        creationDate.setId("creation-date");
         nameAndDate.add(creationDate);
 
         Paragraph content = new Paragraph(comment.getBody());
+        content.setId("comment-content");
 
         Button reply = new Button("Reply");
+        reply.setId("reply-button");
         reply.addClickListener(e -> {
 //            User user = new User();         //TODO TESTOWO - WYCIAGAC Z SYSTEMU JAKOS
 //            user.setFirstName("Test");

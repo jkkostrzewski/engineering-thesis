@@ -1,23 +1,26 @@
-#comment-section {/*
-    border-style: solid;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    width: 80% !important;*/
-
+#comment-section {
 }
 
 #comment-component {
     background-color: #3b5987;
-    width: 70% !important;
+    width: 50% !important;
     display: block;
-    margin-left: auto;  /* to change dynamically */
-    margin-right: auto;
+    margin-left: 25%;
+    margin-right: 25%;
+    margin-bottom: 0.5em;
+}
+
+#reply-comment-component {
+    background-color: #3b5987;
+    width: 47% !important;
+    display: block;
+    margin-left: 28%;
+    margin-right: 28%;
     margin-bottom: 0.5em;
 }
 
 #comments-box {
-    border-style: solid; /*NIE CZAJE CO TU SIE DZIEJE DLACZEGO NIE CHCE TEGO USTAWIC W JEDNEJ LINII Z PRAWEJ*/
+    border-style: solid;
     display: block;
     width: 90% !important;
     margin-left: auto;

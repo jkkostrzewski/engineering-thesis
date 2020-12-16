@@ -23,6 +23,8 @@ import java.io.FileInputStream;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 import java.util.*;
 
 @Component
@@ -118,7 +120,7 @@ public class SetupDataLoader implements
                 " illum qui dolorem eum fugiat quo voluptas nulla pariatur?\"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tv";
 
 
-        ParentComment comment1 = new ParentComment(user, Instant.now(), "ParentComment");
+        ParentComment comment1 = new ParentComment(user, Instant.now().minus(5, ChronoUnit.HOURS), "ParentComment");
         Comment comment2 = new Comment(user, Instant.now(), "Reply1");
         commentRepository.save(comment2);
         comment1.addReply(comment2);
@@ -155,13 +157,14 @@ public class SetupDataLoader implements
 
         HashSet<ParentComment> comments = new HashSet<>();
         comments.add(comment1);
+        comments.add(comment4);
 
         HashSet<ParentComment> comments2 = new HashSet<>();
-        comments2.add(comment4);
+//        comments2.add(comment4);
 
-        Notice test_notice_one = Notice.builder().title("Długi tytuł bardzo porządny opisujący sytuacje").body(longArticle).creationDate(Instant.now())
+        Notice test_notice_one = Notice.builder().title("Ten jest z komentarzami").body(longArticle).creationDate(Instant.now())
                 .image(bFile).parentComments(comments).build();
-        Notice test_notice_two = Notice.builder().title("Długi tytuł bardzo porządny opisujący sytuacje ale dużo dłuższy bo dlaczego nie chciałem zobaczyć co sie stanie lol xd hehe franek cebula sie gotuje").body(longArticle).creationDate(Instant.now())
+        Notice test_notice_two = Notice.builder().title("Ten jest bez komentarzy").body(longArticle).creationDate(Instant.now())
                 .image(bFile).parentComments(comments2).build();
         noticeRepository.save(test_notice_one);
         noticeRepository.save(test_notice_two);

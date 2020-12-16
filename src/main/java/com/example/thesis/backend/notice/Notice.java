@@ -32,6 +32,7 @@ public class Notice {
 //    private String[] tags;
 
     @OneToMany(fetch = EAGER)
+    @OrderBy(value = "id")
     @JoinTable(
             name = "notice_parent_comments",
             joinColumns = @JoinColumn(
