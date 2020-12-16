@@ -54,7 +54,6 @@ public class AddNoticeView extends VerticalLayout {
 
     private byte[] imageBytes;
     private TextField title;
-    //date of creation
     private TextArea body;
     private Button confirm;
 

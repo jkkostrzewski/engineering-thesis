@@ -40,7 +40,7 @@ public class NoticeBoardView extends VerticalLayout implements HasUrlParameter<S
 
         removeAll();
 
-//        Page page = UI.getCurrent().getPage();
+//        Page page = UI.getCurrent().getPage();        //Trying to get last page visited without sending it as a state every time
 //        page.executeJs("document.referrer").then(String.class, result -> {
 //            if (lastPageWasBoard(result)) {
 //                UI.getCurrent().getPage().reload();

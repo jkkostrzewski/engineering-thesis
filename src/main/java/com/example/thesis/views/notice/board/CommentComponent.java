@@ -50,7 +50,7 @@ public class CommentComponent extends VerticalLayout {
 
         Paragraph content = new Paragraph(comment.getBody());
 
-        Button reply = new Button("reply");
+        Button reply = new Button("Reply");
         reply.addClickListener(e -> {
 //            User user = new User();         //TODO TESTOWO - WYCIAGAC Z SYSTEMU JAKOS
 //            user.setFirstName("Test");

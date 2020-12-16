@@ -8,10 +8,9 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 @CssImport("./styles/views/notice/board/comment-section.css")
 public class CommentSectionComponent extends VerticalLayout {
 
-    private static final int MAX_DEPTH = 4;
     private final Div commentsBox;
 
-    public CommentSectionComponent(Notice notice, CommentService commentService, NoticeService noticeService) {
+    public CommentSectionComponent(Notice notice) {
         setId("comment-section");
 
         LeaveCommentComponent leaveCommentComponent = new LeaveCommentComponent();

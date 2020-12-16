@@ -9,10 +9,10 @@ import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity//stworzony zeby mozna bylo nadac nazwe ktora sie wyswietli w menu
+@Entity
 @Data
 @NoArgsConstructor
-public class NoticeBoard {  //TODO wrzucić tu wszystkie notice i pobierać cały board z bazy?
+public class NoticeBoard {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

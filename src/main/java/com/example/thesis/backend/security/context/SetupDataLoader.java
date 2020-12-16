@@ -118,42 +118,44 @@ public class SetupDataLoader implements
                 " illum qui dolorem eum fugiat quo voluptas nulla pariatur?\"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tv";
 
 
-        HashSet<ParentComment> comments = new HashSet<>();
-
-        ParentComment comment1 = new ParentComment(user, Instant.now(), "TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST ");
-        Comment comment2 = new Comment(user, Instant.now(), "TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST  TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST TEST TEST TEST TEST ");
-        Comment comment3 = new Comment(user, Instant.now(), "TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST T TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TESTEST TEST TEST TEST TEST TEST ");
-        Comment comment8 = new Comment(user, Instant.now(), "TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST T TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TESTEST TEST TEST TEST TEST TEST ");
-        Comment comment9 = new Comment(user, Instant.now(), "TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST T TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TESTEST TEST TEST TEST TEST TEST ");
-        Comment comment10 = new Comment(user, Instant.now(), "TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST T TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TESTEST TEST TEST TEST TEST TEST ");
-        Comment comment11 = new Comment(user, Instant.now(), "TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST T TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TESTEST TEST TEST TEST TEST TEST ");
-        commentRepository.save(comment1);
+        ParentComment comment1 = new ParentComment(user, Instant.now(), "ParentComment");
+        Comment comment2 = new Comment(user, Instant.now(), "Reply1");
         commentRepository.save(comment2);
-        commentRepository.save(comment3);
-        commentRepository.save(comment8);
-        commentRepository.save(comment9);
-        commentRepository.save(comment10);
-        commentRepository.save(comment11);
         comment1.addReply(comment2);
+        Comment comment3 = new Comment(user, Instant.now(), "Reply2");
+        commentRepository.save(comment3);
         comment1.addReply(comment3);
+        Comment comment8 = new Comment(user, Instant.now(), "Reply3");
+        commentRepository.save(comment8);
         comment1.addReply(comment8);
+        Comment comment9 = new Comment(user, Instant.now(), "Reply4");
+        commentRepository.save(comment9);
         comment1.addReply(comment9);
+        Comment comment10 = new Comment(user, Instant.now(), "Reply5");
+        commentRepository.save(comment10);
         comment1.addReply(comment10);
+        Comment comment11 = new Comment(user, Instant.now(), "Reply6");
+        commentRepository.save(comment11);
         comment1.addReply(comment11);
 
-        ParentComment comment4 = new ParentComment(user, Instant.now(),"TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST  TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TESTTEST TEST TEST TEST TEST ");
-        Comment comment5 = new Comment(user, Instant.now(),"TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TES TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TESTT TEST ");
-        Comment comment6 = new Comment(user, Instant.now(),"TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST T TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TESTEST TEST ");
-        Comment comment7 = new Comment(user, Instant.now(),"TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST ");
+        commentRepository.save(comment1);
+
+
+        ParentComment comment4 = new ParentComment(user, Instant.now(), "ParentComment2nd");
         commentRepository.save(comment4);
+        Comment comment5 = new Comment(user, Instant.now(), "Reply1-2nd");
         commentRepository.save(comment5);
-        commentRepository.save(comment6);
-        commentRepository.save(comment7);
         comment4.addReply(comment5);
+        Comment comment6 = new Comment(user, Instant.now(), "Reply2-2nd");
+        commentRepository.save(comment6);
         comment4.addReply(comment6);
+        Comment comment7 = new Comment(user, Instant.now(), "Reply3-2nd");
+        commentRepository.save(comment7);
         comment4.addReply(comment7);
 
+        HashSet<ParentComment> comments = new HashSet<>();
         comments.add(comment1);
+
         HashSet<ParentComment> comments2 = new HashSet<>();
         comments2.add(comment4);
 

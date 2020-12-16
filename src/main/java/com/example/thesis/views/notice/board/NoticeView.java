@@ -31,22 +31,20 @@ public class NoticeView extends VerticalLayout implements HasUrlParameter<Long> 
     public static final String ROUTE = "notice-view";
     public static final int BODY_MAX_LENGTH = 770;
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-                                                                           .withZone(ZoneId
-                                                                                   .systemDefault()); //TODO wyrzucić to do klasy utilities?
+            .withZone(ZoneId
+                    .systemDefault()); //TODO wyrzucić to do klasy utilities?
     private Notice notice;
-    private CommentService commentService;
     private NoticeService noticeService;
 
     @Autowired
-    public NoticeView(NoticeService noticeService, CommentService commentService) {
+    public NoticeView(NoticeService noticeService) {
         setId("notice-view");
         this.noticeService = noticeService;
-        this.commentService = commentService;
     }
 
     @Override
     public void setParameter(BeforeEvent event, @OptionalParameter Long parameter) {       //TODO ta metoda jest wywołana po konstruktorze - zastanów się nad zmianą tej metody
-        this.notice = noticeService.findById(parameter).getContent();
+        notice = noticeService.findById(parameter).getContent();
 
         Paragraph title = new Paragraph(notice.getTitle());
         title.setId("notice-view-title");
@@ -63,7 +61,7 @@ public class NoticeView extends VerticalLayout implements HasUrlParameter<Long> 
         image.setSizeUndefined();
         Paragraph body = new Paragraph(notice.getBody());
 
-        CommentSectionComponent commentSection = new CommentSectionComponent(notice, commentService, noticeService);
+        CommentSectionComponent commentSection = new CommentSectionComponent(notice);
 
         setSizeUndefined();
         add(title, date, image, body, commentSection);

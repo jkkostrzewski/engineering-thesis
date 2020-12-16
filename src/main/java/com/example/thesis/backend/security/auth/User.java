@@ -1,6 +1,7 @@
 package com.example.thesis.backend.security.auth;
 
 import com.example.thesis.backend.floor.Floor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -45,11 +46,16 @@ public class User {
 
     @Size(max = 120)
     @NotBlank
+    @JsonIgnore
     private String password;
 
+    @JsonIgnore
     private boolean enabled;
+    @JsonIgnore
     private boolean accountNonExpired;
+    @JsonIgnore
     private boolean accountNonLocked;
+    @JsonIgnore
     private boolean credentialsNonExpired;
 
     @ManyToMany(fetch = FetchType.EAGER)

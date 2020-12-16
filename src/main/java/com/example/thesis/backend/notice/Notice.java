@@ -1,16 +1,12 @@
 package com.example.thesis.backend.notice;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.GenerationType.AUTO;
 
@@ -32,10 +28,16 @@ public class Notice {
     private String body;
 
     @Lob
-    private byte[] image;       //do oddzielnej tabeli moze?
+    private byte[] image;
 //    private String[] tags;
 
-    @OneToMany(fetch = EAGER, cascade = ALL)
+    @OneToMany(fetch = EAGER)
+    @JoinTable(
+            name = "notice_parent_comments",
+            joinColumns = @JoinColumn(
+                    name = "notice_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "parent_comment_id", referencedColumnName = "id"))
     private Collection<ParentComment> parentComments = new ArrayList<>();
 
     public void addParentComment(ParentComment comment) {
