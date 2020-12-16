@@ -1,7 +1,10 @@
 #comment {
-    border-style: solid;
 }
 
 #full-name {
     font-size: 1.45em;
+}
+
+#reply-button {
+    width: 8em;
 }

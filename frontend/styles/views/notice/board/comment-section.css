@@ -2,21 +2,25 @@
 }
 
 #comment-component {
-    background-color: #3b5987;
+    background-color: #384361;
     width: 50% !important;
     display: block;
     margin-left: 25%;
     margin-right: 25%;
     margin-bottom: 0.5em;
+
+    border-radius: 4px;
 }
 
 #reply-comment-component {
-    background-color: #3b5987;
+    background-color: #384361;
     width: 47% !important;
     display: block;
     margin-left: 28%;
     margin-right: 28%;
     margin-bottom: 0.5em;
+
+    border-radius: 4px;
 }
 
 #comments-box {

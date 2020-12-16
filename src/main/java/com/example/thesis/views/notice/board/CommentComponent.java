@@ -21,10 +21,7 @@ public class CommentComponent extends VerticalLayout {
 
     private final Comment comment;
 
-    @Autowired
-    private CommentRepository commentRepository;
-
-    public CommentComponent(Comment comment) {
+    public CommentComponent(Comment comment) {  //TODO - zrobić rozwijanie odpowiedzi (rozdzielić komponent odpowiedzi i parentCommenta?)
         this.comment = comment;
         setId("comment-component");
 
@@ -55,7 +52,7 @@ public class CommentComponent extends VerticalLayout {
         Button reply = new Button("Reply");
         reply.setId("reply-button");
         reply.addClickListener(e -> {
-//            User user = new User();         //TODO TESTOWO - WYCIAGAC Z SYSTEMU JAKOS
+//            User user = new User();
 //            user.setFirstName("Test");
 //            user.setLastName("Test");
 
@@ -63,14 +60,14 @@ public class CommentComponent extends VerticalLayout {
 //            addCommentToRepository(commentz);
         });
 
-        add(nameAndDate, content, reply);
+        add(nameAndDate, content);
+
+        if(comment instanceof ParentComment) {
+            add(reply);
+        }
     }
 
     private String getFormattedTime() {
         return new PrettyTime().format(Date.from(comment.getCreationDate()));
-    }
-
-    private void addCommentToRepository(Comment comment) {
-        commentRepository.save(comment);
     }
 }
