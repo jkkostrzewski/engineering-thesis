@@ -24,6 +24,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinSession;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 
@@ -39,6 +40,7 @@ import java.util.Locale;
 @PageTitle("Reservations")
 @CssImport("./styles/views/reservations/reservation-view.css")
 @Secured(ReservationView.PRIVILEGE)
+@Slf4j
 public class ReservationView extends VerticalLayout {
     public static final String PRIVILEGE = "RESERVATION_VIEW_PRIVILEGE";
     public static final String ROUTE = "reservations";
@@ -120,8 +122,7 @@ public class ReservationView extends VerticalLayout {
         confirmButton.addClickListener(e -> {
             Property property = choosePropertyBox.getValue();
             String username = (String) VaadinSession.getCurrent().getAttribute("name");
-            User user = userRepository.findByUsername(username).get();
-
+            User user = userRepository.findByUsername(username).orElseThrow(RuntimeException::new);
             LocalDateTime start = dateTimePicker.getValue();
             if (start.isBefore(LocalDateTime.now())) {      //TODO check if start doesn't collide with existing reservation
                 Notification.show("Choose a future date!");
@@ -137,6 +138,9 @@ public class ReservationView extends VerticalLayout {
                     .build();
 
             reservationRepository.save(reservation);
+
+            log.info("Reservation saved" + reservation.toString());
+            Notification.show("Reservation added successfully");
             refreshAccordionValues();
         });
 
