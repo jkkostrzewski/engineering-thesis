@@ -6,8 +6,8 @@ Czego brakuje na dzień 9.12.2020
 - Tworzenie zakładek dla poszczególnych pięter tylko dla konkretnych użytkowników - DONE
 - Ogłoszenia piętra - DONE
 
-- panel administracyjny administratora całego akademika
-- panel administracyjny piętrowego
+- panel administracyjny administratora całego akademika - WIDOK DODAWANIA PROPERTY DLA MAINA
+- panel administracyjny piętrowego - WIDOK DODAWANIA PROPERTY DLA PIĘTRA
 
 - dynamiczne przypisywanie privileges dla użytkowników
 

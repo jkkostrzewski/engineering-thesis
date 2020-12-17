@@ -24,14 +24,13 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.server.VaadinSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -49,7 +48,8 @@ public class ReservationView extends VerticalLayout {
     public static final String CHOOSE_FLOOR = "Choose floor:";
     public static final String CHOOSE_DATE_AND_HOUR = "Choose date and hour:";
     public static final String CONFIRM = "Add new";
-    public static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT);
+    private static final String HOUR_PATTERN = "HH:mm";
+    public static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(HOUR_PATTERN);
 
     @Autowired
     private final UserRepository userRepository;
@@ -68,7 +68,8 @@ public class ReservationView extends VerticalLayout {
     private DateTimePicker dateTimePicker;
     private Label accordionLabel;
     private Accordion accordion;
-    private List<AccordionPanel> reservations;
+    private List<AccordionPanel> reservationPanels;
+    private Collection<Reservation> reservations;
 
     public ReservationView(UserRepository userRepository, PropertyRepository propertyRepository,
                            ReservationRepository reservationRepository, FloorRepository floorRepository) {
@@ -80,17 +81,18 @@ public class ReservationView extends VerticalLayout {
         setId("reservation-view");
 
         this.setAlignItems(Alignment.CENTER);
+        String username = SecurityUtils.getLoggedUserUsername();
+        User user = userRepository.findByUsername(username).orElseThrow(RuntimeException::new);
 
-        reservations = new ArrayList<>();
+        reservationPanels = new ArrayList<>();
 
-        List<Floor> floors = this.floorRepository.findAll();
         accordion = new Accordion();
         accordion.setId("accordion");
 
         choosePropertyBox = new ComboBox<>(CHOOSE_PROPERTY);
         choosePropertyBox.setId("choosePropertyBox");
 
-        chooseFloorBox = new ComboBox<>(CHOOSE_FLOOR, floors);
+        chooseFloorBox = new ComboBox<>(CHOOSE_FLOOR, user.getFloors());
         chooseFloorBox.setId("chooseFloorBox");
 
         chooseFloorBox.addValueChangeListener(e -> {
@@ -109,8 +111,7 @@ public class ReservationView extends VerticalLayout {
         dateTimePicker.setId("dateTimePicker");
         dateTimePicker.setLabel(CHOOSE_DATE_AND_HOUR);
         dateTimePicker.setLocale(Locale.GERMAN);
-        LocalDateTime now = LocalDateTime.now();
-        dateTimePicker.setValue(now);
+        dateTimePicker.setValue(findNextRoundTime());
         dateTimePicker.setStep(Duration.ofMinutes(30));
         //setMin(LocalDateTime min)
         //setMax(LocalDateTime max)
@@ -122,8 +123,6 @@ public class ReservationView extends VerticalLayout {
         confirmButton.setId("confirm-button");
         confirmButton.addClickListener(e -> {
             Property property = choosePropertyBox.getValue();
-            String username = SecurityUtils.getLoggedUserUsername();
-            User user = userRepository.findByUsername(username).orElseThrow(RuntimeException::new);
             LocalDateTime start = dateTimePicker.getValue();
             Duration duration = Duration.ofHours(1); //TODO dodaj na widoku
 
@@ -159,8 +158,38 @@ public class ReservationView extends VerticalLayout {
         add(chooseFloorBox, choosePropertyBox, pickerAndConfirm, accordionLabel, accordion);
     }
 
+    private LocalDateTime findNextRoundTime() {
+        LocalDateTime time = LocalDateTime.now();
+        LocalDateTime lastHalf = time.truncatedTo(ChronoUnit.HOURS);
+        return lastHalf.plusMinutes(30 * (time.getMinute() / 15) + 30);
+    }
+
     private boolean reservationCollidesWithAnother(LocalDateTime start, Duration duration) {
-        return false;
+        LocalDateTime end = start.plus(duration);
+
+        return reservations.stream().anyMatch(reservation -> doesNotCollideWithNewReservation(start, end, reservation));
+    }
+
+    private boolean doesNotCollideWithNewReservation(LocalDateTime start, LocalDateTime end, Reservation reservation) {
+        return reservationStartsDuring(start, end, reservation) || reservationStartsBefore(start, end, reservation)
+                || reservationEndsDuring(start, end, reservation);
+    }
+
+    private boolean reservationStartsDuring(LocalDateTime start, LocalDateTime end, Reservation reservation) {
+        LocalDateTime reservationStart = reservation.getStart();
+        return start.isBefore(reservationStart) && end.isAfter(reservationStart);
+    }
+
+    private boolean reservationStartsBefore(LocalDateTime start, LocalDateTime end, Reservation reservation) {
+        LocalDateTime reservationStart = reservation.getStart();
+        LocalDateTime reservationEnd = reservationStart.plus(reservation.getDuration());
+        return start.isAfter(reservationStart) && start.isBefore(reservationEnd)
+                && end.isAfter(reservationStart) && end.isBefore(reservationEnd);
+    }
+
+    private boolean reservationEndsDuring(LocalDateTime start, LocalDateTime end, Reservation reservation) {
+        LocalDateTime reservationEnd = reservation.getStart().plus(reservation.getDuration());
+        return start.isBefore(reservationEnd) && end.isAfter(reservationEnd);
     }
 
     private boolean dateIsInPast(LocalDateTime date) {
@@ -176,13 +205,12 @@ public class ReservationView extends VerticalLayout {
 
         removeAllElementsFromAccordion();
         Floor choseFloor = chooseFloorBox.getValue();
-        Collection<Reservation> reservations;
-        LocalDateTime dayStart = LocalDateTime.of(dateTimePicker.getValue().toLocalDate(), LocalTime.MIN);
+        LocalDateTime now = LocalDateTime.now().minusMinutes(5);
         LocalDateTime dayEnd = LocalDateTime.of(dateTimePicker.getValue().toLocalDate(), LocalTime.MAX);
-        reservations = reservationRepository.findByPropertyOwnerAndStartBetweenOrderByStartAsc(choseFloor, dayStart, dayEnd); //TODO dodaj szukanie po property
+        reservations = reservationRepository.findByPropertyOwnerAndStartBetweenOrderByStartAsc(choseFloor, now, dayEnd); //TODO dodaj szukanie po property
         for (Reservation reservation : reservations) {
             AccordionPanel panel = createAccordionPanelForReservation(reservation);
-            this.reservations.add(panel);
+            this.reservationPanels.add(panel);
             accordion.add(panel).addThemeVariants(DetailsVariant.FILLED);
         }
     }
@@ -196,9 +224,9 @@ public class ReservationView extends VerticalLayout {
     }
 
     private void removeAllElementsFromAccordion() {
-        for (AccordionPanel panel : reservations) {
+        for (AccordionPanel panel : reservationPanels) {
             accordion.remove(panel);
         }
-        reservations.clear();
+        reservationPanels.clear();
     }
 }
