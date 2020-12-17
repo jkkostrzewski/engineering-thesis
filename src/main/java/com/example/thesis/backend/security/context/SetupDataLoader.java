@@ -20,11 +20,8 @@ import org.springframework.stereotype.Component;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.io.FileInputStream;
-import java.time.Duration;
-import java.time.Instant;
-import java.time.LocalDateTime;
+import java.time.*;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
 import java.util.*;
 
 @Component
@@ -201,21 +198,17 @@ public class SetupDataLoader implements
         propertyRepository.save(property);
         propertyRepository.save(property2);
 
-        Reservation reservation = Reservation.builder().start(LocalDateTime.now()).duration(Duration.ofHours(1)).property(property).user(user).build();
-        Reservation reservation3 = Reservation.builder().start(LocalDateTime.now().minusHours(3)).duration(Duration.ofHours(1)).property(property).user(user).build();
-        Reservation reservation4 = Reservation.builder().start(LocalDateTime.now().minusHours(6)).duration(Duration.ofHours(1)).property(property).user(user).build();
-        Reservation reservation5 = Reservation.builder().start(LocalDateTime.now()).duration(Duration.ofHours(1)).property(property).user(user).build();
-        Reservation reservation6 = Reservation.builder().start(LocalDateTime.now().plusHours(4)).duration(Duration.ofHours(1)).property(property).user(user).build();
-        Reservation reservation7 = Reservation.builder().start(LocalDateTime.now()).duration(Duration.ofHours(1)).property(property).user(user).build();
-        Reservation reservation2 = Reservation.builder().start(LocalDateTime.now()).duration(Duration.ofHours(1)).property(property2).user(user).build();
+        Reservation reservation = Reservation.builder().start(LocalDateTime.now()).duration(Duration.ofHours(1)).property(property).user(user).creationTime(Instant.now()).build();
+        Reservation reservation3 = Reservation.builder().start(LocalDateTime.now().minusHours(3)).duration(Duration.ofHours(1)).property(property).user(user).creationTime(Instant.now()).build();
+        Reservation reservation4 = Reservation.builder().start(LocalDateTime.now().minusHours(6)).duration(Duration.ofHours(1)).property(property).user(user).creationTime(Instant.now()).build();
+        Reservation reservation2 = Reservation.builder().start(LocalDateTime.of(LocalDate.now(), LocalTime.of(20, 0 ,0))).duration(Duration.ofHours(1)).property(property2).user(user).creationTime(Instant.now()).build();
+        Reservation reservation5 = Reservation.builder().start(LocalDateTime.of(LocalDate.now(), LocalTime.of(23,  0,0))).duration(Duration.ofHours(1)).property(property2).user(user).creationTime(Instant.now()).build();
 
         reservationRepository.save(reservation);
         reservationRepository.save(reservation2);
         reservationRepository.save(reservation3);
         reservationRepository.save(reservation4);
         reservationRepository.save(reservation5);
-        reservationRepository.save(reservation6);
-        reservationRepository.save(reservation7);
 
         alreadySetup = true;
     }

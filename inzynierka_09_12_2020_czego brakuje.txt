@@ -27,8 +27,7 @@ BUGI:
 	z MainView dlatego ze jest to ten sam widok
 - w oknie nowego usera nie widać MainBoarda - (nie ma przypisanego na starcie głównego piętra)
 - można dodać pusty komentarz do ogłoszenia
-- Rezerwacje powinny otwierać się z piętrem z użytkownika
 - wielkości komponentów na telefonie są kompletnie nieprawidłowe
 - upload zdjęcia z telefonu nie działa (?)
-- dodanie nowego użytkownika nie działa z deploya (?)
+- dodanie nowego użytkownika nie działa z deploya (?) - gmail smtp blokuje heroku
 -

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Data
@@ -23,6 +24,8 @@ public class Reservation {
 
     private LocalDateTime start;
     private Duration duration;
+
+    private Instant creationTime;
 
     @OneToOne
     private Property property;

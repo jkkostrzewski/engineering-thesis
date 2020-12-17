@@ -31,10 +31,7 @@ import org.springframework.security.access.annotation.Secured;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 @Route(value = ReservationView.ROUTE, layout = MainView.class)
 @PageTitle("Reservations")
@@ -50,6 +47,10 @@ public class ReservationView extends VerticalLayout {
     public static final String CONFIRM = "Add new";
     private static final String HOUR_PATTERN = "HH:mm";
     public static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(HOUR_PATTERN);
+    public static DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+            .withZone(ZoneId
+                    .systemDefault()); //TODO wyrzucić to do klasy utilities?
+
 
     @Autowired
     private final UserRepository userRepository;
@@ -70,6 +71,8 @@ public class ReservationView extends VerticalLayout {
     private Accordion accordion;
     private List<AccordionPanel> reservationPanels;
     private Collection<Reservation> reservations;
+    private final ComboBox<Duration> durationSelector = new ComboBox<>();
+    private final User user;
 
     public ReservationView(UserRepository userRepository, PropertyRepository propertyRepository,
                            ReservationRepository reservationRepository, FloorRepository floorRepository) {
@@ -82,7 +85,7 @@ public class ReservationView extends VerticalLayout {
 
         this.setAlignItems(Alignment.CENTER);
         String username = SecurityUtils.getLoggedUserUsername();
-        User user = userRepository.findByUsername(username).orElseThrow(RuntimeException::new);
+        user = userRepository.findByUsername(username).orElseThrow(RuntimeException::new);
 
         reservationPanels = new ArrayList<>();
 
@@ -107,24 +110,28 @@ public class ReservationView extends VerticalLayout {
 
         HorizontalLayout pickerAndConfirm = new HorizontalLayout();
 
-        dateTimePicker = new DateTimePicker();
+        dateTimePicker = new DateTimePicker();          //TODO create datePicker and TimePicker separately that way i can remove night hours from time
         dateTimePicker.setId("dateTimePicker");
         dateTimePicker.setLabel(CHOOSE_DATE_AND_HOUR);
-        dateTimePicker.setLocale(Locale.GERMAN);
+        dateTimePicker.setLocale(Locale.GERMAN);         //TODO try to disable manual editing of hour
         dateTimePicker.setValue(findNextRoundTime());
         dateTimePicker.setStep(Duration.ofMinutes(30));
-        //setMin(LocalDateTime min)
-        //setMax(LocalDateTime max)
-        dateTimePicker.addValueChangeListener(e -> {
-            refreshAccordionValues();
-        });
+        dateTimePicker.addValueChangeListener(e -> refreshAccordionValues());
+
+        durationSelector.setLabel("Duration");
+        durationSelector.setItems(Duration.ofHours(1), Duration.ofHours(2), Duration.ofHours(3), Duration.ofHours(4));
 
         Button confirmButton = new Button(CONFIRM);
         confirmButton.setId("confirm-button");
         confirmButton.addClickListener(e -> {
             Property property = choosePropertyBox.getValue();
             LocalDateTime start = dateTimePicker.getValue();
-            Duration duration = Duration.ofHours(1); //TODO dodaj na widoku
+            Duration duration = durationSelector.getValue();
+
+            if (Objects.isNull(duration)) {
+                Notification.show("Choose a duration!");
+                return;
+            }
 
             if (dateIsInPast(start)) {
                 Notification.show("Choose a future date!");
@@ -134,6 +141,15 @@ public class ReservationView extends VerticalLayout {
             if (reservationCollidesWithAnother(start, duration)) { //TODO check if start doesn't collide with existing reservation
                 Notification.show("Chosen date collides with another reservation!");
                 return;
+            }
+
+            if (!dateTimeInAvailableHours()) {
+                Notification.show("You cannot reserve a property during night time!");
+                return;
+            }
+
+            if (timeIsNotDividedByHalfHour()) {
+                Notification.show("You can reserve by using whole hours or halves!");
             }
 
             Reservation reservation = Reservation.builder()
@@ -155,7 +171,20 @@ public class ReservationView extends VerticalLayout {
         accordionLabel = new Label("Existing reservations");
         accordionLabel.setVisible(false);
         accordion.setVisible(false);
-        add(chooseFloorBox, choosePropertyBox, pickerAndConfirm, accordionLabel, accordion);
+        add(chooseFloorBox, choosePropertyBox, pickerAndConfirm, durationSelector, accordionLabel, accordion);
+    }
+
+    private boolean timeIsNotDividedByHalfHour() {
+        int minute = dateTimePicker.getValue().getMinute();
+        return minute != 0 && minute != 30;
+    }
+
+    private boolean dateTimeInAvailableHours() {
+        LocalDateTime startDateTime = dateTimePicker.getValue();
+        LocalDateTime endDateTime = startDateTime.plus(durationSelector.getValue());
+        return startDateTime.isAfter(LocalDateTime.of(startDateTime.toLocalDate(), LocalTime.of(7, 59, 59)))
+                && startDateTime.isBefore(LocalDateTime.of(startDateTime.toLocalDate(), LocalTime.of(22, 0, 1)))
+                && endDateTime.isBefore(LocalDateTime.of(startDateTime.toLocalDate(), LocalTime.of(22, 0, 1)));
     }
 
     private LocalDateTime findNextRoundTime() {
@@ -172,7 +201,8 @@ public class ReservationView extends VerticalLayout {
 
     private boolean doesNotCollideWithNewReservation(LocalDateTime start, LocalDateTime end, Reservation reservation) {
         return reservationStartsDuring(start, end, reservation) || reservationStartsBefore(start, end, reservation)
-                || reservationEndsDuring(start, end, reservation);
+                || reservationEndsDuring(start, end, reservation) || reservationStartsAtTheSameTime(start, reservation)
+                || reservationEndsAtTheSameTime(end, reservation);
     }
 
     private boolean reservationStartsDuring(LocalDateTime start, LocalDateTime end, Reservation reservation) {
@@ -192,6 +222,15 @@ public class ReservationView extends VerticalLayout {
         return start.isBefore(reservationEnd) && end.isAfter(reservationEnd);
     }
 
+    private boolean reservationStartsAtTheSameTime(LocalDateTime start, Reservation reservation) {
+        return start.isEqual(reservation.getStart());
+    }
+
+    private boolean reservationEndsAtTheSameTime(LocalDateTime end, Reservation reservation) {
+        LocalDateTime reservationEnd = reservation.getStart().plus(reservation.getDuration());
+        return end.isEqual(reservationEnd);
+    }
+
     private boolean dateIsInPast(LocalDateTime date) {
         return date.isBefore(LocalDateTime.now());
     }
@@ -205,9 +244,10 @@ public class ReservationView extends VerticalLayout {
 
         removeAllElementsFromAccordion();
         Floor choseFloor = chooseFloorBox.getValue();
-        LocalDateTime now = LocalDateTime.now().minusMinutes(5);
-        LocalDateTime dayEnd = LocalDateTime.of(dateTimePicker.getValue().toLocalDate(), LocalTime.MAX);
-        reservations = reservationRepository.findByPropertyOwnerAndStartBetweenOrderByStartAsc(choseFloor, now, dayEnd); //TODO dodaj szukanie po property
+//        LocalDateTime startDayTime = findStartDateTime();   //TODO tDOESNT SHOW ANYTHING
+        LocalDateTime startDayTime = LocalDateTime.of(dateTimePicker.getValue().toLocalDate(), LocalTime.MIN);
+        LocalDateTime dayTimeEnd = LocalDateTime.of(dateTimePicker.getValue().toLocalDate(), LocalTime.MAX);
+        reservations = reservationRepository.findByPropertyOwnerAndStartBetweenOrderByStartAsc(choseFloor, startDayTime, dayTimeEnd); //TODO dodaj szukanie po property
         for (Reservation reservation : reservations) {
             AccordionPanel panel = createAccordionPanelForReservation(reservation);
             this.reservationPanels.add(panel);
@@ -215,12 +255,37 @@ public class ReservationView extends VerticalLayout {
         }
     }
 
+//    private LocalDateTime findStartDateTime() {
+//        LocalDate date = dateTimePicker.getValue().toLocalDate();
+//        if (date.isEqual(LocalDate.now())) {
+//            return LocalDateTime.of(date, LocalTime.now());
+//        }
+//        return LocalDateTime.of(dateTimePicker.getValue().toLocalDate(), LocalTime.MIN);
+//    }
+
     private AccordionPanel createAccordionPanelForReservation(Reservation reservation) {
         String start = dateTimeFormatter.format(reservation.getStart());
         String end = dateTimeFormatter.format(reservation.getStart().plus(reservation.getDuration()));
         String time = start + " - " + end;
-        Span content = new Span(reservation.toString());
-        return new AccordionPanel(time, content);
+
+        String contentHTML = "Created by: " + reservation.getUser().getFullName() + "<br>"
+                + "Creation time: " + DATE_TIME_FORMATTER.format(reservation.getCreationTime()) + "<br>";
+        Span content = new Span();
+        content.getElement().setProperty("innerHTML", contentHTML);
+
+        AccordionPanel panel = new AccordionPanel(time, content);
+
+        if (user.equals(reservation.getUser())) {
+            Button delete = new Button("Delete");
+            delete.addClickListener(e -> {
+                reservationRepository.delete(reservation);
+                refreshAccordionValues();
+                Notification.show("Reservation has been deleted");
+            });
+            panel.addContent(delete);
+        }
+
+        return panel;
     }
 
     private void removeAllElementsFromAccordion() {
