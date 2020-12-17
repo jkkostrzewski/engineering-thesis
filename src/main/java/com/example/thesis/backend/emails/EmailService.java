@@ -1,8 +1,10 @@
 package com.example.thesis.backend.emails;
 
 import com.example.thesis.backend.security.auth.Token;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.server.VaadinSession;
 import io.vavr.control.Try;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -16,6 +18,7 @@ import javax.mail.internet.MimeMessage;
 import java.net.URI;
 
 @Service
+@Slf4j
 public class EmailService {
 
     @Autowired
@@ -34,6 +37,8 @@ public class EmailService {
     private void sendEmail(String to, String title, String content) {
         MimeMessage mail = javaMailSender.createMimeMessage();
 
+        log.info("Creating email object");
+
         Try.of(() -> {
             helper = new MimeMessageHelper(mail, true);
             helper.setTo(to);
@@ -43,6 +48,7 @@ public class EmailService {
             return helper;
         });
         javaMailSender.send(mail);
+        Notification.show("Email has been sent");
     }
 
     public void sendRegistrationEmail(String email, Token token) {

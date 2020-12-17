@@ -16,6 +16,7 @@ Czego brakuje na dzień 9.12.2020
 - Wszelakie drobne poprawki TODO we wszystkich klasach
 - Optymalizacja i refactoring!
 - Zweryfikowanie kolorystyki i ogólne ułożenie elementów
+- Opcja edycji rezerwacji i ogłoszeń dla właściciela danego elementu oraz adminów/floorAdminów
 
 DODATKOWE:
 - Usunięcie wyświetlania stack trace'a na samej stronie podczas jakiegokolwiek błędu
@@ -27,3 +28,7 @@ BUGI:
 - w oknie nowego usera nie widać MainBoarda - (nie ma przypisanego na starcie głównego piętra)
 - można dodać pusty komentarz do ogłoszenia
 - Rezerwacje powinny otwierać się z piętrem z użytkownika
+- wielkości komponentów na telefonie są kompletnie nieprawidłowe
+- upload zdjęcia z telefonu nie działa (?)
+- dodanie nowego użytkownika nie działa z deploya (?)
+-

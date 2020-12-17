@@ -6,6 +6,7 @@ import com.example.thesis.backend.reservation.Property;
 import com.example.thesis.backend.reservation.PropertyRepository;
 import com.example.thesis.backend.reservation.Reservation;
 import com.example.thesis.backend.reservation.ReservationRepository;
+import com.example.thesis.backend.security.SecurityUtils;
 import com.example.thesis.backend.security.auth.User;
 import com.example.thesis.backend.security.auth.UserRepository;
 import com.example.thesis.views.main.MainView;
@@ -121,14 +122,20 @@ public class ReservationView extends VerticalLayout {
         confirmButton.setId("confirm-button");
         confirmButton.addClickListener(e -> {
             Property property = choosePropertyBox.getValue();
-            String username = (String) VaadinSession.getCurrent().getAttribute("name");
+            String username = SecurityUtils.getLoggedUserUsername();
             User user = userRepository.findByUsername(username).orElseThrow(RuntimeException::new);
             LocalDateTime start = dateTimePicker.getValue();
-            if (start.isBefore(LocalDateTime.now())) {      //TODO check if start doesn't collide with existing reservation
+            Duration duration = Duration.ofHours(1); //TODO dodaj na widoku
+
+            if (dateIsInPast(start)) {
                 Notification.show("Choose a future date!");
                 return;
             }
-            Duration duration = Duration.ofHours(1); //TODO dodaj na widoku
+
+            if (reservationCollidesWithAnother(start, duration)) { //TODO check if start doesn't collide with existing reservation
+                Notification.show("Chosen date collides with another reservation!");
+                return;
+            }
 
             Reservation reservation = Reservation.builder()
                     .user(user)
@@ -152,6 +159,14 @@ public class ReservationView extends VerticalLayout {
         add(chooseFloorBox, choosePropertyBox, pickerAndConfirm, accordionLabel, accordion);
     }
 
+    private boolean reservationCollidesWithAnother(LocalDateTime start, Duration duration) {
+        return false;
+    }
+
+    private boolean dateIsInPast(LocalDateTime date) {
+        return date.isBefore(LocalDateTime.now());
+    }
+
     private void refreshAccordionValues() {
         if (chooseFloorBox.isEmpty() || choosePropertyBox.isEmpty()) {
             return;
@@ -166,14 +181,18 @@ public class ReservationView extends VerticalLayout {
         LocalDateTime dayEnd = LocalDateTime.of(dateTimePicker.getValue().toLocalDate(), LocalTime.MAX);
         reservations = reservationRepository.findByPropertyOwnerAndStartBetweenOrderByStartAsc(choseFloor, dayStart, dayEnd); //TODO dodaj szukanie po property
         for (Reservation reservation : reservations) {
-            String start = dateTimeFormatter.format(reservation.getStart());
-            String end = dateTimeFormatter.format(reservation.getStart().plus(reservation.getDuration()));
-            String time = start + " - " + end;
-            Span content = new Span(reservation.toString());
-            AccordionPanel panel = new AccordionPanel(time, content);
+            AccordionPanel panel = createAccordionPanelForReservation(reservation);
             this.reservations.add(panel);
             accordion.add(panel).addThemeVariants(DetailsVariant.FILLED);
         }
+    }
+
+    private AccordionPanel createAccordionPanelForReservation(Reservation reservation) {
+        String start = dateTimeFormatter.format(reservation.getStart());
+        String end = dateTimeFormatter.format(reservation.getStart().plus(reservation.getDuration()));
+        String time = start + " - " + end;
+        Span content = new Span(reservation.toString());
+        return new AccordionPanel(time, content);
     }
 
     private void removeAllElementsFromAccordion() {
