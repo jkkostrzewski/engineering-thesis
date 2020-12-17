@@ -1,9 +1,11 @@
 package com.example.thesis.views.notice.board;
 
-import com.example.thesis.backend.notice.CommentService;
-import com.example.thesis.backend.notice.Notice;
-import com.example.thesis.backend.notice.NoticeService;
+import com.example.thesis.backend.notice.*;
+import com.example.thesis.backend.security.SecurityUtils;
+import com.example.thesis.backend.security.auth.User;
+import com.example.thesis.backend.security.auth.UserRepository;
 import com.example.thesis.views.main.MainView;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Paragraph;
@@ -33,13 +35,20 @@ public class NoticeView extends VerticalLayout implements HasUrlParameter<Long> 
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
             .withZone(ZoneId
                     .systemDefault()); //TODO wyrzucić to do klasy utilities?
+
+    private final NoticeService noticeService;
+    private final UserRepository userRepository;
+    private final CommentRepository commentRepository;
+
     private Notice notice;
-    private NoticeService noticeService;
+    private User currentUser;
 
     @Autowired
-    public NoticeView(NoticeService noticeService) {
-        setId("notice-view");
+    public NoticeView(NoticeService noticeService, UserRepository userRepository, CommentRepository commentRepository) {
         this.noticeService = noticeService;
+        this.userRepository = userRepository;
+        this.commentRepository = commentRepository;
+        setId("notice-view");
     }
 
     @Override
@@ -61,9 +70,34 @@ public class NoticeView extends VerticalLayout implements HasUrlParameter<Long> 
         image.setSizeUndefined();
         Paragraph body = new Paragraph(notice.getBody());
 
-        CommentSectionComponent commentSection = new CommentSectionComponent(notice);
+        String username = SecurityUtils.getLoggedUserUsername();
+        currentUser = userRepository.findByUsername(username).orElseThrow(RuntimeException::new);
+
+        CommentSectionComponent commentSection = new CommentSectionComponent(this);
 
         setSizeUndefined();
         add(title, date, image, body, commentSection);
+    }
+
+    public Notice getNotice() {
+        return notice;
+    }
+
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    public void addParentComment(ParentComment parentComment) {     //websockets to load comments dynamically?
+        commentRepository.save(parentComment);
+        this.notice.addParentComment(parentComment);
+        noticeService.saveNotice(this.notice);
+        UI.getCurrent().getPage().reload();
+    }
+
+    public void addReply(ParentComment parent, Comment comment) {
+        commentRepository.save(comment);
+        parent.addReply(comment);
+        commentRepository.save(parent);
+        UI.getCurrent().getPage().reload();
     }
 }

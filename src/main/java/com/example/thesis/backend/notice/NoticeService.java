@@ -17,13 +17,13 @@ public class NoticeService {
         this.noticeRepository = noticeRepository;
     }
 
-    public ServiceResponse<Notice> addNotice(Notice notice) {
+    public ServiceResponse<Notice> saveNotice(Notice notice) {
         return new ServiceResponse<>(HttpStatus.OK, noticeRepository.save(notice));
     }
 
     public ServiceResponse<Notice> addComment(Notice notice, ParentComment comment) {
         notice.addParentComment(comment);
-        return addNotice(notice);
+        return saveNotice(notice);
     }
 
     public ServiceResponse<Notice> findById(long id) {

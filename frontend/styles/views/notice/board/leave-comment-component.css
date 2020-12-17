@@ -1,12 +1,18 @@
 #leave-comment-component {
-
 }
 
-#inner-box {
+#inner-box-parent {
     background-color: #283b59;
     margin: 0 auto;
     align-items: center;
     width: 46%;
+}
+
+#inner-box-reply {
+    background-color: #283b59;
+    margin: 0 auto;
+    align-items: right;
+    width: 98%;
 }
 
 #comment-box {

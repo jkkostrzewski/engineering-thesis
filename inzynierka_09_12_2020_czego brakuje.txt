@@ -16,6 +16,7 @@ Czego brakuje na dzień 9.12.2020
 - Wszelakie drobne poprawki TODO we wszystkich klasach
 - Optymalizacja i refactoring!
 - Zweryfikowanie kolorystyki i ogólne ułożenie elementów
+- Usunięcie wyświetlania stack trace'a na samej stronie podczas jakiegokolwiek błędu
 
 
 BUGI:

@@ -52,4 +52,8 @@ public class SecurityUtils {
         return getCurrentUserRoles().stream().anyMatch(e -> e.getAuthority().equals(role));
     }
 
+    public static String getLoggedUserUsername() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getName();
+    }
 }

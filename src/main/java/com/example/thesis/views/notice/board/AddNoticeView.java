@@ -87,7 +87,7 @@ public class AddNoticeView extends VerticalLayout {
 
         confirm = new Button("Confirm");
         confirm.addClickListener(e -> {
-            ServiceResponse<Notice> response = noticeService.addNotice(Notice.builder()
+            ServiceResponse<Notice> response = noticeService.saveNotice(Notice.builder()
                                                           .creationDate(Instant.now())
                                                           .title(title.getValue())
                                                           .body(body.getValue())

@@ -44,5 +44,11 @@ public class Notice {
     public void addParentComment(ParentComment comment) {
         parentComments.add(comment);
     }
+
+    public void addReply(ParentComment parent, Comment comment) {
+        parentComments.stream()
+                .filter(element -> element.equals(parent))
+                .forEach((parentComment) -> parentComment.addReply(comment));
+    }
 }
 

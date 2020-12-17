@@ -1,6 +1,7 @@
 package com.example.thesis.views.notice.board;
 
 import com.example.thesis.backend.notice.*;
+import com.example.thesis.backend.security.auth.User;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -9,29 +10,26 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 public class CommentSectionComponent extends VerticalLayout {
 
     private final Div commentsBox;
+    private final NoticeView noticeView;
 
-    public CommentSectionComponent(Notice notice) {
+    public CommentSectionComponent(NoticeView noticeView) {
         setId("comment-section");
 
-        LeaveCommentComponent leaveCommentComponent = new LeaveCommentComponent();
+        this.noticeView = noticeView;
+
+        LeaveCommentComponent leaveCommentComponent = new LeaveCommentComponent(noticeView);
         add(leaveCommentComponent);
 
         commentsBox = new Div();
         commentsBox.setId("comments-box");
 
-        createCommentComponents(notice, commentsBox);
+        createCommentComponents(noticeView.getNotice(), commentsBox);
         add(commentsBox);
     }
 
     private void createCommentComponents(Notice notice, Div commentsBox) {
         for (ParentComment parentComment : notice.getParentComments()) {
-            CommentComponent commentComponent = new CommentComponent(parentComment);
-//            String margin = getCommentMargin(comment);
-//            commentComponent.getStyle().set("margin-left", margin);
-//            if(!comment.isParentComment()) {
-////                String margin = commentComponent.getStyle().get("margin")
-//                commentComponent.getStyle().set("margin-left", "20px auto");
-//            }
+            CommentComponent commentComponent = new CommentComponent(noticeView, parentComment);
             commentsBox.add(commentComponent);
             createReplyComponents(parentComment);
         }
@@ -43,10 +41,4 @@ public class CommentSectionComponent extends VerticalLayout {
             commentsBox.add(replyComponent);
         }
     }
-//
-//    private String getCommentMargin(Comment comment) {
-//        int depth = comment.getDepth() <= MAX_DEPTH ? comment.getDepth() : MAX_DEPTH;
-//        depth = depth * 2;
-//        return depth + "em";
-//    }
 }

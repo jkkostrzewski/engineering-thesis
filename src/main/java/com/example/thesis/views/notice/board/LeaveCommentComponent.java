@@ -1,22 +1,48 @@
 package com.example.thesis.views.notice.board;
 
+import com.example.thesis.backend.notice.Comment;
+import com.example.thesis.backend.notice.Notice;
+import com.example.thesis.backend.notice.ParentComment;
+import com.example.thesis.backend.security.auth.User;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 
+import java.time.Instant;
+
 @CssImport("./styles/views/notice/board/leave-comment-component.css")
 public class LeaveCommentComponent extends VerticalLayout {
 
-    private final TextArea commentBox;
-    private final Button submit;
+    private final NoticeView noticeView;
+    private TextArea commentBox;
+    private Button submit;
+    private Div innerBox;
 
-    public LeaveCommentComponent() {
+    public LeaveCommentComponent(NoticeView noticeView) {   //TODO check if notice persists after adding parent comment
+        innerBox = new Div();
+        innerBox.setId("inner-box-parent");
+
+        constructUnchangeableParts();
+
+        this.noticeView = noticeView;
+        submit.addClickListener(e -> addParentComment());
+    }
+
+    public LeaveCommentComponent(NoticeView noticeView, ParentComment parent) {   //TODO check if notice persists after adding parent comment
+        innerBox = new Div();
+        innerBox.setId("inner-box-reply");
+
+        constructUnchangeableParts();
+
+        this.noticeView = noticeView;
+
+        submit.addClickListener(e -> addReply(parent));
+    }
+
+    private void constructUnchangeableParts() {
         setId("leave-comment-component");
-
-        Div innerBox = new Div();
-        innerBox.setId("inner-box");
 
         commentBox = new TextArea();
         commentBox.setPlaceholder("Leave a comment...");
@@ -24,9 +50,18 @@ public class LeaveCommentComponent extends VerticalLayout {
 
         submit = new Button("Submit");
         submit.setId("submit-button");
-        //TODO - add click listener add to repository and to commentsectioncomponent
 
         innerBox.add(commentBox, submit);
         add(innerBox);
+    }
+
+    private void addParentComment() {
+        ParentComment comment = new ParentComment(noticeView.getCurrentUser(), Instant.now(), commentBox.getValue());
+        noticeView.addParentComment(comment);
+    }
+
+    private void addReply(ParentComment parent) {
+        Comment comment = new Comment(noticeView.getCurrentUser(), Instant.now(), commentBox.getValue());
+        noticeView.addReply(parent, comment);
     }
 }
