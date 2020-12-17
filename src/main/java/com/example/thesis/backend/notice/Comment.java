@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 import java.time.Instant;
 
@@ -27,6 +28,7 @@ public class Comment {
 
     private Instant creationDate;
 
+    @Size(max = 350)
     private String body;
 
     public Comment(User user, Instant creationDate, String body) {

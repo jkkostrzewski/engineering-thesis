@@ -16,8 +16,10 @@ Czego brakuje na dzień 9.12.2020
 - Wszelakie drobne poprawki TODO we wszystkich klasach
 - Optymalizacja i refactoring!
 - Zweryfikowanie kolorystyki i ogólne ułożenie elementów
-- Usunięcie wyświetlania stack trace'a na samej stronie podczas jakiegokolwiek błędu
 
+DODATKOWE:
+- Usunięcie wyświetlania stack trace'a na samej stronie podczas jakiegokolwiek błędu
+- Linkowanie artkułów między boardami przez floorAdmina, admina
 
 BUGI:
 - przejście z noticeboarda na inny noticeboard powoduje ze menu sie nie zamyka - wynika to z faktu ze nie wywoluje sie metoda afterNavigation
