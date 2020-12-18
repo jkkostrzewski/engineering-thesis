@@ -95,7 +95,7 @@ public class ReservationView extends VerticalLayout {
         choosePropertyBox = new ComboBox<>(CHOOSE_PROPERTY);
         choosePropertyBox.setId("choosePropertyBox");
 
-        chooseFloorBox = new ComboBox<>(CHOOSE_FLOOR, user.getFloors());
+        chooseFloorBox = new ComboBox<>(CHOOSE_FLOOR, user.getFloors());        //TODO findAllFloors raczej z warningiem że rezerwuje z innego piętra niż jego własny
         chooseFloorBox.setId("chooseFloorBox");
 
         chooseFloorBox.addValueChangeListener(e -> {
@@ -153,6 +153,7 @@ public class ReservationView extends VerticalLayout {
             }
 
             Reservation reservation = Reservation.builder()
+                    .creationTime(Instant.now())
                     .user(user)
                     .property(property)
                     .duration(duration)
@@ -244,7 +245,7 @@ public class ReservationView extends VerticalLayout {
 
         removeAllElementsFromAccordion();
         Floor choseFloor = chooseFloorBox.getValue();
-//        LocalDateTime startDayTime = findStartDateTime();   //TODO tDOESNT SHOW ANYTHING
+//        LocalDateTime startDayTime = findStartDateTime();   //TODO DOESNT SHOW ANYTHING
         LocalDateTime startDayTime = LocalDateTime.of(dateTimePicker.getValue().toLocalDate(), LocalTime.MIN);
         LocalDateTime dayTimeEnd = LocalDateTime.of(dateTimePicker.getValue().toLocalDate(), LocalTime.MAX);
         reservations = reservationRepository.findByPropertyOwnerAndStartBetweenOrderByStartAsc(choseFloor, startDayTime, dayTimeEnd); //TODO dodaj szukanie po property

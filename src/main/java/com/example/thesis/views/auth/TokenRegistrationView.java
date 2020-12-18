@@ -1,5 +1,6 @@
 package com.example.thesis.views.auth;
 
+import com.example.thesis.backend.floor.FloorRepository;
 import com.example.thesis.backend.security.auth.*;
 import com.example.thesis.backend.security.utilities.DefaultPrivilegeProvider;
 import com.vaadin.flow.component.UI;
@@ -22,6 +23,7 @@ import java.util.UUID;
 @CssImport("./styles/views/auth/token-registration-view.css")
 public class TokenRegistrationView extends VerticalLayout implements HasUrlParameter<String> {
     public static final String ROUTE = "/token-registration";
+    public static final String MAIN_FLOOR_NAME = "Main";
 
     @Autowired
     private final TokenRepository tokenRepository;
@@ -35,6 +37,9 @@ public class TokenRegistrationView extends VerticalLayout implements HasUrlParam
     @Autowired
     private final DefaultPrivilegeProvider defaultPrivilegeProvider;
 
+    @Autowired
+    private final FloorRepository floorRepository;
+
     private TextField firstName;
     private Label info;
     private TextField lastName;
@@ -45,12 +50,14 @@ public class TokenRegistrationView extends VerticalLayout implements HasUrlParam
     private PasswordField confirmPassword;
 
     private Token token;
+    private TextField floor;
 
-    public TokenRegistrationView(TokenRepository tokenRepository, PasswordEncoder passwordEncoder, UserRepository userRepository, DefaultPrivilegeProvider defaultPrivilegeProvider) {
+    public TokenRegistrationView(TokenRepository tokenRepository, PasswordEncoder passwordEncoder, UserRepository userRepository, DefaultPrivilegeProvider defaultPrivilegeProvider, FloorRepository floorRepository) {
         this.tokenRepository = tokenRepository;
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.defaultPrivilegeProvider = defaultPrivilegeProvider;
+        this.floorRepository = floorRepository;
 
         setId("token-registration");
 
@@ -71,15 +78,20 @@ public class TokenRegistrationView extends VerticalLayout implements HasUrlParam
         lastName = new TextField("Last name");
         username = new TextField("Username");
         email = new EmailField("Email");
+        email.setValue(token.getEmail());
+        email.setEnabled(false);
+        floor = new TextField("Floor");
+        floor.setValue(token.getMainFloor().getName());
+        floor.setEnabled(false);
         password = new PasswordField("Password");
         confirmPassword = new PasswordField("Confirm password");
 
         register = new Button("Register");
-        register.addClickListener(e -> {    //TODO check if email is the same in token as in EmailField
+        register.addClickListener(e -> {
             registerNewUser();
         });
 
-        add(info, firstName, lastName, email, username, password, confirmPassword, register);
+        add(info, firstName, lastName, email, floor, username, password, confirmPassword, register);
     }
 
     private void registerNewUser() {
@@ -96,9 +108,12 @@ public class TokenRegistrationView extends VerticalLayout implements HasUrlParam
                     true
             );
 
-            setRoleFromToken(user);
+            user.addFloor(floorRepository.findByName(MAIN_FLOOR_NAME)); //TODO przeniesc tą stałą do klasy konfiguracyjnej
+            user.addFloor(token.getMainFloor());
 
+            setRoleFromToken(user);
             userRepository.save(user);
+
             Notification.show("User registered successfully");
         } else {
             Notification.show("Passwords don't match!");

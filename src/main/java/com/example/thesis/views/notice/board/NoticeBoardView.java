@@ -5,12 +5,16 @@ import com.example.thesis.backend.notice.NoticeBoard;
 import com.example.thesis.backend.notice.NoticeBoardRepository;
 import com.example.thesis.views.main.MainView;
 import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
+import com.vaadin.flow.component.html.Paragraph;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.page.Page;
 import com.vaadin.flow.router.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+
+import static com.example.thesis.backend.security.SecurityUtils.userHasRole;
 
 
 @Route(value = NoticeBoardView.ROUTE, layout = MainView.class)
@@ -22,23 +26,38 @@ public class NoticeBoardView extends VerticalLayout implements HasUrlParameter<S
     public static final String ROUTE = "/notice-board";
 
     private NoticeBoardRepository noticeBoardRepository;
+    private NoticeBoard noticeBoard;
 
     @Autowired
     public NoticeBoardView(NoticeBoardRepository noticeBoardRepository) {
         setId("notice-board");
         this.noticeBoardRepository = noticeBoardRepository;
 
-//        Pageable firstPage = PageRequest.of(0, 2);  //TODO zrobić inny konstruktor dla kolejnych stron?
-        //np. NoticeBoardView(int page)
-
         this.setAlignItems(Alignment.CENTER);
     }
 
     @Override
     public void setParameter(BeforeEvent beforeEvent, @OptionalParameter String boardName) {
-        NoticeBoard noticeBoard = noticeBoardRepository.findByName(boardName.replace("%20", " "));
-
+        noticeBoard = noticeBoardRepository.findByName(boardName.replace("%20", " "));
         removeAll();
+
+        HorizontalLayout boardHeader = new HorizontalLayout();
+        boardHeader.setId("board-header");
+
+        Paragraph boardNameText = new Paragraph(noticeBoard.getName());
+        boardNameText.setId("board-name");
+
+        boardHeader.add(boardNameText);
+        boardHeader.expand(boardNameText);
+
+        if (userHasRole(AddNoticeView.PRIVILEGE)) {
+            Button addNotice = new Button("Add notice");
+            addNotice.setId("add-notice-button");
+            addNotice.addClickListener(e -> UI.getCurrent().navigate(AddNoticeView.class, boardName));
+            boardHeader.add(addNotice);
+        }
+
+        add(boardHeader);
 
 //        Page page = UI.getCurrent().getPage();        //Trying to get last page visited without sending it as a state every time
 //        page.executeJs("document.referrer").then(String.class, result -> {
@@ -47,7 +66,7 @@ public class NoticeBoardView extends VerticalLayout implements HasUrlParameter<S
 //            }
 //        });
 
-        for (Notice notice : noticeBoard.getNotices()) {
+        for (Notice notice : noticeBoard.getNotices()) {    //TODO add paging
             add(new NoticeComponent(notice));
         }
     }

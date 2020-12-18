@@ -2,6 +2,7 @@ package com.example.thesis.views.notice.board;
 
 import com.example.thesis.backend.ServiceResponse;
 import com.example.thesis.backend.notice.Notice;
+import com.example.thesis.backend.notice.NoticeBoard;
 import com.example.thesis.backend.notice.NoticeBoardRepository;
 import com.example.thesis.backend.notice.NoticeService;
 import com.example.thesis.views.main.MainView;
@@ -21,8 +22,7 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.upload.Upload;
 import com.vaadin.flow.component.upload.receivers.MemoryBuffer;
 import com.vaadin.flow.internal.MessageDigestUtil;
-import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.*;
 import com.vaadin.flow.server.StreamResource;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +44,7 @@ import java.util.Iterator;
 @PageTitle("Add notice")
 @CssImport("./styles/views/notice/board/add-notice.css")
 @Secured(AddNoticeView.PRIVILEGE)
-public class AddNoticeView extends VerticalLayout {
+public class AddNoticeView extends VerticalLayout implements HasUrlParameter<String> {
 
     public static final String PRIVILEGE = "ADD_NOTICE_VIEW_PRIVILEGE";
     public static final String ROUTE = "add-notice";
@@ -60,8 +60,11 @@ public class AddNoticeView extends VerticalLayout {
     @Autowired
     private NoticeService noticeService;
 
-    public AddNoticeView(NoticeBoardRepository noticeBoardRepository) {
+    private NoticeBoard noticeBoard;
+
+    public AddNoticeView(NoticeBoardRepository noticeBoardRepository, NoticeService noticeService) {
         this.noticeBoardRepository = noticeBoardRepository;
+        this.noticeService = noticeService;
         setId("add-notice");
 
         title = new TextField("Title");
@@ -88,12 +91,12 @@ public class AddNoticeView extends VerticalLayout {
         confirm = new Button("Confirm");
         confirm.addClickListener(e -> {
             ServiceResponse<Notice> response = noticeService.saveNotice(Notice.builder()
-                                                          .creationDate(Instant.now())
-                                                          .title(title.getValue())
-                                                          .body(body.getValue())
-                                                          .image(imageBytes).build());
+                            .creationDate(Instant.now())
+                            .title(title.getValue())
+                            .body(body.getValue())
+                            .image(imageBytes).build(),
+                    noticeBoard);
 
-//            NoticeBoard noticeBoard = noticeBoardRepository.      //TODO Add to specific notice board
 
             if (response.getStatus() == HttpStatus.OK) {
                 Notification.show("Upload has been successful");
@@ -107,6 +110,11 @@ public class AddNoticeView extends VerticalLayout {
 
         //TODO add logic to fields not being complete
         this.setAlignItems(Alignment.CENTER);
+    }
+
+    @Override
+    public void setParameter(BeforeEvent beforeEvent, @OptionalParameter String boardName) {
+        noticeBoard = noticeBoardRepository.findByName(boardName.replace("%20", " "));
     }
 
     private Component createComponent(String mimeType, String fileName,

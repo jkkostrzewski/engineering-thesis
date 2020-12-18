@@ -48,7 +48,6 @@ public class EmailService {
             return helper;
         });
         javaMailSender.send(mail);
-        Notification.show("Email has been sent");
     }
 
     public void sendRegistrationEmail(String email, Token token) {

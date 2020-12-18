@@ -11,10 +11,19 @@ import java.security.InvalidParameterException;
 public class NoticeService {
 
     private NoticeRepository noticeRepository;
+    private NoticeBoardRepository noticeBoardRepository;
 
     @Autowired
-    public NoticeService(NoticeRepository noticeRepository) {
+    public NoticeService(NoticeRepository noticeRepository, NoticeBoardRepository noticeBoardRepository) {
         this.noticeRepository = noticeRepository;
+        this.noticeBoardRepository = noticeBoardRepository;
+    }
+
+    public ServiceResponse<Notice> saveNotice(Notice notice, NoticeBoard noticeBoard) {
+        noticeRepository.save(notice);
+        noticeBoard.addNotice(notice);
+        noticeBoardRepository.save(noticeBoard);
+        return new ServiceResponse<>(HttpStatus.OK, noticeRepository.save(notice));
     }
 
     public ServiceResponse<Notice> saveNotice(Notice notice) {

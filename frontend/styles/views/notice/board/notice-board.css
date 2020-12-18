@@ -1,4 +1,15 @@
 notice-board,
 #notice-board {
-  position: relative;
+    position: relative;
+}
+
+#board-header {
+    background-color: #435162;
+}
+
+#board-name {
+    float:left;
+}
+
+#add-notice-button {
 }

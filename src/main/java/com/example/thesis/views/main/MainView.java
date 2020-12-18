@@ -131,10 +131,6 @@ public class MainView extends AppLayout {
             links.add(new RouterLink("Reservations", ReservationView.class));
         }
 
-        if (userHasRole(AddNoticeView.PRIVILEGE)) {
-            links.add(new RouterLink("Add notice", AddNoticeView.class));
-        }
-
         if (userHasRole(UserRegistrationView.PRIVILEGE)) {
             links.add(new RouterLink("Register new user", UserRegistrationView.class));
         }

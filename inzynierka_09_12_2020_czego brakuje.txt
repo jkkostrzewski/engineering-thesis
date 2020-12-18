@@ -21,13 +21,13 @@ Czego brakuje na dzień 9.12.2020
 DODATKOWE:
 - Usunięcie wyświetlania stack trace'a na samej stronie podczas jakiegokolwiek błędu
 - Linkowanie artkułów między boardami przez floorAdmina, admina
+- nazwa usera w artykule
+- usuwanie artykułów
 
 BUGI:
 - przejście z noticeboarda na inny noticeboard powoduje ze menu sie nie zamyka - wynika to z faktu ze nie wywoluje sie metoda afterNavigation
 	z MainView dlatego ze jest to ten sam widok
-- w oknie nowego usera nie widać MainBoarda - (nie ma przypisanego na starcie głównego piętra)
 - można dodać pusty komentarz do ogłoszenia
 - wielkości komponentów na telefonie są kompletnie nieprawidłowe
 - upload zdjęcia z telefonu nie działa (?)
 - dodanie nowego użytkownika nie działa z deploya (?) - gmail smtp blokuje heroku
--
