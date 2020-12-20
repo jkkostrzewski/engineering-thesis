@@ -39,7 +39,7 @@ public class NoticeBoard {
     }
 
     public void addNotice(Notice notice) {
-        notices.add(notice);
+        notices.add(0, notice);
     }
 }
 

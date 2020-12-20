@@ -10,9 +10,8 @@ import com.example.thesis.backend.notice.NoticeBoardRepository;
 import com.example.thesis.backend.security.SecurityUtils;
 import com.example.thesis.backend.security.auth.User;
 import com.example.thesis.backend.security.auth.UserRepository;
-import com.example.thesis.views.auth.UserRegistrationView;
-import com.example.thesis.views.floor.AddFloorView;
-import com.example.thesis.views.notice.board.AddNoticeView;
+import com.example.thesis.views.auth.UserManagementView;
+import com.example.thesis.views.floor.FloorManagementView;
 import com.example.thesis.views.notice.board.NoticeBoardView;
 import com.example.thesis.views.reservation.ReservationView;
 import com.vaadin.flow.component.Component;
@@ -131,12 +130,12 @@ public class MainView extends AppLayout {
             links.add(new RouterLink("Reservations", ReservationView.class));
         }
 
-        if (userHasRole(UserRegistrationView.PRIVILEGE)) {
-            links.add(new RouterLink("Register new user", UserRegistrationView.class));
+        if (userHasRole(UserManagementView.PRIVILEGE)) {
+            links.add(new RouterLink("User management", UserManagementView.class));
         }
 
-        if (userHasRole(AddFloorView.PRIVILEGE)) {
-            links.add(new RouterLink("Add new floor", AddFloorView.class));
+        if (userHasRole(FloorManagementView.PRIVILEGE)) {
+            links.add(new RouterLink("Floor management", FloorManagementView.class));
         }
 
         return links.stream().map(MainView::createTab).toArray(Tab[]::new);

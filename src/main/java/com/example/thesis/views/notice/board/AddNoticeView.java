@@ -6,11 +6,7 @@ import com.example.thesis.backend.notice.NoticeBoard;
 import com.example.thesis.backend.notice.NoticeBoardRepository;
 import com.example.thesis.backend.notice.NoticeService;
 import com.example.thesis.views.main.MainView;
-import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.HasComponents;
-import com.vaadin.flow.component.HtmlComponent;
-import com.vaadin.flow.component.Tag;
-import com.vaadin.flow.component.Text;
+import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Div;
@@ -90,6 +86,10 @@ public class AddNoticeView extends VerticalLayout implements HasUrlParameter<Str
 
         confirm = new Button("Confirm");
         confirm.addClickListener(e -> {
+            if (body.isEmpty()) {
+                Notification.show("You can't add a notice without content!");
+                return;
+            }
             ServiceResponse<Notice> response = noticeService.saveNotice(Notice.builder()
                             .creationDate(Instant.now())
                             .title(title.getValue())
@@ -100,6 +100,7 @@ public class AddNoticeView extends VerticalLayout implements HasUrlParameter<Str
 
             if (response.getStatus() == HttpStatus.OK) {
                 Notification.show("Upload has been successful");
+                UI.getCurrent().navigate(NoticeBoardView.class, noticeBoard.getName());
             } else {
                 Notification.show("Something went wrong with the upload. Try again.");
             }

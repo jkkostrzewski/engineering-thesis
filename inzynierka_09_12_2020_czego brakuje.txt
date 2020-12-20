@@ -9,7 +9,7 @@ Czego brakuje na dzień 9.12.2020
 - panel administracyjny administratora całego akademika - WIDOK DODAWANIA PROPERTY DLA MAINA
 - panel administracyjny piętrowego - WIDOK DODAWANIA PROPERTY DLA PIĘTRA
 
-- dynamiczne przypisywanie privileges dla użytkowników
+- dynamiczne przypisywanie privileges dla użytkowników - DONE
 
 - TŁUMACZENIE ELEMENTÓW NA POLSKI
 
@@ -23,11 +23,12 @@ DODATKOWE:
 - Linkowanie artkułów między boardami przez floorAdmina, admina
 - nazwa usera w artykule
 - usuwanie artykułów
+- Websockety w komentarzach
+- brak przypomnienia hasła w oknie logowania
 
 BUGI:
 - przejście z noticeboarda na inny noticeboard powoduje ze menu sie nie zamyka - wynika to z faktu ze nie wywoluje sie metoda afterNavigation
 	z MainView dlatego ze jest to ten sam widok
-- można dodać pusty komentarz do ogłoszenia
 - wielkości komponentów na telefonie są kompletnie nieprawidłowe
 - upload zdjęcia z telefonu nie działa (?)
 - dodanie nowego użytkownika nie działa z deploya (?) - gmail smtp blokuje heroku

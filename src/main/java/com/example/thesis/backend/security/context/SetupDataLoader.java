@@ -74,7 +74,7 @@ public class SetupDataLoader implements
         admin.setAccountNonLocked(true);
         admin.setCredentialsNonExpired(true);
         admin.setEnabled(true);
-        Set<Role> roles = new HashSet<>();
+        List<Role> roles = new ArrayList<>();
         roles.add(privilegeProvider.admin("admin"));
         roles.add(privilegeProvider.user("admin"));
         admin.setRoles(roles);
@@ -91,7 +91,7 @@ public class SetupDataLoader implements
         user.setAccountNonExpired(true);
         user.setCredentialsNonExpired(true);
         user.setEnabled(true);
-        Set<Role> roles2 = new HashSet<>();
+        List<Role> roles2 = new ArrayList<>();
         roles2.add(privilegeProvider.user("user"));
         user.setRoles(roles2);
         userRepository.save(user);
