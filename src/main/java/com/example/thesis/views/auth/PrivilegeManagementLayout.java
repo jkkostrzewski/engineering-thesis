@@ -62,6 +62,11 @@ public class PrivilegeManagementLayout extends FormLayout {
     }
 
     private void changeUserPrivileges() {
+        if (userIsAdmin()) {
+            Notification.show("You can't change admin privileges!");
+            return;
+        }
+
         List<Privilege> selected = new ArrayList<>(privileges.getSelectedItems());
 //        user.getRoles().forEach(roleRepository::delete); //TODO delete previous role if not used
         Role newRole = updateRole(user.getEmail(), selected);
@@ -70,6 +75,10 @@ public class PrivilegeManagementLayout extends FormLayout {
         userRepository.save(user);
 
         Notification.show("User privileges changed successfully");
+    }
+
+    private boolean userIsAdmin() {
+        return user.getUsername().equalsIgnoreCase("admin");
     }
 
     private List<Privilege> getAlreadyUsedPrivileges() {

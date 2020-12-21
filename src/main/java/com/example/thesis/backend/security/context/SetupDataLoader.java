@@ -197,6 +197,46 @@ public class SetupDataLoader implements
 
         propertyRepository.save(property);
         propertyRepository.save(property2);
+        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
+        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
+        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
+        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
+        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
+        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
+        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
+        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
+        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
+        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
+        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
+        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
+        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
+        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
+        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
+        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
+        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
+        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
+        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
+        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
+        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
+        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
+        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
+        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
+        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
+        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
+        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
+        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
+        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
+        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
+        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
+
+        propertyRepository.save(Property.builder().name("Silownia").owner(main).build());
+        propertyRepository.save(Property.builder().name("Silownia").owner(main).build());
+        propertyRepository.save(Property.builder().name("Silownia").owner(main).build());
+        propertyRepository.save(Property.builder().name("Silownia").owner(main).build());
+        propertyRepository.save(Property.builder().name("Silownia").owner(main).build());
+        propertyRepository.save(Property.builder().name("Silownia").owner(main).build());
+        propertyRepository.save(Property.builder().name("Silownia").owner(main).build());
+        propertyRepository.save(Property.builder().name("Silownia").owner(main).build());
 
         Reservation reservation = Reservation.builder().start(LocalDateTime.now()).duration(Duration.ofHours(1)).property(property).user(user).creationTime(Instant.now()).build();
         Reservation reservation3 = Reservation.builder().start(LocalDateTime.now().minusHours(3)).duration(Duration.ofHours(1)).property(property).user(user).creationTime(Instant.now()).build();

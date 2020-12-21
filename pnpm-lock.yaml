@@ -1,6 +1,9 @@
 dependencies:
   '@polymer/iron-icon': 3.0.1
+  '@polymer/iron-iconset-svg': 3.0.1
   '@polymer/iron-list': 3.1.0
+  '@polymer/paper-button': 3.0.1
+  '@polymer/paper-icon-button': 3.0.2
   '@polymer/polymer': 3.2.0
   '@vaadin/flow-frontend': 'link:target/flow-frontend'
   '@vaadin/form': 'link:target/flow-frontend/form'
@@ -45,6 +48,7 @@ dependencies:
   '@vaadin/vaadin-time-picker': 2.3.0
   '@vaadin/vaadin-upload': 4.4.1
   lit-element: 2.3.1
+  lit-html: 1.2.1
   open: 7.2.1
 devDependencies:
   '@types/validator': 13.1.0
@@ -53,7 +57,6 @@ devDependencies:
   compression-webpack-plugin: 4.0.1_webpack@4.42.0
   copy-webpack-plugin: 5.1.2_webpack@4.42.0
   html-webpack-plugin: 3.2.0_webpack@4.42.0
-  lit-html: 1.2.1
   progress-webpack-plugin: 0.0.24
   raw-loader: 4.0.0_webpack@4.42.0
   script-ext-html-webpack-plugin: 2.1.4_f9f57bd8a148b6edc3192202e3fa66cb
@@ -930,6 +933,10 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-Uv6h1sT+0DrblvIrolFtbvM1FgWm+/sy4B3pvLp67Zys+thcukzS5ekn7HsZFGpWP4Q3fYJCljbWQE/XivMRLw==
+  /@polymer/font-roboto/3.0.2:
+    dev: false
+    resolution:
+      integrity: sha512-tx5TauYSmzsIvmSqepUPDYbs4/Ejz2XbZ1IkD7JEGqkdNUJlh+9KU85G56Tfdk/xjEZ8zorFfN09OSwiMrIQWA==
   /@polymer/iron-a11y-announcer/3.0.2:
     dependencies:
       '@polymer/polymer': 3.2.0
@@ -942,6 +949,21 @@ packages:
     dev: false
     resolution:
       integrity: sha512-lnrjKq3ysbBPT/74l0Fj0U9H9C35Tpw2C/tpJ8a+5g8Y3YJs1WSZYnEl1yOkw6sEyaxOq/1DkzH0+60gGu5/PQ==
+  /@polymer/iron-behaviors/3.0.1:
+    dependencies:
+      '@polymer/iron-a11y-keys-behavior': 3.0.1
+      '@polymer/polymer': 3.2.0
+    dev: false
+    resolution:
+      integrity: sha512-IMEwcv1lhf1HSQxuyWOUIL0lOBwmeaoSTpgCJeP9IBYnuB1SPQngmfRuHKgK6/m9LQ9F9miC7p3HeQQUdKAE0w==
+  /@polymer/iron-checked-element-behavior/3.0.1:
+    dependencies:
+      '@polymer/iron-form-element-behavior': 3.0.1
+      '@polymer/iron-validatable-behavior': 3.0.1
+      '@polymer/polymer': 3.2.0
+    dev: false
+    resolution:
+      integrity: sha512-aDr0cbCNVq49q+pOqa6CZutFh+wWpwPMLpEth9swx+GkAj+gCURhuQkaUYhIo5f2egDbEioR1aeHMnPlU9dQZA==
   /@polymer/iron-fit-behavior/3.0.2:
     dependencies:
       '@polymer/polymer': 3.2.0
@@ -954,6 +976,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-7gB869czArF+HZcPTVSgvA7tXYFze9EKckvM95NB7SqYF+NnsQyhoXgKnpFwGyo95lUjUW9TFDLUwDXnCYFtkw==
+  /@polymer/iron-form-element-behavior/3.0.1:
+    dependencies:
+      '@polymer/polymer': 3.2.0
+    dev: false
+    resolution:
+      integrity: sha512-G/e2KXyL5AY7mMjmomHkGpgS0uAf4ovNpKhkuUTRnMuMJuf589bKqE85KN4ovE1Tzhv2hJoh/igyD6ekHiYU1A==
   /@polymer/iron-icon/3.0.1:
     dependencies:
       '@polymer/iron-flex-layout': 3.0.1
@@ -1011,6 +1039,55 @@ packages:
     dev: false
     resolution:
       integrity: sha512-xg1WanG25BIkQE8rhuReqY9zx1K5M7F+YAIYpswEp5eyDIaZ1Y3vUmVeQ3KG+hiSugzI1M752azXN7kvyhOBcQ==
+  /@polymer/iron-validatable-behavior/3.0.1:
+    dependencies:
+      '@polymer/iron-meta': 3.0.1
+      '@polymer/polymer': 3.2.0
+    dev: false
+    resolution:
+      integrity: sha512-wwpYh6wOa4fNI+jH5EYKC7TVPYQ2OfgQqocWat7GsNWcsblKYhLYbwsvEY5nO0n2xKqNfZzDLrUom5INJN7msQ==
+  /@polymer/paper-behaviors/3.0.1:
+    dependencies:
+      '@polymer/iron-behaviors': 3.0.1
+      '@polymer/iron-checked-element-behavior': 3.0.1
+      '@polymer/paper-ripple': 3.0.2
+      '@polymer/polymer': 3.2.0
+    dev: false
+    resolution:
+      integrity: sha512-6knhj69fPJejv8qR0kCSUY+Q0XjaUf0OSnkjRjmTJPAwSrRYtgqE+l6P1FfA+py1X/cUjgne9EF5rMZAKJIg1g==
+  /@polymer/paper-button/3.0.1:
+    dependencies:
+      '@polymer/iron-flex-layout': 3.0.1
+      '@polymer/paper-behaviors': 3.0.1
+      '@polymer/paper-styles': 3.0.1
+      '@polymer/polymer': 3.2.0
+    dev: false
+    resolution:
+      integrity: sha512-JRNBc+Oj9EWnmyLr7FcCr8T1KAnEHPh6mosln9BUdkM+qYaYsudSICh3cjTIbnj6AuF5OJidoLkM1dlyj0j6Zg==
+  /@polymer/paper-icon-button/3.0.2:
+    dependencies:
+      '@polymer/iron-icon': 3.0.1
+      '@polymer/paper-behaviors': 3.0.1
+      '@polymer/paper-styles': 3.0.1
+      '@polymer/polymer': 3.2.0
+    dev: false
+    resolution:
+      integrity: sha512-kOdxQgnKL097bggFF6PWvsBYuWg+MCcoHoTHX6bh/MuZoWFZNjrFntFqwuB4oEbpjCpfm4moA33muPJFj7CihQ==
+  /@polymer/paper-ripple/3.0.2:
+    dependencies:
+      '@polymer/iron-a11y-keys-behavior': 3.0.1
+      '@polymer/polymer': 3.2.0
+    dev: false
+    resolution:
+      integrity: sha512-DnLNvYIMsiayeICroYxx6Q6Hg1cUU8HN2sbutXazlemAlGqdq80qz3TIaVdbpbt/pvjcFGX2HtntMlPstCge8Q==
+  /@polymer/paper-styles/3.0.1:
+    dependencies:
+      '@polymer/font-roboto': 3.0.2
+      '@polymer/iron-flex-layout': 3.0.1
+      '@polymer/polymer': 3.2.0
+    dev: false
+    resolution:
+      integrity: sha512-y6hmObLqlCx602TQiSBKHqjwkE7xmDiFkoxdYGaNjtv4xcysOTdVJsDR/R9UHwIaxJ7gHlthMSykir1nv78++g==
   /@polymer/polymer/3.2.0:
     dependencies:
       '@webcomponents/shadycss': 1.9.4
@@ -3443,6 +3520,7 @@ packages:
     resolution:
       integrity: sha1-FQStJSMVjKpA20onh8sBQRmU6k8=
   /fsevents/2.1.3:
+    deprecated: Please update to v 2.2.x
     dev: true
     engines:
       node: ^8.16.0 || ^10.6.0 || >=11.0.0
@@ -4274,6 +4352,7 @@ packages:
     resolution:
       integrity: sha512-tOcUAmeO3BzwiQ7FGWdsshNvC0HVHcTFYw/TLIImmKwXYoV0E7zCBASa8IJ7DiP4cen/Yoj454gS0qqTnIGsFA==
   /lit-html/1.2.1:
+    dev: false
     resolution:
       integrity: sha512-GSJHHXMGLZDzTRq59IUfL9FCdAlGfqNp/dEa7k7aBaaWD+JKaCjsAk9KYm2V12ItonVaYx2dprN66Zdm1AuBTQ==
   /loader-runner/2.4.0:
@@ -6727,7 +6806,10 @@ packages:
       integrity: sha512-AX3Zw5iPruN5ie6xGRIDgqkT+ZhnRlZMLMHAs8tg7nRruy2Nb+i5o9bwghAogtM08q1dpr2LVoS8KSTMYpWXUw==
 specifiers:
   '@polymer/iron-icon': 3.0.1
+  '@polymer/iron-iconset-svg': 3.0.1
   '@polymer/iron-list': 3.1.0
+  '@polymer/paper-button': ^3.0.1
+  '@polymer/paper-icon-button': ^3.0.2
   '@polymer/polymer': 3.2.0
   '@types/validator': 13.1.0
   '@vaadin/flow-frontend': ./target/flow-frontend
@@ -6777,8 +6859,8 @@ specifiers:
   compression-webpack-plugin: 4.0.1
   copy-webpack-plugin: 5.1.2
   html-webpack-plugin: 3.2.0
-  lit-element: 2.3.1
-  lit-html: 1.2.1
+  lit-element: ^2.2.1
+  lit-html: ^1.1.2
   open: ^7.2.1
   progress-webpack-plugin: 0.0.24
   raw-loader: 4.0.0

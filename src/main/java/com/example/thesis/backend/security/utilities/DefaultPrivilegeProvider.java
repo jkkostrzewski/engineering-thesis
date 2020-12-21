@@ -9,6 +9,7 @@ import com.example.thesis.views.floor.FloorManagementView;
 import com.example.thesis.views.notice.board.AddNoticeView;
 import com.example.thesis.views.notice.board.NoticeBoardView;
 import com.example.thesis.views.notice.board.NoticeView;
+import com.example.thesis.views.property.PropertyManagementView;
 import com.example.thesis.views.reservation.ReservationView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -29,8 +30,9 @@ public class DefaultPrivilegeProvider {
     private final Privilege noticeBoardView;
     private final Privilege addNoticeView;
     private final Privilege reservationView;
-    private final Privilege userRegistrationView;
-    private final Privilege addFloorView;
+    private final Privilege userManagementView;
+    private final Privilege floorManagementView;
+    private final Privilege propertyManagementView;
 
     public DefaultPrivilegeProvider(PrivilegeRepository privilegeRepository,
                                     RoleRepository roleRepository) {
@@ -41,8 +43,9 @@ public class DefaultPrivilegeProvider {
         noticeBoardView = createPrivilegeIfNotFound(NoticeBoardView.PRIVILEGE);
         addNoticeView = createPrivilegeIfNotFound(AddNoticeView.PRIVILEGE);
         reservationView = createPrivilegeIfNotFound(ReservationView.PRIVILEGE);
-        userRegistrationView = createPrivilegeIfNotFound(UserManagementView.PRIVILEGE);
-        addFloorView = createPrivilegeIfNotFound(FloorManagementView.PRIVILEGE);
+        userManagementView = createPrivilegeIfNotFound(UserManagementView.PRIVILEGE);
+        floorManagementView = createPrivilegeIfNotFound(FloorManagementView.PRIVILEGE);
+        propertyManagementView = createPrivilegeIfNotFound(PropertyManagementView.PRIVILEGE);
     }
 
     public Role user(String username) {
@@ -57,7 +60,7 @@ public class DefaultPrivilegeProvider {
 
     public Role admin(String username) {
         List<Privilege> privileges = Arrays.asList(noticeBoardView, noticeView, reservationView, addNoticeView,
-                userRegistrationView, addFloorView);
+                userManagementView, floorManagementView, propertyManagementView);
         return createRoleIfNotFound(username, privileges);
     }
 

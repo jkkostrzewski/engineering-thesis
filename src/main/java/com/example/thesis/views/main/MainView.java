@@ -13,6 +13,7 @@ import com.example.thesis.backend.security.auth.UserRepository;
 import com.example.thesis.views.auth.UserManagementView;
 import com.example.thesis.views.floor.FloorManagementView;
 import com.example.thesis.views.notice.board.NoticeBoardView;
+import com.example.thesis.views.property.PropertyManagementView;
 import com.example.thesis.views.reservation.ReservationView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.applayout.AppLayout;
@@ -136,6 +137,10 @@ public class MainView extends AppLayout {
 
         if (userHasRole(FloorManagementView.PRIVILEGE)) {
             links.add(new RouterLink("Floor management", FloorManagementView.class));
+        }
+
+        if (userHasRole(PropertyManagementView.PRIVILEGE)) {
+            links.add(new RouterLink("Property management", PropertyManagementView.class));
         }
 
         return links.stream().map(MainView::createTab).toArray(Tab[]::new);

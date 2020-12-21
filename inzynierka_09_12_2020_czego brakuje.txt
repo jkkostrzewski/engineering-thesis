@@ -22,15 +22,17 @@ Czego brakuje na dzień 9.12.2020
 - Opcja edycji rezerwacji i ogłoszeń dla właściciela danego elementu oraz adminów/floorAdminów
 
 DODATKOWE:
-- usuwanie artykułów
+- usuwanie artykułów wszystkich dla admina (userHasRole(admin)) / z piętra dla floorAdmina / pojedynczych dla usera
 - brak przypomnienia hasła w oknie logowania
 - nazwa usera w artykule
 - Websockety w komentarzach
 
 Low priority:
+- usuwanie dowolnej rezerwacji przez admina wszędzie i przez floorAdmina na konkretnym piętrze
 - możliwe godziny wynajęcia w Property
 - Linkowanie artkułów między boardami przez floorAdmina, admina
 - Usunięcie wyświetlania stack trace'a na samej stronie podczas jakiegokolwiek błędu
+- przekazywanie do child componentów samego widoku zamiast repozytoriów?
 
 
 BUGI:
