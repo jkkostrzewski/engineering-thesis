@@ -5,26 +5,33 @@ Czego brakuje na dzień 9.12.2020
 - Poprawne dodanie komentarzy przy ogłoszeniach - DONE
 - Tworzenie zakładek dla poszczególnych pięter tylko dla konkretnych użytkowników - DONE
 - Ogłoszenia piętra - DONE
-
-- panel administracyjny administratora całego akademika - WIDOK DODAWANIA PROPERTY DLA MAINA
-- panel administracyjny piętrowego - WIDOK DODAWANIA PROPERTY DLA PIĘTRA
-
 - dynamiczne przypisywanie privileges dla użytkowników - DONE
 
-- TŁUMACZENIE ELEMENTÓW NA POLSKI
+- panel administracyjny administratora całego akademika -
+    WIDOK DODAWANIA PROPERTY DLA MAINA / DODAWANIA PIETRA / PRZYPISYWANIE UZYTKOWNIKA DO PIETRA
+- panel administracyjny piętrowego -
+    WIDOK DODAWANIA PROPERTY DLA PIĘTRA
 
+
+
+
+- TŁUMACZENIE ELEMENTÓW NA POLSKI
 - Wszelakie drobne poprawki TODO we wszystkich klasach
 - Optymalizacja i refactoring!
 - Zweryfikowanie kolorystyki i ogólne ułożenie elementów
 - Opcja edycji rezerwacji i ogłoszeń dla właściciela danego elementu oraz adminów/floorAdminów
 
 DODATKOWE:
-- Usunięcie wyświetlania stack trace'a na samej stronie podczas jakiegokolwiek błędu
-- Linkowanie artkułów między boardami przez floorAdmina, admina
-- nazwa usera w artykule
 - usuwanie artykułów
-- Websockety w komentarzach
 - brak przypomnienia hasła w oknie logowania
+- nazwa usera w artykule
+- Websockety w komentarzach
+
+Low priority:
+- możliwe godziny wynajęcia w Property
+- Linkowanie artkułów między boardami przez floorAdmina, admina
+- Usunięcie wyświetlania stack trace'a na samej stronie podczas jakiegokolwiek błędu
+
 
 BUGI:
 - przejście z noticeboarda na inny noticeboard powoduje ze menu sie nie zamyka - wynika to z faktu ze nie wywoluje sie metoda afterNavigation

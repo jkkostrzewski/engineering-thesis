@@ -1,16 +1,13 @@
 package com.example.thesis.views.floor;
 
-import com.example.thesis.backend.floor.Floor;
 import com.example.thesis.backend.floor.FloorRepository;
-import com.example.thesis.backend.notice.NoticeBoard;
 import com.example.thesis.backend.notice.NoticeBoardRepository;
+import com.example.thesis.backend.reservation.PropertyRepository;
+import com.example.thesis.backend.security.auth.UserRepository;
 import com.example.thesis.views.main.MainView;
-import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.accordion.Accordion;
 import com.vaadin.flow.component.dependency.CssImport;
-import com.vaadin.flow.component.html.Label;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,36 +28,31 @@ public class FloorManagementView extends VerticalLayout {
     @Autowired
     private final NoticeBoardRepository noticeBoardRepository;
 
-    private final Button confirm;
-    private final TextField floorName;
-    private final Label label;
+    @Autowired
+    private final UserRepository userRepository;
 
-    private Floor floor;
+    @Autowired
+    private final PropertyRepository propertyRepository;
 
-    public FloorManagementView(FloorRepository floorRepository, NoticeBoardRepository noticeBoardRepository) {
+    public FloorManagementView(FloorRepository floorRepository, NoticeBoardRepository noticeBoardRepository,
+                               UserRepository userRepository, PropertyRepository propertyRepository) {
         this.floorRepository = floorRepository;
         this.noticeBoardRepository = noticeBoardRepository;
+        this.userRepository = userRepository;
+        this.propertyRepository = propertyRepository;
 
-        label = new Label("Create floor");
-        floorName = new TextField("Enter floor name");
-        confirm = new Button("Confirm");
-        confirm.addClickListener(e -> {
-            createFloor();
-            createNoticeBoard();
-            Notification.show("Floor created successfully"); //TODO refresh tab menu on left
-        });
+        Accordion accordion = new Accordion();
 
-        add(label, floorName, confirm);
-        this.setAlignItems(Alignment.CENTER);
+        FloorCreationLayout floorCreationLayout = new FloorCreationLayout(floorRepository, noticeBoardRepository, userRepository);
+        accordion.add("Floor creation", floorCreationLayout);
+
+        PropertyCreationLayout propertyCreationLayout = new PropertyCreationLayout(propertyRepository, floorRepository);
+        accordion.add("Property creation", propertyCreationLayout);
+
+        add(accordion);
+
+//        this.setAlignItems(Alignment.CENTER);
     }
 
-    private void createNoticeBoard() {
-        NoticeBoard board = new NoticeBoard(floorName.getValue(), floor);
-        noticeBoardRepository.save(board);
-    }
 
-    private void createFloor() {
-        floor = Floor.builder().name(floorName.getValue()).build();
-        floorRepository.save(floor);
-    }
 }

@@ -9,5 +9,5 @@ import java.util.Collection;
 
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
-    Collection<Reservation> findByPropertyOwnerAndStartBetweenOrderByStartAsc(Floor owner, LocalDateTime start, LocalDateTime end);
+    Collection<Reservation> findByPropertyOwnerAndPropertyAndStartBetweenOrderByStartAsc(Floor owner, Property property, LocalDateTime start, LocalDateTime end);
 }

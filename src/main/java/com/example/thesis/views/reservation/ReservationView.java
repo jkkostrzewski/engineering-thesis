@@ -248,7 +248,7 @@ public class ReservationView extends VerticalLayout {
 //        LocalDateTime startDayTime = findStartDateTime();   //TODO DOESNT SHOW ANYTHING
         LocalDateTime startDayTime = LocalDateTime.of(dateTimePicker.getValue().toLocalDate(), LocalTime.MIN);
         LocalDateTime dayTimeEnd = LocalDateTime.of(dateTimePicker.getValue().toLocalDate(), LocalTime.MAX);
-        reservations = reservationRepository.findByPropertyOwnerAndStartBetweenOrderByStartAsc(choseFloor, startDayTime, dayTimeEnd); //TODO dodaj szukanie po property
+        reservations = reservationRepository.findByPropertyOwnerAndPropertyAndStartBetweenOrderByStartAsc(choseFloor, choosePropertyBox.getValue(), startDayTime, dayTimeEnd); //TODO dodaj szukanie po property
         for (Reservation reservation : reservations) {
             AccordionPanel panel = createAccordionPanelForReservation(reservation);
             this.reservationPanels.add(panel);
