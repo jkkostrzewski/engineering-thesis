@@ -50,3 +50,12 @@ buildNumber.properties
 *.iml
 
 node_modules/
+
+package-lock.json
+webpack.generated.js
+webpack.config.js
+pnpm-lock.yaml
+pnpmfile.js
+types.d.ts
+tsconfig.json
+package.json
