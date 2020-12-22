@@ -1,10 +1,14 @@
 package com.example.thesis.views.property;
 
+import com.example.thesis.backend.floor.Floor;
 import com.example.thesis.backend.floor.FloorRepository;
 import com.example.thesis.backend.reservation.Property;
 import com.example.thesis.backend.reservation.PropertyRepository;
+import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.confirmdialog.ConfirmDialog;
+import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.contextmenu.GridContextMenu;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
@@ -30,6 +34,9 @@ public class PropertyGridLayout extends VerticalLayout {
 
     @Id("grid")
     private final PaginatedGrid<Property> grid;
+    private Property clicked;
+    private TextField propertyName;
+    private ComboBox<Floor> propertyOwner;
 
     public PropertyGridLayout(PropertyRepository propertyRepository, FloorRepository floorRepository) {
         this.propertyRepository = propertyRepository;
@@ -58,26 +65,24 @@ public class PropertyGridLayout extends VerticalLayout {
         filters.add(propertyName, floorName);
         add(filters);
 
-        ConfirmDialog dialog = new ConfirmDialog();
-        dialog.setConfirmButtonTheme("error primary");
-        dialog.setHeader("Confirm delete");
-        dialog.setText("Are you sure you want to delete the item?");
+        ConfirmDialog removeDialog = constructRemoveDialog();
+        add(removeDialog);
 
-        dialog.setCancelButton("Cancel", this::onCancel);
-        add(dialog);
+        Dialog editDialog = constructEditDialog();
+        add(editDialog);
 
         GridContextMenu<Property> contextMenu = new GridContextMenu<>(grid);
         contextMenu.addItem("Remove", event -> {
             event.getItem().ifPresent(property -> {
-                Button saveButton = new Button("Delete", VaadinIcon.DEL.create());
-                saveButton.addClickListener(saveButtonEvent -> {
-                    removeProperty(property);
-                    dialog.close();
-                });
-                saveButton.getElement().setAttribute("theme", "primary");
-                dialog.setConfirmButton(saveButton);
-
-                dialog.open();
+                clicked = property;
+                removeDialog.open();
+            });
+        });
+        contextMenu.addItem("Edit", event -> {
+            event.getItem().ifPresent(property -> {
+                clicked = property;
+                setValuesForEditDialog();
+                editDialog.open();
             });
         });
 
@@ -85,6 +90,63 @@ public class PropertyGridLayout extends VerticalLayout {
 
         add(grid);
 
+    }
+
+    private Dialog constructEditDialog() {
+        Dialog editDialog = new Dialog();
+
+        VerticalLayout layout = new VerticalLayout();
+
+        Text dialogName = new Text("Edit property");
+
+        propertyName = new TextField("Name");
+
+        propertyOwner = new ComboBox<>();
+        propertyOwner.setItems(floorRepository.findAll());
+
+        HorizontalLayout buttons = new HorizontalLayout();
+
+        Button cancel = new Button("Cancel");
+        cancel.addClickListener(e -> editDialog.close());
+
+        Button confirm = new Button("Confirm");
+        confirm.addClickListener(e -> {
+            clicked.setName(propertyName.getValue());
+            clicked.setOwner(propertyOwner.getValue());
+            propertyRepository.save(clicked);
+            propertyProvider.refreshAll();
+            editDialog.close();
+        });
+
+        layout.add(dialogName, propertyName, propertyOwner);
+        buttons.add(cancel, confirm);
+        layout.add(buttons);
+
+        editDialog.add(layout);
+        return editDialog;
+    }
+
+    private void setValuesForEditDialog() {
+        propertyName.setValue(clicked.getName());
+        propertyOwner.setValue(clicked.getOwner());
+    }
+
+    private ConfirmDialog constructRemoveDialog() {
+        ConfirmDialog removeDialog = new ConfirmDialog();
+        removeDialog.setConfirmButtonTheme("error primary");
+        removeDialog.setHeader("Confirm delete");
+        removeDialog.setText("Are you sure you want to delete the item?");
+
+        Button saveButton = new Button("Delete", VaadinIcon.DEL.create());
+        saveButton.addClickListener(saveButtonEvent -> {
+            removeProperty(clicked);
+            removeDialog.close();
+        });
+        saveButton.getElement().setAttribute("theme", "primary");
+        removeDialog.setConfirmButton(saveButton);
+
+        removeDialog.setCancelButton("Cancel", this::onCancel);
+        return removeDialog;
     }
 
     public void refreshGrid() {
