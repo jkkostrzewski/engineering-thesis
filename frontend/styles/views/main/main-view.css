@@ -5,6 +5,9 @@
 }
 #header user-info {
 }
+#logout-button {
+    /*box-shadow: 0 0 3px #ddd;*/
+}
 #header span img {
   border-radius: 50%;
   height: var(--material-size-s);
@@ -28,12 +31,14 @@
   padding: var(--material-space-s) var(--material-space-m);
 }
 #logo img {
-  height: calc(var(--material-h1-font-size) * 1.5);
+  height: calc(var(--material-h1-font-size));
+  padding-left: 1rem;
 }
 #logo h1 {
   font-size: var(--material-font-size-xl);
   font-weight: 600;
   margin: 0 var(--material-space-s);
+  padding-left: 1rem;
 }
 
 vaadin-tab {

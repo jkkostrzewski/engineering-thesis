@@ -25,18 +25,18 @@ $_documentContainer.innerHTML = `
     <style>
       :host(:not([dir='rtl']):not([overlay])) [part='drawer'] {
         border-right: none;
-        box-shadow: var(--material-box-shadow-s);
-        background-color: var(--material-base-color);
+        box-shadow: var(--material-secondary-background-color);
+        background-color: var(--material-background-color);
         z-index: 1;
       }
-      :host([dir='rtl']:not([overlay])) [part='drawer'] {
+      :host([dir='rtl']:not([overlay])) [part='drawer'] { //phone mode
         border-left: none;
-        box-shadow: var(--material-box-shadow-s);
-        background-color: var(--material-base-color);
+        box-shadow: var(--material-secondary-background-color);
+        background-color: var(--material-background-color);
         z-index: 1;
       }
       [part='navbar'] {
-        box-shadow: var(--material-box-shadow-s);
+        box-shadow: var(--material-secondary-background-color);
       }
       :host([overlay]) [part="backdrop"] {
         z-index: 0;

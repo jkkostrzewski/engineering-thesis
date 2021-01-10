@@ -71,7 +71,6 @@ public class MainView extends AppLayout {
     private Component createHeaderContent() {
         HorizontalLayout layout = new HorizontalLayout();
         layout.setId("header");
-        layout.getThemeList().set("dark", true);
         layout.setWidthFull();
         layout.setSpacing(false);
         layout.setAlignItems(FlexComponent.Alignment.CENTER);
@@ -79,13 +78,17 @@ public class MainView extends AppLayout {
         viewTitle = new H1();
         viewTitle.setId("view-title");
         layout.add(viewTitle);
+
         HorizontalLayout userInfo = new HorizontalLayout();
         userInfo.setId("user-info");
+
         if (SecurityUtils.isUserLoggedIn()) {
-            userInfo.add(new Button("Logout", event -> {
+            Button logout = new Button("Logout", event -> {
                 getUI().get().getPage().executeJs("window.location.href='logout'");
                 getUI().get().getSession().close();
-            }));
+            });
+            logout.setId("logout-button");
+            userInfo.add(logout);
         }
         userInfo.add(new Paragraph(SecurityContextHolder.getContext().getAuthentication().getName()));
 //        userInfo.add(new Image("images/user.svg", "Avatar"));
@@ -103,7 +106,7 @@ public class MainView extends AppLayout {
         HorizontalLayout logoLayout = new HorizontalLayout();
         logoLayout.setId("logo");
         logoLayout.setAlignItems(FlexComponent.Alignment.CENTER);
-        logoLayout.add(new Image("images/logo.png", "Dorm coordinator logo"));
+        logoLayout.add(new Image("images/logo.jpg", "Dorm coordinator logo"));
         logoLayout.add(new H1("Dorm coordinator"));
         layout.add(logoLayout, menu);
         return layout;
