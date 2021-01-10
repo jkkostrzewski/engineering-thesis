@@ -1,15 +1,14 @@
 package com.example.thesis.views.reservation;
 
 import com.example.thesis.backend.floor.Floor;
-import com.example.thesis.backend.floor.FloorRepository;
-import com.example.thesis.backend.reservation.Property;
-import com.example.thesis.backend.reservation.PropertyRepository;
-import com.example.thesis.backend.reservation.Reservation;
-import com.example.thesis.backend.reservation.ReservationRepository;
+import com.example.thesis.backend.reservation.*;
 import com.example.thesis.backend.security.SecurityUtils;
 import com.example.thesis.backend.security.auth.User;
 import com.example.thesis.backend.security.auth.UserRepository;
+import com.example.thesis.backend.security.auth.UserService;
 import com.example.thesis.views.main.MainView;
+import com.example.thesis.views.utilities.DateUtility;
+import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.accordion.Accordion;
 import com.vaadin.flow.component.accordion.AccordionPanel;
 import com.vaadin.flow.component.button.Button;
@@ -22,6 +21,7 @@ import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.polymertemplate.Id;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +29,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 
 import java.time.*;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
@@ -38,6 +37,7 @@ import java.util.*;
 @CssImport("./styles/views/reservations/reservation-view.css")
 @Secured(ReservationView.PRIVILEGE)
 @Slf4j
+@Tag("reservation-view")
 public class ReservationView extends VerticalLayout {
     public static final String PRIVILEGE = "RESERVATION_VIEW_PRIVILEGE";
     public static final String ROUTE = "reservations";
@@ -45,62 +45,58 @@ public class ReservationView extends VerticalLayout {
     public static final String CHOOSE_FLOOR = "Choose floor:";
     public static final String CHOOSE_DATE_AND_HOUR = "Choose date and hour:";
     public static final String CONFIRM = "Add new";
-    private static final String HOUR_PATTERN = "HH:mm";
-    public static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(HOUR_PATTERN);
-    public static DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-            .withZone(ZoneId
-                    .systemDefault()); //TODO wyrzucić to do klasy utilities?
-
 
     @Autowired
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     @Autowired
-    private final PropertyRepository propertyRepository;
+    private final ReservationService reservationService;
 
     @Autowired
-    private final ReservationRepository reservationRepository;
+    private final PropertyService propertyService;
 
-    @Autowired
-    private final FloorRepository floorRepository;
-
+    @Id("chooseFloorBox")
     private ComboBox<Floor> chooseFloorBox;
+
+    @Id("choosePropertyBox")
     private ComboBox<Property> choosePropertyBox;
+
+    @Id("dateTimePicker")
     private DateTimePicker dateTimePicker;
+
     private Label accordionLabel;
+
+    @Id("accordion")
     private Accordion accordion;
     private List<AccordionPanel> reservationPanels;
     private Collection<Reservation> reservations;
+
+    @Id("Duration")
     private final ComboBox<Duration> durationSelector = new ComboBox<>();
+
     private final User user;
 
-    public ReservationView(UserRepository userRepository, PropertyRepository propertyRepository,
-                           ReservationRepository reservationRepository, FloorRepository floorRepository) {
-        this.userRepository = userRepository;
-        this.propertyRepository = propertyRepository;
-        this.reservationRepository = reservationRepository;
-        this.floorRepository = floorRepository;
-
-        setId("reservation-view");
+    public ReservationView(UserService userService,
+                           ReservationService reservationService,
+                           PropertyService propertyService) {
+        this.userService = userService;
+        this.reservationService = reservationService;
+        this.propertyService = propertyService;
 
         this.setAlignItems(Alignment.CENTER);
         String username = SecurityUtils.getLoggedUserUsername();
-        user = userRepository.findByUsername(username).orElseThrow(RuntimeException::new);
+        user = userService.findByUsername(username).orElseThrow(RuntimeException::new);
 
         reservationPanels = new ArrayList<>();
 
         accordion = new Accordion();
-        accordion.setId("accordion");
 
         choosePropertyBox = new ComboBox<>(CHOOSE_PROPERTY);
-        choosePropertyBox.setId("choosePropertyBox");
-
         chooseFloorBox = new ComboBox<>(CHOOSE_FLOOR, user.getFloors());        //TODO findAllFloors raczej z warningiem że rezerwuje z innego piętra niż jego własny
-        chooseFloorBox.setId("chooseFloorBox");
 
         chooseFloorBox.addValueChangeListener(e -> {
             refreshAccordionValues();
-            Collection<Property> properties = this.propertyRepository.findByOwner(e.getValue());
+            Collection<Property> properties = propertyService.findByOwner(e.getValue());
             choosePropertyBox.setItems(properties);
         });
 
@@ -111,14 +107,12 @@ public class ReservationView extends VerticalLayout {
         HorizontalLayout pickerAndConfirm = new HorizontalLayout();
 
         dateTimePicker = new DateTimePicker();          //TODO create datePicker and TimePicker separately that way i can remove night hours from time
-        dateTimePicker.setId("dateTimePicker");
         dateTimePicker.setLabel(CHOOSE_DATE_AND_HOUR);
         dateTimePicker.setLocale(Locale.GERMAN);         //TODO try to disable manual editing of hour
         dateTimePicker.setValue(findNextRoundTime());
         dateTimePicker.setStep(Duration.ofMinutes(30));
         dateTimePicker.addValueChangeListener(e -> refreshAccordionValues());
 
-        durationSelector.setLabel("Duration");
         durationSelector.setItems(Duration.ofHours(1), Duration.ofHours(2), Duration.ofHours(3), Duration.ofHours(4));
 
         Button confirmButton = new Button(CONFIRM);
@@ -160,7 +154,7 @@ public class ReservationView extends VerticalLayout {
                     .start(start)
                     .build();
 
-            reservationRepository.save(reservation);
+            reservationService.save(reservation);
 
             log.info("Reservation saved" + reservation.toString());
             Notification.show("Reservation added successfully");
@@ -248,7 +242,7 @@ public class ReservationView extends VerticalLayout {
 //        LocalDateTime startDayTime = findStartDateTime();   //TODO DOESNT SHOW ANYTHING
         LocalDateTime startDayTime = LocalDateTime.of(dateTimePicker.getValue().toLocalDate(), LocalTime.MIN);
         LocalDateTime dayTimeEnd = LocalDateTime.of(dateTimePicker.getValue().toLocalDate(), LocalTime.MAX);
-        reservations = reservationRepository.findByPropertyOwnerAndPropertyAndStartBetweenOrderByStartAsc(choseFloor, choosePropertyBox.getValue(), startDayTime, dayTimeEnd); //TODO dodaj szukanie po property
+        reservations = reservationService.findByPropertyOwnerAndPropertyAndStartBetweenOrderByStartAsc(choseFloor, choosePropertyBox.getValue(), startDayTime, dayTimeEnd); //TODO dodaj szukanie po property
         for (Reservation reservation : reservations) {
             AccordionPanel panel = createAccordionPanelForReservation(reservation);
             this.reservationPanels.add(panel);
@@ -265,12 +259,12 @@ public class ReservationView extends VerticalLayout {
 //    }
 
     private AccordionPanel createAccordionPanelForReservation(Reservation reservation) {
-        String start = dateTimeFormatter.format(reservation.getStart());
-        String end = dateTimeFormatter.format(reservation.getStart().plus(reservation.getDuration()));
+        String start = DateUtility.HOUR_MINUTE.format(reservation.getStart());
+        String end = DateUtility.HOUR_MINUTE.format(reservation.getStart().plus(reservation.getDuration()));
         String time = start + " - " + end;
 
         String contentHTML = "Created by: " + reservation.getUser().getFullName() + "<br>"
-                + "Creation time: " + DATE_TIME_FORMATTER.format(reservation.getCreationTime()) + "<br>";
+                + "Creation time: " + DateUtility.STANDARD_DATE_TIME.format(reservation.getCreationTime()) + "<br>";
         Span content = new Span();
         content.getElement().setProperty("innerHTML", contentHTML);
 
@@ -279,7 +273,7 @@ public class ReservationView extends VerticalLayout {
         if (user.equals(reservation.getUser())) {
             Button delete = new Button("Delete");
             delete.addClickListener(e -> {
-                reservationRepository.delete(reservation);
+                reservationService.delete(reservation);
                 refreshAccordionValues();
                 Notification.show("Reservation has been deleted");
             });

@@ -34,6 +34,7 @@ import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.theme.Theme;
 import com.example.thesis.views.auth.LoginView;
 import com.vaadin.flow.theme.lumo.Lumo;
+import com.vaadin.flow.theme.material.Material;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -44,7 +45,7 @@ import static com.example.thesis.backend.security.SecurityUtils.userHasRole;
  * The main view is a top-level placeholder for other views.
  */
 @JsModule("./styles/shared-styles.js")
-@Theme(value = Lumo.class, variant = Lumo.DARK)
+@Theme(value = Material.class, variant = Material.DARK)
 @CssImport("./styles/views/main/main-view.css")
 public class MainView extends AppLayout {
 
@@ -87,7 +88,7 @@ public class MainView extends AppLayout {
             }));
         }
         userInfo.add(new Paragraph(SecurityContextHolder.getContext().getAuthentication().getName()));
-        userInfo.add(new Image("images/user.svg", "Avatar"));
+//        userInfo.add(new Image("images/user.svg", "Avatar"));
         layout.add(userInfo);
         return layout;
     }
@@ -102,8 +103,8 @@ public class MainView extends AppLayout {
         HorizontalLayout logoLayout = new HorizontalLayout();
         logoLayout.setId("logo");
         logoLayout.setAlignItems(FlexComponent.Alignment.CENTER);
-        logoLayout.add(new Image("images/logo.png", "Bsc Thesis project logo"));
-        logoLayout.add(new H1("Bsc Thesis project"));
+        logoLayout.add(new Image("images/logo.png", "Dorm coordinator logo"));
+        logoLayout.add(new H1("Dorm coordinator"));
         layout.add(logoLayout, menu);
         return layout;
     }
@@ -111,7 +112,7 @@ public class MainView extends AppLayout {
     private Tabs createMenu() {
         final Tabs tabs = new Tabs();
         tabs.setOrientation(Tabs.Orientation.VERTICAL);
-        tabs.addThemeVariants(TabsVariant.LUMO_MINIMAL);
+        tabs.addThemeVariants(TabsVariant.MATERIAL_FIXED);
         tabs.setId("tabs");
         tabs.add(createMenuItems());
         return tabs;

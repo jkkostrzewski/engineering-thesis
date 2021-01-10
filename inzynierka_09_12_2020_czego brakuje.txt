@@ -16,10 +16,10 @@ Czego brakuje na dzień 9.12.2020
 
 
 - TŁUMACZENIE ELEMENTÓW NA POLSKI
-- Wszelakie drobne poprawki TODO we wszystkich klasach
-- Optymalizacja i refactoring!
 - Zweryfikowanie kolorystyki i ogólne ułożenie elementów
 - Opcja edycji rezerwacji i ogłoszeń dla właściciela danego elementu oraz adminów/floorAdminów
+- Wszelakie drobne poprawki TODO we wszystkich klasach
+- Optymalizacja i refactoring!
 
 DODATKOWE:
 - usuwanie artykułów wszystkich dla admina (userHasRole(admin)) / z piętra dla floorAdmina / pojedynczych dla usera
@@ -41,3 +41,5 @@ BUGI:
 - wielkości komponentów na telefonie są kompletnie nieprawidłowe
 - upload zdjęcia z telefonu nie działa (?)
 - dodanie nowego użytkownika nie działa z deploya (?) - gmail smtp blokuje heroku
+- przy usuwaniu piętra które ma jakieś zależności nie ma komunikatu informującego że dane piętro jest wykorzystywane
+    (można tu dodać - czy na pewno chcesz usunąć i wywalić kaskadowo)

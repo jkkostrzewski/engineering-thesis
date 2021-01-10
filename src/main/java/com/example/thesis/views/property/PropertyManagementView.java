@@ -1,27 +1,15 @@
 package com.example.thesis.views.property;
 
-import com.example.thesis.backend.floor.Floor;
 import com.example.thesis.backend.floor.FloorRepository;
-import com.example.thesis.backend.reservation.Property;
 import com.example.thesis.backend.reservation.PropertyRepository;
 import com.example.thesis.views.main.MainView;
 import com.vaadin.flow.component.accordion.Accordion;
-import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.combobox.ComboBox;
-import com.vaadin.flow.component.confirmdialog.ConfirmDialog;
 import com.vaadin.flow.component.dependency.CssImport;
-import com.vaadin.flow.component.grid.contextmenu.GridContextMenu;
-import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.data.provider.DataProvider;
-import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.annotation.Secured;
-import org.vaadin.klaudeta.PaginatedGrid;
 
 @Slf4j
 @Route(value = PropertyManagementView.ROUTE, layout = MainView.class)
@@ -59,6 +47,5 @@ public class PropertyManagementView extends VerticalLayout {
     public void refreshGrid() {
         this.propertyGridLayout.refreshGrid();
     }
-
 
 }

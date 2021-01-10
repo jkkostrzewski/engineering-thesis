@@ -10,6 +10,7 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.polymertemplate.Id;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.provider.ListDataProvider;
@@ -18,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.vaadin.klaudeta.PaginatedGrid;
 
+
 @Slf4j
 public class PropertyGridLayout extends VerticalLayout {
 
@@ -25,6 +27,8 @@ public class PropertyGridLayout extends VerticalLayout {
     private final FloorRepository floorRepository;
 
     private final ListDataProvider<Property> propertyProvider;
+
+    @Id("grid")
     private final PaginatedGrid<Property> grid;
 
     public PropertyGridLayout(PropertyRepository propertyRepository, FloorRepository floorRepository) {

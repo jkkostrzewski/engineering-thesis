@@ -47,12 +47,12 @@ public class FloorManagementView extends VerticalLayout {
         FloorCreationLayout floorCreationLayout = new FloorCreationLayout(floorRepository, noticeBoardRepository, userRepository);
         accordion.add("Floor creation", floorCreationLayout);
 
-//        PropertyManagementView propertyCreationLayout = new PropertyManagementView(propertyRepository, floorRepository);
-//        accordion.add("Property management", propertyCreationLayout);
+        FloorGridLayout floorGridLayout = new FloorGridLayout(floorRepository);
+        accordion.add("Floor management", floorGridLayout);
 
         add(accordion);
 
-//        this.setAlignItems(Alignment.CENTER);
+        this.setWidthFull();
     }
 
 
