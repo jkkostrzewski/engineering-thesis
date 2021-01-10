@@ -1,9 +1,8 @@
 package com.example.thesis.views.property;
 
 import com.example.thesis.backend.floor.Floor;
-import com.example.thesis.backend.floor.FloorRepository;
 import com.example.thesis.backend.reservation.Property;
-import com.example.thesis.backend.reservation.PropertyRepository;
+import com.example.thesis.backend.reservation.PropertyService;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -27,8 +26,7 @@ import org.vaadin.klaudeta.PaginatedGrid;
 @Slf4j
 public class PropertyGridLayout extends VerticalLayout {
 
-    private final PropertyRepository propertyRepository;
-    private final FloorRepository floorRepository;
+    private final PropertyService propertyService;
 
     private final ListDataProvider<Property> propertyProvider;
 
@@ -38,12 +36,11 @@ public class PropertyGridLayout extends VerticalLayout {
     private TextField propertyName;
     private ComboBox<Floor> propertyOwner;
 
-    public PropertyGridLayout(PropertyRepository propertyRepository, FloorRepository floorRepository) {
-        this.propertyRepository = propertyRepository;
-        this.floorRepository = floorRepository;
+    public PropertyGridLayout(PropertyService propertyService) {
+        this.propertyService = propertyService;
 
         grid = new PaginatedGrid<>(Property.class);
-        propertyProvider = DataProvider.ofCollection(this.propertyRepository.findAll());
+        propertyProvider = DataProvider.ofCollection(propertyService.findAll());
         grid.setItems(propertyProvider);
         grid.setPageSize(15);
         grid.setPaginatorSize(5);
@@ -102,7 +99,7 @@ public class PropertyGridLayout extends VerticalLayout {
         propertyName = new TextField("Name");
 
         propertyOwner = new ComboBox<>();
-        propertyOwner.setItems(floorRepository.findAll());
+        propertyOwner.setItems(propertyService.findAllFloors());
 
         HorizontalLayout buttons = new HorizontalLayout();
 
@@ -113,7 +110,7 @@ public class PropertyGridLayout extends VerticalLayout {
         confirm.addClickListener(e -> {
             clicked.setName(propertyName.getValue());
             clicked.setOwner(propertyOwner.getValue());
-            propertyRepository.save(clicked);
+            propertyService.save(clicked);
             propertyProvider.refreshAll();
             editDialog.close();
         });
@@ -161,7 +158,7 @@ public class PropertyGridLayout extends VerticalLayout {
         log.info(property.toString() + " property with id " + property.getId() + " is being removed", PropertyGridLayout.class);
         propertyProvider.getItems().remove(property);
         propertyProvider.refreshAll();
-        propertyRepository.delete(property);
+        propertyService.delete(property);
 
         Notification.show("Property has been removed");
     }

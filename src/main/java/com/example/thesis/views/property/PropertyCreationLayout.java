@@ -1,9 +1,8 @@
 package com.example.thesis.views.property;
 
 import com.example.thesis.backend.floor.Floor;
-import com.example.thesis.backend.floor.FloorRepository;
 import com.example.thesis.backend.reservation.Property;
-import com.example.thesis.backend.reservation.PropertyRepository;
+import com.example.thesis.backend.reservation.PropertyService;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.notification.Notification;
@@ -12,22 +11,20 @@ import com.vaadin.flow.component.textfield.TextField;
 
 public class PropertyCreationLayout extends VerticalLayout {
 
-    private PropertyManagementView propertyManagementView;
-    private final PropertyRepository propertyRepository;
-    private final FloorRepository floorRepository;
+    private final PropertyManagementView propertyManagementView;
+    private final PropertyService propertyService;
 
     private final TextField name;
     private final ComboBox<Floor> availableFloors;
     private final Button confirm;
 
-    public PropertyCreationLayout(PropertyManagementView propertyManagementView, PropertyRepository propertyRepository, FloorRepository floorRepository) {
+    public PropertyCreationLayout(PropertyManagementView propertyManagementView, PropertyService propertyService) {
         this.propertyManagementView = propertyManagementView;
-        this.propertyRepository = propertyRepository;
-        this.floorRepository = floorRepository;
+        this.propertyService = propertyService;
 
         name = new TextField("Enter property name");
         availableFloors = new ComboBox<>("Choose a floor");
-        availableFloors.setItems(this.floorRepository.findAll());
+        availableFloors.setItems(propertyService.findAllFloors());
 
         confirm = new Button("Confirm");
         confirm.addClickListener(e -> addProperty());
@@ -41,7 +38,7 @@ public class PropertyCreationLayout extends VerticalLayout {
         }
 
         Property property = Property.builder().name(name.getValue()).owner(availableFloors.getValue()).build();
-        propertyRepository.save(property);
+        propertyService.save(property);
         propertyManagementView.refreshGrid();
 
         Notification.show("Property created successfully");

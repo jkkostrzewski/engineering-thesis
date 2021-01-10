@@ -72,7 +72,7 @@ public class ReservationView extends VerticalLayout {
     private Collection<Reservation> reservations;
 
     @Id("Duration")
-    private final ComboBox<Duration> durationSelector = new ComboBox<>();
+    private final ComboBox<Duration> durationSelector;
 
     private final User user;
 
@@ -113,6 +113,7 @@ public class ReservationView extends VerticalLayout {
         dateTimePicker.setStep(Duration.ofMinutes(30));
         dateTimePicker.addValueChangeListener(e -> refreshAccordionValues());
 
+        durationSelector = new ComboBox<>("Duration");
         durationSelector.setItems(Duration.ofHours(1), Duration.ofHours(2), Duration.ofHours(3), Duration.ofHours(4));
 
         Button confirmButton = new Button(CONFIRM);

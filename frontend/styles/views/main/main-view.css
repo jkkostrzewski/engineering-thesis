@@ -21,7 +21,8 @@
   overflow: hidden;
 }
 #header h1 {
-  font-size: var(--material-font-size-l);
+  font-size: var(--material-font-size-s);
+  font-weight: 600;
   margin: 0;
   flex-grow: 0.98;
 }
@@ -35,7 +36,7 @@
   padding-left: 1rem;
 }
 #logo h1 {
-  font-size: var(--material-font-size-xl);
+  font-size: var(--material-font-size-s);
   font-weight: 600;
   margin: 0 var(--material-space-s);
   padding-left: 1rem;
