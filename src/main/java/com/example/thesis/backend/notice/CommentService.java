@@ -7,14 +7,30 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CommentService {
-    private CommentRepository commentRepository;
+    private final CommentRepository commentRepository;
+    private final NoticeService noticeService;
 
     @Autowired
-    public CommentService(CommentRepository commentRepository) {
+    public CommentService(CommentRepository commentRepository, NoticeService noticeService) {
         this.commentRepository = commentRepository;
+        this.noticeService = noticeService;
     }
 
-    public ServiceResponse<Comment> addComment(Comment comment) {
-        return new ServiceResponse<>(HttpStatus.OK, commentRepository.save(comment));
+    public ServiceResponse<Comment> addComment(Long noticeId, ParentComment parentComment, Comment comment) {
+        Notice notice = noticeService.findById(noticeId).getContent();
+        commentRepository.save(comment);
+        notice.addReply(parentComment, comment);
+        noticeService.saveNotice(notice);
+
+        return new ServiceResponse<>(HttpStatus.OK, comment);
+    }
+
+    public ServiceResponse<ParentComment> addParentComment(Long noticeId, ParentComment parentComment) {
+        Notice notice = noticeService.findById(noticeId).getContent();
+        commentRepository.save(parentComment);
+        notice.addParentComment(parentComment);
+        noticeService.saveNotice(notice);
+
+        return new ServiceResponse<>(HttpStatus.OK, parentComment);
     }
 }

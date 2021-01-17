@@ -181,8 +181,8 @@ public class SetupDataLoader implements
         mainBoard.addNotice(test_notice_two);
 
         NoticeBoard floorOneBoard = new NoticeBoard("1st Floor", floor);
-        floorOneBoard.addNotice(test_notice_one);
-        floorOneBoard.addNotice(test_notice_two);
+//        floorOneBoard.addNotice(test_notice_one);
+//        floorOneBoard.addNotice(test_notice_two);
 
         noticeBoardRepository.save(mainBoard);
         noticeBoardRepository.save(floorOneBoard);

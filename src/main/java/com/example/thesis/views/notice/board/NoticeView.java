@@ -5,6 +5,10 @@ import com.example.thesis.backend.security.SecurityUtils;
 import com.example.thesis.backend.security.auth.User;
 import com.example.thesis.backend.security.auth.UserRepository;
 import com.example.thesis.views.main.MainView;
+import com.example.thesis.views.utilities.CommentBroadcaster;
+import com.example.thesis.views.utilities.DateUtility;
+import com.vaadin.flow.component.AttachEvent;
+import com.vaadin.flow.component.DetachEvent;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Image;
@@ -16,12 +20,11 @@ import com.vaadin.flow.router.OptionalParameter;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.StreamResource;
+import com.vaadin.flow.shared.Registration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 
 import java.io.ByteArrayInputStream;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 
 @Route(value = NoticeView.ROUTE, layout = MainView.class)
 @PageTitle("Notice view")
@@ -31,35 +34,34 @@ public class NoticeView extends VerticalLayout implements HasUrlParameter<Long> 
 
     public static final String PRIVILEGE = "NOTICE_VIEW_PRIVILEGE";
     public static final String ROUTE = "notice-view";
-    public static final int BODY_MAX_LENGTH = 770;
-    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-            .withZone(ZoneId
-                    .systemDefault()); //TODO wyrzucić to do klasy utilities?
+
+    private Registration broadcasterRegistration;
 
     private final NoticeService noticeService;
     private final UserRepository userRepository;
-    private final CommentRepository commentRepository;
+    private final CommentService commentService;
 
     private Notice notice;
     private User currentUser;
+    private CommentSectionComponent commentSection;
 
     @Autowired
-    public NoticeView(NoticeService noticeService, UserRepository userRepository, CommentRepository commentRepository) {
+    public NoticeView(NoticeService noticeService, UserRepository userRepository, CommentService commentService) {
         this.noticeService = noticeService;
         this.userRepository = userRepository;
-        this.commentRepository = commentRepository;
+        this.commentService = commentService;
         setId("notice-view");
     }
 
     @Override
-    public void setParameter(BeforeEvent event, @OptionalParameter Long parameter) {       //TODO ta metoda jest wywołana po konstruktorze - zastanów się nad zmianą tej metody
+    public void setParameter(BeforeEvent event, @OptionalParameter Long parameter) {
         notice = noticeService.findById(parameter).getContent();
 
         Paragraph title = new Paragraph(notice.getTitle());
         title.setId("notice-view-title");
         title.setSizeUndefined();
 
-        Paragraph date = new Paragraph(DATE_TIME_FORMATTER.format(notice.getCreationDate()));
+        Paragraph date = new Paragraph(DateUtility.STANDARD_DATE_TIME.format(notice.getCreationDate()));
         date.setId("notice-view-date");
         date.setSizeUndefined();
 
@@ -73,7 +75,7 @@ public class NoticeView extends VerticalLayout implements HasUrlParameter<Long> 
         String username = SecurityUtils.getLoggedUserUsername();
         currentUser = userRepository.findByUsername(username).orElseThrow(RuntimeException::new);
 
-        CommentSectionComponent commentSection = new CommentSectionComponent(this);
+        commentSection = new CommentSectionComponent(this);
 
         setSizeUndefined();
         add(title, date, image, body, commentSection);
@@ -87,17 +89,27 @@ public class NoticeView extends VerticalLayout implements HasUrlParameter<Long> 
         return currentUser;
     }
 
-    public void addParentComment(ParentComment parentComment) {     //websockets to load comments dynamically?
-        commentRepository.save(parentComment);
-        this.notice.addParentComment(parentComment);
-        noticeService.saveNotice(this.notice);
-        UI.getCurrent().getPage().reload();
+    public CommentService getCommentService() {
+        return commentService;
     }
 
-    public void addReply(ParentComment parent, Comment comment) {
-        commentRepository.save(comment);
-        parent.addReply(comment);
-        commentRepository.save(parent);
-        UI.getCurrent().getPage().reload();
+    public NoticeService getNoticeService() {
+        return noticeService;
+    }
+
+    @Override
+    protected void onAttach(AttachEvent attachEvent) {
+        UI ui = attachEvent.getUI();
+        broadcasterRegistration = CommentBroadcaster.register(() ->
+                ui.access(() ->
+                        commentSection.refreshCommentSection()
+                )
+        );
+    }
+
+    @Override
+    protected void onDetach(DetachEvent detachEvent) {
+        broadcasterRegistration.remove();
+        broadcasterRegistration = null;
     }
 }

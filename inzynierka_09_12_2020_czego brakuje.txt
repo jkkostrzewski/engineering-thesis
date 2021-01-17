@@ -33,6 +33,7 @@ Low priority:
 - Linkowanie artkułów między boardami przez floorAdmina, admina
 - Usunięcie wyświetlania stack trace'a na samej stronie podczas jakiegokolwiek błędu
 - przekazywanie do child componentów samego widoku zamiast repozytoriów?
+- RichTextArea do edycji posta? - sprawdzic czy w vaadin 17 coś takiego istnieje
 
 
 BUGI:

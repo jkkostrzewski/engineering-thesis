@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Configurable;
 import java.util.Date;
 
 @CssImport("./styles/views/notice/board/comment.css")
-@Configurable
 public class CommentComponent extends VerticalLayout {
 
     private final Comment comment;
@@ -36,12 +35,19 @@ public class CommentComponent extends VerticalLayout {
 
         createUnchangeableParts();
 
+        LeaveCommentComponent commentComponent = new LeaveCommentComponent(noticeView, comment);
+        add(commentComponent);
+        commentComponent.setVisible(false);
+
         reply = new Button("Reply");
         reply.setId("reply-button");
         reply.addClickListener(e -> {
-            LeaveCommentComponent commentComponent = new LeaveCommentComponent(noticeView, comment);
-            add(commentComponent);
-//            addComponentAtIndex();
+            commentComponent.setVisible(!commentComponent.isVisible());
+            if (reply.getText().equals("Reply")) {
+                reply.setText("Cancel");
+            } else {
+                reply.setText("Reply");
+            }
         });
 
         add(reply);

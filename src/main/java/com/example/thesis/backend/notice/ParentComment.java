@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 public class ParentComment extends Comment {
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @org.hibernate.annotations.Fetch(FetchMode.SELECT)      //eliminates cartesian product loading - might be better to create dto or load in transaction
     @JoinTable(
             name = "comment_replies",
@@ -32,5 +32,10 @@ public class ParentComment extends Comment {
 
     public void addReply(Comment comment) {
         replies.add(comment);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
     }
 }

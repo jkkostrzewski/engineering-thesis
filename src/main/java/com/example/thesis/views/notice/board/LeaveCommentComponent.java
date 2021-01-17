@@ -4,6 +4,7 @@ import com.example.thesis.backend.notice.Comment;
 import com.example.thesis.backend.notice.Notice;
 import com.example.thesis.backend.notice.ParentComment;
 import com.example.thesis.backend.security.auth.User;
+import com.example.thesis.views.utilities.CommentBroadcaster;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Div;
@@ -27,7 +28,10 @@ public class LeaveCommentComponent extends VerticalLayout {
         constructUnchangeableParts();
 
         this.noticeView = noticeView;
-        submit.addClickListener(e -> addParentComment());
+        submit.addClickListener(e -> {
+            addParentComment();
+            CommentBroadcaster.broadcast();
+        });
     }
 
     public LeaveCommentComponent(NoticeView noticeView, ParentComment parent) {   //TODO check if notice persists after adding parent comment
@@ -38,7 +42,10 @@ public class LeaveCommentComponent extends VerticalLayout {
 
         this.noticeView = noticeView;
 
-        submit.addClickListener(e -> addReply(parent));
+        submit.addClickListener(e ->  {
+            addReply(parent);
+            CommentBroadcaster.broadcast();
+        });
     }
 
     private void constructUnchangeableParts() {
@@ -57,11 +64,11 @@ public class LeaveCommentComponent extends VerticalLayout {
 
     private void addParentComment() {
         ParentComment comment = new ParentComment(noticeView.getCurrentUser(), Instant.now(), commentBox.getValue());
-        noticeView.addParentComment(comment);
+        noticeView.getCommentService().addParentComment(noticeView.getNotice().getId(), comment);
     }
 
     private void addReply(ParentComment parent) {
         Comment comment = new Comment(noticeView.getCurrentUser(), Instant.now(), commentBox.getValue());
-        noticeView.addReply(parent, comment);
+        noticeView.getCommentService().addComment(noticeView.getNotice().getId(), parent, comment);
     }
 }

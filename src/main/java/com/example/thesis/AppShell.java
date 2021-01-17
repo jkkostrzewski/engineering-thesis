@@ -1,6 +1,7 @@
 package com.example.thesis;
 
 import com.vaadin.flow.component.page.AppShellConfigurator;
+import com.vaadin.flow.component.page.Push;
 import com.vaadin.flow.server.PWA;
 
 /**
@@ -8,5 +9,6 @@ import com.vaadin.flow.server.PWA;
  * and some desktop browsers.
  */
 @PWA(name = "Bsc Thesis project", shortName = "bsc-thesis-project")
+@Push
 public class AppShell implements AppShellConfigurator {
 }

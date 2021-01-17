@@ -31,7 +31,7 @@ public class Notice {
     private byte[] image;
 //    private String[] tags;
 
-    @OneToMany(fetch = EAGER)
+    @OneToMany(fetch = EAGER, cascade = CascadeType.ALL)
     @OrderBy(value = "id")
     @JoinTable(
             name = "notice_parent_comments",
@@ -48,7 +48,10 @@ public class Notice {
     public void addReply(ParentComment parent, Comment comment) {
         parentComments.stream()
                 .filter(element -> element.equals(parent))
-                .forEach((parentComment) -> parentComment.addReply(comment));
+                .findFirst()
+                .orElseThrow(RuntimeException::new)
+                .addReply(comment);
+//                .forEach((parentComment) -> parentComment.addReply(comment));
     }
 }
 
