@@ -15,7 +15,6 @@ public class CommentBroadcaster {
 
     public static synchronized Registration register(
             Runnable listener) {
-        log.info("New listener added!");
         listeners.add(listener);
 
         return () -> {

@@ -1,9 +1,9 @@
 package com.example.thesis.views.floor;
 
-import com.example.thesis.backend.floor.FloorRepository;
-import com.example.thesis.backend.notice.NoticeBoardRepository;
-import com.example.thesis.backend.reservation.PropertyRepository;
-import com.example.thesis.backend.security.auth.UserRepository;
+import com.example.thesis.backend.floor.FloorService;
+import com.example.thesis.backend.notice.NoticeService;
+import com.example.thesis.backend.reservation.PropertyService;
+import com.example.thesis.backend.security.auth.UserService;
 import com.example.thesis.views.main.MainView;
 import com.vaadin.flow.component.accordion.Accordion;
 import com.vaadin.flow.component.dependency.CssImport;
@@ -22,32 +22,26 @@ public class FloorManagementView extends VerticalLayout {
     public static final String ROUTE = "/add-floor";
     public static final String PRIVILEGE = "ADD_FLOOR_VIEW_PRIVILEGE";
 
-    @Autowired
-    private final FloorRepository floorRepository;
+    private final FloorService floorService;
+    private final NoticeService noticeService;
+    private final UserService userService;
+    private final PropertyService propertyService;
 
     @Autowired
-    private final NoticeBoardRepository noticeBoardRepository;
-
-    @Autowired
-    private final UserRepository userRepository;
-
-    @Autowired
-    private final PropertyRepository propertyRepository;
-
-    public FloorManagementView(FloorRepository floorRepository, NoticeBoardRepository noticeBoardRepository,
-                               UserRepository userRepository, PropertyRepository propertyRepository) {
-        this.floorRepository = floorRepository;
-        this.noticeBoardRepository = noticeBoardRepository;
-        this.userRepository = userRepository;
-        this.propertyRepository = propertyRepository;
+    public FloorManagementView(FloorService floorService, NoticeService noticeService, UserService userService,
+                               PropertyService propertyService) {
+        this.floorService = floorService;
+        this.noticeService = noticeService;
+        this.userService = userService;
+        this.propertyService = propertyService;
 
         Accordion accordion = new Accordion();
         accordion.setWidthFull();
 
-        FloorCreationLayout floorCreationLayout = new FloorCreationLayout(floorRepository, noticeBoardRepository, userRepository);
+        FloorCreationLayout floorCreationLayout = new FloorCreationLayout(floorService, noticeService, userService);
         accordion.add("Floor creation", floorCreationLayout);
 
-        FloorGridLayout floorGridLayout = new FloorGridLayout(floorRepository);
+        FloorGridLayout floorGridLayout = new FloorGridLayout(floorService);
         accordion.add("Floor management", floorGridLayout);
 
         add(accordion);

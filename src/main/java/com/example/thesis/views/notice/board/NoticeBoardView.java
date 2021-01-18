@@ -2,7 +2,7 @@ package com.example.thesis.views.notice.board;
 
 import com.example.thesis.backend.notice.Notice;
 import com.example.thesis.backend.notice.NoticeBoard;
-import com.example.thesis.backend.notice.NoticeBoardRepository;
+import com.example.thesis.backend.notice.NoticeService;
 import com.example.thesis.views.main.MainView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -10,7 +10,11 @@ import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.router.*;
+import com.vaadin.flow.router.BeforeEvent;
+import com.vaadin.flow.router.HasUrlParameter;
+import com.vaadin.flow.router.OptionalParameter;
+import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 
@@ -25,20 +29,20 @@ public class NoticeBoardView extends VerticalLayout implements HasUrlParameter<S
     public static final String PRIVILEGE = "NOTICE_BOARD_VIEW_PRIVILEGE";
     public static final String ROUTE = "/notice-board";
 
-    private NoticeBoardRepository noticeBoardRepository;
+    private final NoticeService noticeService;
     private NoticeBoard noticeBoard;
 
     @Autowired
-    public NoticeBoardView(NoticeBoardRepository noticeBoardRepository) {
+    public NoticeBoardView(NoticeService noticeService) {
         setId("notice-board");
-        this.noticeBoardRepository = noticeBoardRepository;
+        this.noticeService = noticeService;
 
         this.setAlignItems(Alignment.CENTER);
     }
 
     @Override
     public void setParameter(BeforeEvent beforeEvent, @OptionalParameter String boardName) {
-        noticeBoard = noticeBoardRepository.findByName(boardName.replace("%20", " "));
+        noticeBoard = noticeService.findByName(boardName.replace("%20", " "));
         removeAll();
 
         HorizontalLayout boardHeader = new HorizontalLayout();
@@ -59,14 +63,7 @@ public class NoticeBoardView extends VerticalLayout implements HasUrlParameter<S
 
         add(boardHeader);
 
-//        Page page = UI.getCurrent().getPage();        //Trying to get last page visited without sending it as a state every time
-//        page.executeJs("document.referrer").then(String.class, result -> {
-//            if (lastPageWasBoard(result)) {
-//                UI.getCurrent().getPage().reload();
-//            }
-//        });
-
-        for (Notice notice : noticeBoard.getNotices()) {    //TODO add paging
+        for (Notice notice : noticeBoard.getNotices()) {
             add(new NoticeComponent(notice));
         }
     }

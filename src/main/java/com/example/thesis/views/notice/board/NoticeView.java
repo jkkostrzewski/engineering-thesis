@@ -1,12 +1,13 @@
 package com.example.thesis.views.notice.board;
 
-import com.example.thesis.backend.notice.*;
+import com.example.thesis.backend.notice.CommentService;
+import com.example.thesis.backend.notice.Notice;
+import com.example.thesis.backend.notice.NoticeService;
 import com.example.thesis.backend.security.SecurityUtils;
 import com.example.thesis.backend.security.auth.User;
-import com.example.thesis.backend.security.auth.UserRepository;
+import com.example.thesis.backend.security.auth.UserService;
 import com.example.thesis.views.main.MainView;
 import com.example.thesis.views.utilities.CommentBroadcaster;
-import com.example.thesis.views.utilities.DateUtility;
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.DetachEvent;
 import com.vaadin.flow.component.UI;
@@ -26,6 +27,8 @@ import org.springframework.security.access.annotation.Secured;
 
 import java.io.ByteArrayInputStream;
 
+import static com.example.thesis.views.utilities.DateUtility.STANDARD_DATE_TIME;
+
 @Route(value = NoticeView.ROUTE, layout = MainView.class)
 @PageTitle("Notice view")
 @CssImport("./styles/views/notice/notice-view.css")
@@ -38,7 +41,7 @@ public class NoticeView extends VerticalLayout implements HasUrlParameter<Long> 
     private Registration broadcasterRegistration;
 
     private final NoticeService noticeService;
-    private final UserRepository userRepository;
+    private final UserService userService;
     private final CommentService commentService;
 
     private Notice notice;
@@ -46,9 +49,9 @@ public class NoticeView extends VerticalLayout implements HasUrlParameter<Long> 
     private CommentSectionComponent commentSection;
 
     @Autowired
-    public NoticeView(NoticeService noticeService, UserRepository userRepository, CommentService commentService) {
+    public NoticeView(NoticeService noticeService, UserService userService, CommentService commentService) {
         this.noticeService = noticeService;
-        this.userRepository = userRepository;
+        this.userService = userService;
         this.commentService = commentService;
         setId("notice-view");
     }
@@ -61,7 +64,7 @@ public class NoticeView extends VerticalLayout implements HasUrlParameter<Long> 
         title.setId("notice-view-title");
         title.setSizeUndefined();
 
-        Paragraph date = new Paragraph(DateUtility.STANDARD_DATE_TIME.format(notice.getCreationDate()));
+        Paragraph date = new Paragraph(STANDARD_DATE_TIME.format(notice.getCreationDate()));
         date.setId("notice-view-date");
         date.setSizeUndefined();
 
@@ -73,7 +76,7 @@ public class NoticeView extends VerticalLayout implements HasUrlParameter<Long> 
         Paragraph body = new Paragraph(notice.getBody());
 
         String username = SecurityUtils.getLoggedUserUsername();
-        currentUser = userRepository.findByUsername(username).orElseThrow(RuntimeException::new);
+        currentUser = userService.findByUsername(username).orElseThrow(RuntimeException::new);
 
         commentSection = new CommentSectionComponent(this);
 

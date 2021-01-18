@@ -45,9 +45,6 @@ public class AddNoticeView extends VerticalLayout implements HasUrlParameter<Str
     public static final String PRIVILEGE = "ADD_NOTICE_VIEW_PRIVILEGE";
     public static final String ROUTE = "add-notice";
 
-    @Autowired
-    private final NoticeBoardRepository noticeBoardRepository;
-
     private byte[] imageBytes;
     private TextField title;
     private TextArea body;
@@ -58,8 +55,7 @@ public class AddNoticeView extends VerticalLayout implements HasUrlParameter<Str
 
     private NoticeBoard noticeBoard;
 
-    public AddNoticeView(NoticeBoardRepository noticeBoardRepository, NoticeService noticeService) {
-        this.noticeBoardRepository = noticeBoardRepository;
+    public AddNoticeView(NoticeService noticeService) {
         this.noticeService = noticeService;
         setId("add-notice");
 
@@ -115,7 +111,7 @@ public class AddNoticeView extends VerticalLayout implements HasUrlParameter<Str
 
     @Override
     public void setParameter(BeforeEvent beforeEvent, @OptionalParameter String boardName) {
-        noticeBoard = noticeBoardRepository.findByName(boardName.replace("%20", " "));
+        noticeBoard = noticeService.findByName(boardName.replace("%20", " "));
     }
 
     private Component createComponent(String mimeType, String fileName,

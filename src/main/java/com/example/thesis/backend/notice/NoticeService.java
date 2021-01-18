@@ -1,6 +1,7 @@
 package com.example.thesis.backend.notice;
 
 import com.example.thesis.backend.ServiceResponse;
+import com.example.thesis.backend.floor.Floor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -37,5 +38,17 @@ public class NoticeService {
 
     public ServiceResponse<Notice> findById(long id) {
         return new ServiceResponse<>(HttpStatus.OK, noticeRepository.findById(id).orElseThrow(InvalidParameterException::new));
+    }
+
+    public NoticeBoard findByName(String boardName) {
+        return noticeBoardRepository.findByName(boardName);
+    }
+
+    public NoticeBoard findByOwner(Floor floor) {
+        return noticeBoardRepository.findByOwner(floor);
+    }
+
+    public void save(NoticeBoard board) {
+        noticeBoardRepository.save(board);
     }
 }

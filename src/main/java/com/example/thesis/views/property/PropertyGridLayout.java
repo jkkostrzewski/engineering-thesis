@@ -27,7 +27,6 @@ import org.vaadin.klaudeta.PaginatedGrid;
 public class PropertyGridLayout extends VerticalLayout {
 
     private final PropertyService propertyService;
-
     private final ListDataProvider<Property> propertyProvider;
 
     @Id("grid")

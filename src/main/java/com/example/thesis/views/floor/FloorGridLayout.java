@@ -1,7 +1,7 @@
 package com.example.thesis.views.floor;
 
 import com.example.thesis.backend.floor.Floor;
-import com.example.thesis.backend.floor.FloorRepository;
+import com.example.thesis.backend.floor.FloorService;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.confirmdialog.ConfirmDialog;
 import com.vaadin.flow.component.grid.contextmenu.GridContextMenu;
@@ -13,7 +13,6 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.data.value.ValueChangeMode;
-import io.vavr.control.Try;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.vaadin.klaudeta.PaginatedGrid;
@@ -21,16 +20,16 @@ import org.vaadin.klaudeta.PaginatedGrid;
 @Slf4j
 public class FloorGridLayout extends VerticalLayout {
 
-    private final FloorRepository floorRepository;
+    private final FloorService floorService;
 
     private final ListDataProvider<Floor> floorProvider;
     private final PaginatedGrid<Floor> grid;
 
-    public FloorGridLayout(FloorRepository floorRepository) {
-        this.floorRepository = floorRepository;
+    public FloorGridLayout(FloorService floorService) {
+        this.floorService = floorService;
 
         grid = new PaginatedGrid<>(Floor.class);
-        floorProvider = DataProvider.ofCollection(this.floorRepository.findAll());
+        floorProvider = DataProvider.ofCollection(floorService.findAll());
         grid.setItems(floorProvider);
         grid.setPageSize(15);
         grid.setPaginatorSize(5);
@@ -78,7 +77,7 @@ public class FloorGridLayout extends VerticalLayout {
         log.info(floor.toString() + " floor with id " + floor.getId() + " is being removed", FloorGridLayout.class);
         floorProvider.getItems().remove(floor);
         floorProvider.refreshAll();
-        floorRepository.delete(floor);
+        floorService.delete(floor);
 
         Notification.show("Property has been removed");
     }

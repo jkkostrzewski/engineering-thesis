@@ -6,10 +6,10 @@ import java.util.Optional;
 
 import com.example.thesis.backend.floor.Floor;
 import com.example.thesis.backend.notice.NoticeBoard;
-import com.example.thesis.backend.notice.NoticeBoardRepository;
+import com.example.thesis.backend.notice.NoticeService;
 import com.example.thesis.backend.security.SecurityUtils;
 import com.example.thesis.backend.security.auth.User;
-import com.example.thesis.backend.security.auth.UserRepository;
+import com.example.thesis.backend.security.auth.UserService;
 import com.example.thesis.views.auth.UserManagementView;
 import com.example.thesis.views.floor.FloorManagementView;
 import com.example.thesis.views.notice.board.NoticeBoardView;
@@ -21,11 +21,12 @@ import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
-import com.vaadin.flow.component.html.*;
+import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.page.Push;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.tabs.TabsVariant;
@@ -41,26 +42,21 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import static com.example.thesis.backend.security.SecurityUtils.userHasRole;
 
-/**
- * The main view is a top-level placeholder for other views.
- */
 @JsModule("./styles/shared-styles.js")
 @Theme(value = Material.class, variant = Material.DARK)
 @CssImport("./styles/views/main/main-view.css")
 public class MainView extends AppLayout {
 
-    @Autowired
-    private final NoticeBoardRepository noticeBoardRepository;
-
-    @Autowired
-    private final UserRepository userRepository;
+    private final NoticeService noticeService;
+    private final UserService userService;
 
     private final Tabs menu;
     private H1 viewTitle;
 
-    public MainView(NoticeBoardRepository noticeBoardRepository, UserRepository userRepository) {
-        this.noticeBoardRepository = noticeBoardRepository;
-        this.userRepository = userRepository;
+    @Autowired
+    public MainView(NoticeService noticeService, UserService userService) {
+        this.noticeService = noticeService;
+        this.userService = userService;
 
         setPrimarySection(Section.DRAWER);
         addToNavbar(true, createHeaderContent());
@@ -152,11 +148,11 @@ public class MainView extends AppLayout {
 
     private void addBoardLinks(List<Component> links) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User currentUser = userRepository.findByUsername(authentication.getName())
+        User currentUser = userService.findByUsername(authentication.getName())
                 .orElseThrow(RuntimeException::new);
 
         for (Floor floor : currentUser.getFloors()) {
-            NoticeBoard noticeBoard = noticeBoardRepository.findByOwner(floor);
+            NoticeBoard noticeBoard = noticeService.findByOwner(floor);
             String boardName = noticeBoard.getName();
             links.add(new RouterLink(boardName, NoticeBoardView.class, boardName));
         }

@@ -10,16 +10,13 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.server.StreamResource;
 
 import java.io.ByteArrayInputStream;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
+
+import static com.example.thesis.views.utilities.DateUtility.STANDARD_DATE_TIME;
 
 @CssImport("./styles/views/notice/board/notice.css")
 public class NoticeComponent extends VerticalLayout {
 
     public static int BODY_MAX_LENGTH = 770;
-    public static DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-                                                                           .withZone(ZoneId
-                                                                                   .systemDefault()); //TODO wyrzucić to do klasy utilities?
 
     private Notice notice;
 
@@ -31,7 +28,7 @@ public class NoticeComponent extends VerticalLayout {
         title.setId("notice-title");
         title.setSizeUndefined();
 
-        Paragraph date = new Paragraph(DATE_TIME_FORMATTER.format(notice.getCreationDate()));
+        Paragraph date = new Paragraph(STANDARD_DATE_TIME.format(notice.getCreationDate()));
         date.setId("notice-date");
         date.setSizeUndefined();
 
@@ -44,7 +41,7 @@ public class NoticeComponent extends VerticalLayout {
 
         Button readMore = new Button("Read More");
 
-        readMore.addClickListener(e -> navigateToNoticeView());
+        readMore.addClickListener(event -> navigateToNoticeView());
 
         if (body.getText().length() > BODY_MAX_LENGTH) {        //TODO skalowanie
             body.setText(body.getText().substring(0, BODY_MAX_LENGTH + 1) + "...");
@@ -60,6 +57,6 @@ public class NoticeComponent extends VerticalLayout {
     }
 
     private void navigateToNoticeView() {
-        UI.getCurrent().navigate("notice-view/" + notice.getId());
+        UI.getCurrent().navigate(NoticeView.class, notice.getId());
     }
 }
