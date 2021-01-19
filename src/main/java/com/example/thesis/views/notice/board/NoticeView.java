@@ -103,11 +103,8 @@ public class NoticeView extends VerticalLayout implements HasUrlParameter<Long> 
     @Override
     protected void onAttach(AttachEvent attachEvent) {
         UI ui = attachEvent.getUI();
-        broadcasterRegistration = CommentBroadcaster.register(() ->
-                ui.access(() ->
-                        commentSection.refreshCommentSection()
-                )
-        );
+        broadcasterRegistration = CommentBroadcaster.register(noticeId ->
+                ui.access(() -> commentSection.refreshCommentSection(noticeId)));
     }
 
     @Override

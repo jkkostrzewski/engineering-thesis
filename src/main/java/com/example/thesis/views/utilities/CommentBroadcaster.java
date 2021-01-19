@@ -1,20 +1,19 @@
 package com.example.thesis.views.utilities;
 
 import com.vaadin.flow.shared.Registration;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.LinkedList;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.function.Consumer;
 
-@Slf4j
 public class CommentBroadcaster {
     static Executor executor = Executors.newSingleThreadExecutor();
 
-    static LinkedList<Runnable> listeners = new LinkedList<>();
+    static LinkedList<Consumer<Long>> listeners = new LinkedList<>();
 
     public static synchronized Registration register(
-            Runnable listener) {
+            Consumer<Long> listener) {
         listeners.add(listener);
 
         return () -> {
@@ -24,9 +23,9 @@ public class CommentBroadcaster {
         };
     }
 
-    public static synchronized void broadcast() {
-        for (Runnable listener : listeners) {
-            executor.execute(listener);
+    public static synchronized void broadcast(long noticeId) {
+        for (Consumer<Long> listener : listeners) {
+            executor.execute(() -> listener.accept(noticeId));
         }
     }
 }

@@ -1,9 +1,7 @@
 package com.example.thesis.views.notice.board;
 
 import com.example.thesis.backend.notice.Comment;
-import com.example.thesis.backend.notice.Notice;
 import com.example.thesis.backend.notice.ParentComment;
-import com.example.thesis.backend.security.auth.User;
 import com.example.thesis.views.utilities.CommentBroadcaster;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
@@ -30,11 +28,11 @@ public class LeaveCommentComponent extends VerticalLayout {
         this.noticeView = noticeView;
         submit.addClickListener(e -> {
             addParentComment();
-            CommentBroadcaster.broadcast();
+            CommentBroadcaster.broadcast(this.noticeView.getNotice().getId());
         });
     }
 
-    public LeaveCommentComponent(NoticeView noticeView, ParentComment parent) {   //TODO check if notice persists after adding parent comment
+    public LeaveCommentComponent(NoticeView noticeView, Button reply, ParentComment parent) {   //TODO check if notice persists after adding parent comment
         innerBox = new Div();
         innerBox.setId("inner-box-reply");
 
@@ -44,7 +42,9 @@ public class LeaveCommentComponent extends VerticalLayout {
 
         submit.addClickListener(e ->  {
             addReply(parent);
-            CommentBroadcaster.broadcast();
+            CommentBroadcaster.broadcast(this.noticeView.getNotice().getId());
+            this.setVisible(false);
+            reply.setText("Reply");
         });
     }
 
