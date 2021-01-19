@@ -1,5 +1,6 @@
 package com.example.thesis.views.exception;
 
+import com.example.thesis.backend.security.SecurityUtils;
 import com.example.thesis.views.main.MainView;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -27,7 +28,7 @@ public class NotFoundView extends VerticalLayout implements HasErrorParameter<No
     @Override
     public int setErrorParameter(BeforeEnterEvent event, ErrorParameter<NotFoundException> parameter) {
         log.error(parameter.getException().getMessage());
-        add(new H1("Could not navigate to '" + event.getLocation().getPath() + "'"));
+        add(new H1(SecurityUtils.getLoggedUserUsername() + " - " + "Could not navigate to '" + event.getLocation().getPath() + "'"));
         return HttpServletResponse.SC_NOT_FOUND;
     }
 }

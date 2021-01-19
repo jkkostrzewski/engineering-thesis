@@ -1,5 +1,6 @@
 package com.example.thesis.views.exception;
 
+import com.example.thesis.backend.security.SecurityUtils;
 import com.example.thesis.views.main.MainView;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -25,7 +26,7 @@ public class InternalServerErrorView extends VerticalLayout implements HasErrorP
 
     @Override
     public int setErrorParameter(BeforeEnterEvent event, ErrorParameter<Exception> parameter) {
-        log.error(parameter.getException().getMessage());
+        log.error(SecurityUtils.getLoggedUserUsername() + " - " + parameter.getException().getMessage());
         add(new H1("Internal server error"));
         return HttpServletResponse.SC_NOT_FOUND;
     }
