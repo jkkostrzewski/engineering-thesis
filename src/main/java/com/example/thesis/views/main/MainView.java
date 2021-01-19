@@ -11,11 +11,13 @@ import com.example.thesis.backend.security.SecurityUtils;
 import com.example.thesis.backend.security.auth.User;
 import com.example.thesis.backend.security.auth.UserService;
 import com.example.thesis.views.auth.UserManagementView;
+import com.example.thesis.views.exception.NotFoundView;
 import com.example.thesis.views.floor.FloorManagementView;
 import com.example.thesis.views.notice.board.NoticeBoardView;
 import com.example.thesis.views.property.PropertyManagementView;
 import com.example.thesis.views.reservation.ReservationView;
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
@@ -30,12 +32,14 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.tabs.TabsVariant;
+import com.vaadin.flow.router.NotFoundException;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.RouteConfiguration;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.theme.Theme;
 import com.example.thesis.views.auth.LoginView;
 import com.vaadin.flow.theme.material.Material;
+import io.vavr.control.Try;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -52,6 +56,7 @@ public class MainView extends AppLayout {
 
     private final Tabs menu;
     private H1 viewTitle;
+    private String currentRoute;
 
     @Autowired
     public MainView(NoticeService noticeService, UserService userService) {
@@ -177,7 +182,11 @@ public class MainView extends AppLayout {
     }
 
     private Optional<Tab> getTabWithCurrentRoute() {
-        String currentRoute = RouteConfiguration.forSessionScope().getUrl(getContent().getClass());
+        try {
+            currentRoute = RouteConfiguration.forSessionScope().getUrl(getContent().getClass());
+        } catch (NotFoundException exception) {
+            UI.getCurrent().navigate(NotFoundView.class);
+        }
         return menu.getChildren().filter(tab -> hasLink(tab, currentRoute)).findFirst().map(Tab.class::cast);
     }
 
