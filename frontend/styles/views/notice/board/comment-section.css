@@ -2,31 +2,62 @@
 }
 
 #comment-component {
-    background-color: #384361;
-    width: 50% !important;
+    background-color: var(--material-secondary-background-color);
+    box-shadow: var(--material-shadow-elevation-2dp);
     display: block;
-    margin-left: 25%;
-    margin-right: 25%;
     margin-bottom: 0.5em;
-
-    border-radius: 4px;
 }
 
 #reply-comment-component {
-    background-color: #384361;
-    width: 47% !important;
+    background-color: var(--material-secondary-background-color);
+    box-shadow: var(--material-shadow-elevation-2dp);
     display: block;
-    margin-left: 28%;
-    margin-right: 28%;
     margin-bottom: 0.5em;
-
-    border-radius: 4px;
 }
 
 #comments-box {
     border-style: solid;
     display: block;
     width: 90% !important;
-    margin-left: auto;
-    margin-right: auto;
+    margin: auto;
+}
+
+/*###Desktops, big landscape tablets and laptops(Large, Extra large)####*/
+@media screen and (min-width: 1024px){
+    #comment-component {
+        width: 50% !important;
+        margin-left: 25%;
+        margin-right: 25%;
+    }
+
+    #reply-comment-component {
+        width: 47% !important;
+        margin-left: 28%;
+        margin-right: 28%;
+    }
+}
+
+/*###Tablet(medium)###*/
+@media screen and (min-width : 768px) and (max-width : 1023px){
+    #comment-component {
+        width: 80% !important;
+        margin-left: 10%;
+    }
+
+    #reply-comment-component {
+        width: 75% !important;
+        margin-left: 15%;
+    }
+}
+
+/*### Smartphones (portrait and landscape)(small)### */
+@media screen and (min-width : 0px) and (max-width : 767px){
+    #comment-component {
+        width: 100% !important;
+    }
+
+    #reply-comment-component {
+        width: 93% !important;
+        margin-left: 7%;
+    }
 }

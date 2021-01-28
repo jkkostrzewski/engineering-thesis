@@ -20,9 +20,7 @@ import static com.example.thesis.views.utilities.DateFormatters.STANDARD_DATE_TI
 @CssImport("./styles/views/notice/board/notice.css")
 public class NoticeComponent extends VerticalLayout {
 
-    public static int BODY_MAX_LENGTH = 350;
-
-    private Notice notice;
+    private final Notice notice;
 
     @Id("notice-title")
     private final Paragraph title;
@@ -31,7 +29,7 @@ public class NoticeComponent extends VerticalLayout {
     private final Paragraph date;
 
     @Id("body")
-    private Div body;
+    private final Div body;
 
     @Id("read-more")
     private final Button readMore;
@@ -41,10 +39,8 @@ public class NoticeComponent extends VerticalLayout {
         this.notice = notice;
 
         title = new Paragraph(notice.getTitle());
-        title.setSizeUndefined();
-
+        title.setId("notice-title");
         date = new Paragraph(STANDARD_DATE_TIME.format(notice.getCreationDate()));
-        date.setSizeUndefined();
 
         add(title, date);
 

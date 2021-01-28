@@ -1,10 +1,10 @@
 #notice-view-image {
      width: 100%;
-     height: auto;  /* nie ma skalowania do tych samych proporcji ale skaluje się do mniejszych rozdzielczosci */
+     height: auto;
 }
 
 #notice-view-title {
-    font-size: 22px;
+    font-size: var(--material-h5-font-size);
     margin-bottom: 0;
 }
 

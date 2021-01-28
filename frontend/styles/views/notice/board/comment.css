@@ -2,7 +2,7 @@
 }
 
 #full-name {
-    font-size: 1.45em;
+    font-size: var(--material-body-font-size);
 }
 
 #reply-button {

@@ -1,20 +1,19 @@
 notice,
 #notice {
      border-radius: 25px;
-     border: 2px solid #3c597c;
      padding: 2em;
      width: 100%;
-     background-color: var(--material-secondary-background-color);
+     box-shadow: var(--material-shadow-elevation-2dp);
 }
 
 #image {
      width: 100%;
-     height: auto;  /* nie ma skalowania do tych samych proporcji ale skaluje się do mniejszych rozdzielczosci */
+     height: auto;
 }
 
 #notice-title {
-    font-size: 22px;
     font: var(--material-font-family)
+    font-size: var(--material-h5-font-size);
     margin-bottom: 0;
 }
 

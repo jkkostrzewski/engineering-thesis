@@ -4,7 +4,7 @@ notice-board,
 }
 
 #board-header {
-    background-color: #435162;
+    box-shadow: var(--material-shadow-elevation-2dp);
 }
 
 #board-name {

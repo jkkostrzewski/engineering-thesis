@@ -70,11 +70,17 @@ public class NoticeView extends VerticalLayout implements HasUrlParameter<Long> 
         date.setId("notice-view-date");
         date.setSizeUndefined();
 
-        StreamResource imageResource = new StreamResource("noticeImage.jpg", () -> new ByteArrayInputStream(notice
-                .getImage()));
-        Image image = new Image(imageResource, "NoticeImage");
-        image.setId("notice-view-image");
-        image.setSizeUndefined();
+        add(title, date);
+
+        if (notice.getImage().length != 0) {
+            StreamResource imageResource = new StreamResource("noticeImage.jpg", () -> new ByteArrayInputStream(notice
+                    .getImage()));
+            Image image = new Image(imageResource, "NoticeImage");
+            image.setId("notice-view-image");
+            image.setSizeUndefined();
+
+            add(image);
+        }
         Div body = new Div();
         HtmlUtil.setInnerHtml(body.getElement(), notice.getBody());
 
@@ -84,7 +90,7 @@ public class NoticeView extends VerticalLayout implements HasUrlParameter<Long> 
         commentSection = new CommentSectionComponent(this);
 
         setSizeUndefined();
-        add(title, date, image, body, commentSection);
+        add(body, commentSection);
     }
 
     public Notice getNotice() {

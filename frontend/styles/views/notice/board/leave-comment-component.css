@@ -2,14 +2,15 @@
 }
 
 #inner-box-parent {
-    background-color: #283b59;
+    background-color: var(--material-secondary-background-color);
+    box-shadow: var(--material-shadow-elevation-2dp);
     margin: 0 auto;
     align-items: center;
-    width: 46%;
 }
 
 #inner-box-reply {
-    background-color: #283b59;
+    background-color: var(--material-secondary-background-color);
+    box-shadow: var(--material-shadow-elevation-4dp);
     margin: 0 auto;
     align-items: right;
     width: 98%;
@@ -26,4 +27,25 @@
     width: 8em;
     float: right;
     right: 0px;
+}
+
+/*###Desktops, big landscape tablets and laptops(Large, Extra large)####*/
+@media screen and (min-width: 1024px){
+    #inner-box-parent {
+        width: 46%;
+    }
+}
+
+/*###Tablet(medium)###*/
+@media screen and (min-width : 768px) and (max-width : 1023px){
+    #inner-box-parent {
+        width: 80%;
+    }
+}
+
+/*### Smartphones (portrait and landscape)(small)### */
+@media screen and (min-width : 0px) and (max-width : 767px){
+    #inner-box-parent {
+        width: 100%;
+    }
 }
