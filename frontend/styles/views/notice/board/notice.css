@@ -3,8 +3,8 @@ notice,
      border-radius: 25px;
      border: 2px solid #3c597c;
      padding: 2em;
-     width: 80%;
-     background-color: #435162;
+     width: 100%;
+     background-color: var(--material-secondary-background-color);
 }
 
 #image {
@@ -14,6 +14,7 @@ notice,
 
 #notice-title {
     font-size: 22px;
+    font: var(--material-font-family)
     margin-bottom: 0;
 }
 
@@ -23,4 +24,13 @@ notice,
 
 #notice-date {
     margin: 0;
+}
+
+#body {
+}
+
+.truncate-text {
+  height: 8em;
+  width: 100%;
+  overflow: hidden;
 }

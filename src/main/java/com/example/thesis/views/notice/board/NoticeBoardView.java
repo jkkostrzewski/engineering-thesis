@@ -10,6 +10,7 @@ import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.polymertemplate.Id;
 import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.OptionalParameter;
@@ -32,6 +33,12 @@ public class NoticeBoardView extends VerticalLayout implements HasUrlParameter<S
     private final NoticeService noticeService;
     private NoticeBoard noticeBoard;
 
+    @Id("board-header")
+    private HorizontalLayout boardHeader;
+
+    @Id("board-name")
+    private Paragraph boardNameText;
+
     @Autowired
     public NoticeBoardView(NoticeService noticeService) {
         setId("notice-board");
@@ -45,11 +52,8 @@ public class NoticeBoardView extends VerticalLayout implements HasUrlParameter<S
         noticeBoard = noticeService.findByName(boardName.replace("%20", " "));
         removeAll();
 
-        HorizontalLayout boardHeader = new HorizontalLayout();
-        boardHeader.setId("board-header");
-
-        Paragraph boardNameText = new Paragraph(noticeBoard.getName());
-        boardNameText.setId("board-name");
+        boardHeader = new HorizontalLayout();
+        boardNameText = new Paragraph(noticeBoard.getName());
 
         boardHeader.add(boardNameText);
         boardHeader.expand(boardNameText);

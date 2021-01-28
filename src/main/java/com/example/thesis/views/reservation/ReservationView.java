@@ -4,10 +4,9 @@ import com.example.thesis.backend.floor.Floor;
 import com.example.thesis.backend.reservation.*;
 import com.example.thesis.backend.security.SecurityUtils;
 import com.example.thesis.backend.security.auth.User;
-import com.example.thesis.backend.security.auth.UserRepository;
 import com.example.thesis.backend.security.auth.UserService;
 import com.example.thesis.views.main.MainView;
-import com.example.thesis.views.utilities.DateUtility;
+import com.example.thesis.views.utilities.DateFormatters;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.accordion.Accordion;
 import com.vaadin.flow.component.accordion.AccordionPanel;
@@ -260,12 +259,12 @@ public class ReservationView extends VerticalLayout {
 //    }
 
     private AccordionPanel createAccordionPanelForReservation(Reservation reservation) {
-        String start = DateUtility.HOUR_MINUTE.format(reservation.getStart());
-        String end = DateUtility.HOUR_MINUTE.format(reservation.getStart().plus(reservation.getDuration()));
+        String start = DateFormatters.HOUR_MINUTE.format(reservation.getStart());
+        String end = DateFormatters.HOUR_MINUTE.format(reservation.getStart().plus(reservation.getDuration()));
         String time = start + " - " + end;
 
         String contentHTML = "Created by: " + reservation.getUser().getFullName() + "<br>"
-                + "Creation time: " + DateUtility.STANDARD_DATE_TIME.format(reservation.getCreationTime()) + "<br>";
+                + "Creation time: " + DateFormatters.STANDARD_DATE_TIME.format(reservation.getCreationTime()) + "<br>";
         Span content = new Span();
         content.getElement().setProperty("innerHTML", contentHTML);
 

@@ -15,7 +15,8 @@ $_documentContainer.innerHTML = `
 <custom-style>
   <style>
     html {
-      overflow:hidden;
+      overflow: hidden;
+      font: var(--material-font-family);
     }
   </style>
 </custom-style>

@@ -3,7 +3,6 @@ package com.example.thesis.views.notice.board;
 import com.example.thesis.backend.ServiceResponse;
 import com.example.thesis.backend.notice.Notice;
 import com.example.thesis.backend.notice.NoticeBoard;
-import com.example.thesis.backend.notice.NoticeBoardRepository;
 import com.example.thesis.backend.notice.NoticeService;
 import com.example.thesis.views.main.MainView;
 import com.vaadin.flow.component.*;
@@ -13,7 +12,7 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.TextArea;
+import com.vaadin.flow.component.richtexteditor.RichTextEditor;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.upload.Upload;
 import com.vaadin.flow.component.upload.receivers.MemoryBuffer;
@@ -47,7 +46,7 @@ public class AddNoticeView extends VerticalLayout implements HasUrlParameter<Str
 
     private byte[] imageBytes;
     private TextField title;
-    private TextArea body;
+    private RichTextEditor body;
     private Button confirm;
 
     @Autowired
@@ -76,7 +75,7 @@ public class AddNoticeView extends VerticalLayout implements HasUrlParameter<Str
 
         add(upload, output);
 
-        body = new TextArea("Body");
+        body = new RichTextEditor();
         body.setId("body");
         body.setSizeUndefined();
 
@@ -89,7 +88,7 @@ public class AddNoticeView extends VerticalLayout implements HasUrlParameter<Str
             ServiceResponse<Notice> response = noticeService.saveNotice(Notice.builder()
                             .creationDate(Instant.now())
                             .title(title.getValue())
-                            .body(body.getValue())
+                            .body(body.getHtmlValue())
                             .image(imageBytes).build(),
                     noticeBoard);
 

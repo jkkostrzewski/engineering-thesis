@@ -29,6 +29,7 @@ public class LeaveCommentComponent extends VerticalLayout {
         submit.addClickListener(e -> {
             addParentComment();
             CommentBroadcaster.broadcast(this.noticeView.getNotice().getId());
+            commentBox.setValue("");
         });
     }
 
@@ -45,6 +46,7 @@ public class LeaveCommentComponent extends VerticalLayout {
             CommentBroadcaster.broadcast(this.noticeView.getNotice().getId());
             this.setVisible(false);
             reply.setText("Reply");
+            commentBox.setValue("");
         });
     }
 

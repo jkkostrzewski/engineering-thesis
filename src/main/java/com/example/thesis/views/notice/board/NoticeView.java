@@ -8,10 +8,12 @@ import com.example.thesis.backend.security.auth.User;
 import com.example.thesis.backend.security.auth.UserService;
 import com.example.thesis.views.main.MainView;
 import com.example.thesis.views.utilities.CommentBroadcaster;
+import com.example.thesis.views.utilities.HtmlUtil;
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.DetachEvent;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.dependency.CssImport;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -27,7 +29,7 @@ import org.springframework.security.access.annotation.Secured;
 
 import java.io.ByteArrayInputStream;
 
-import static com.example.thesis.views.utilities.DateUtility.STANDARD_DATE_TIME;
+import static com.example.thesis.views.utilities.DateFormatters.STANDARD_DATE_TIME;
 
 @Route(value = NoticeView.ROUTE, layout = MainView.class)
 @PageTitle("Notice view")
@@ -73,7 +75,8 @@ public class NoticeView extends VerticalLayout implements HasUrlParameter<Long> 
         Image image = new Image(imageResource, "NoticeImage");
         image.setId("notice-view-image");
         image.setSizeUndefined();
-        Paragraph body = new Paragraph(notice.getBody());
+        Div body = new Div();
+        HtmlUtil.setInnerHtml(body.getElement(), notice.getBody());
 
         String username = SecurityUtils.getLoggedUserUsername();
         currentUser = userService.findByUsername(username).orElseThrow(RuntimeException::new);

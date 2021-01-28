@@ -16,8 +16,8 @@ Czego brakuje na dzień 9.12.2020
 
 
 - TŁUMACZENIE ELEMENTÓW NA POLSKI
-- Zweryfikowanie kolorystyki i ogólne ułożenie elementów
 - Opcja edycji rezerwacji i ogłoszeń dla właściciela danego elementu oraz adminów/floorAdminów
+- Zweryfikowanie kolorystyki i ogólne ułożenie elementów
 - Wszelakie drobne poprawki TODO we wszystkich klasach
 - Optymalizacja i refactoring!
 

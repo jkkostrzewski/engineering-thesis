@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 public class InternalServerErrorView extends VerticalLayout implements HasErrorParameter<Exception> {
 
     public static final String ROUTE = "/internal-server-error";
+    private final String LOG_DELIMITER = "------------------------------------------------------------------";
 
     public InternalServerErrorView() {
         setAlignItems(Alignment.CENTER);
@@ -26,8 +27,23 @@ public class InternalServerErrorView extends VerticalLayout implements HasErrorP
 
     @Override
     public int setErrorParameter(BeforeEnterEvent event, ErrorParameter<Exception> parameter) {
-        log.error(SecurityUtils.getLoggedUserUsername() + " - " + parameter.getException().getMessage());
+        Exception exception = parameter.getException();
+        logError(exception);
+
         add(new H1("Internal server error"));
         return HttpServletResponse.SC_NOT_FOUND;
+    }
+
+    private void logError(Exception exception) {
+        log.error(LOG_DELIMITER);
+        log.error(SecurityUtils.getLoggedUserUsername() + " - " + exception.getClass().getName() + " - " + exception.getMessage());
+        printStackTrace(exception);
+        log.error(LOG_DELIMITER);
+    }
+
+    private void printStackTrace(Exception exception) {
+        for (StackTraceElement stackTraceElement : exception.getStackTrace()) {
+            log.error(stackTraceElement.toString());
+        }
     }
 }
