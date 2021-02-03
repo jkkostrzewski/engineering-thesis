@@ -42,7 +42,7 @@ public class EmailService {
         Try.of(() -> {
             helper = new MimeMessageHelper(mail, true);
             helper.setTo(to);
-            helper.setFrom("shopfinderappemailsender@gmail.com");
+            helper.setFrom("dormapp@outlook.com");
             helper.setSubject(title);
             helper.setText(content, true);
             return helper;
