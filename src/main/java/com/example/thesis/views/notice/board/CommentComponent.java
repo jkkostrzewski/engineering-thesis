@@ -50,6 +50,7 @@ public class CommentComponent extends VerticalLayout {
                 reply.setText("Cancel");
             } else {
                 reply.setText("Reply");
+                commentComponent.clearCommentBox();
             }
         });
 

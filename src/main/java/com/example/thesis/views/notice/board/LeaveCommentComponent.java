@@ -6,6 +6,7 @@ import com.example.thesis.views.utilities.CommentBroadcaster;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 
@@ -19,7 +20,7 @@ public class LeaveCommentComponent extends VerticalLayout {
     private Button submit;
     private Div innerBox;
 
-    public LeaveCommentComponent(NoticeView noticeView) {   //TODO check if notice persists after adding parent comment
+    public LeaveCommentComponent(NoticeView noticeView) {
         innerBox = new Div();
         innerBox.setId("inner-box-parent");
 
@@ -27,13 +28,17 @@ public class LeaveCommentComponent extends VerticalLayout {
 
         this.noticeView = noticeView;
         submit.addClickListener(e -> {
-            addParentComment();
-            CommentBroadcaster.broadcast(this.noticeView.getNotice().getId());
-            commentBox.setValue("");
+            if(!commentBox.getValue().isEmpty()) {
+                addParentComment();
+                CommentBroadcaster.broadcast(this.noticeView.getNotice().getId());
+                commentBox.setValue("");
+            } else {
+                Notification.show("You cannot add an empty comment!");
+            }
         });
     }
 
-    public LeaveCommentComponent(NoticeView noticeView, Button reply, ParentComment parent) {   //TODO check if notice persists after adding parent comment
+    public LeaveCommentComponent(NoticeView noticeView, Button reply, ParentComment parent) {
         innerBox = new Div();
         innerBox.setId("inner-box-reply");
 
@@ -42,12 +47,20 @@ public class LeaveCommentComponent extends VerticalLayout {
         this.noticeView = noticeView;
 
         submit.addClickListener(e ->  {
-            addReply(parent);
-            CommentBroadcaster.broadcast(this.noticeView.getNotice().getId());
-            this.setVisible(false);
-            reply.setText("Reply");
-            commentBox.setValue("");
+            if(!commentBox.getValue().isEmpty()) {
+                addReply(parent);
+                CommentBroadcaster.broadcast(this.noticeView.getNotice().getId());
+                this.setVisible(false);
+                reply.setText("Reply");
+                commentBox.setValue("");
+            } else {
+                Notification.show("You cannot add an empty comment!");
+            }
         });
+    }
+
+    public void clearCommentBox() {
+        commentBox.clear();
     }
 
     private void constructUnchangeableParts() {

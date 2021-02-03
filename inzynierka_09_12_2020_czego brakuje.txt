@@ -18,6 +18,7 @@ Czego brakuje na dzień 9.12.2020
 - Zweryfikowanie kolorystyki i ogólne ułożenie elementów
 - Wszelakie drobne poprawki TODO we wszystkich klasach
 - Optymalizacja i refactoring!
+- Usuwanie notice'ów
 
 DODATKOWE:
 - usuwanie artykułów wszystkich dla admina (userHasRole(admin)) / z piętra dla floorAdmina / pojedynczych dla usera
