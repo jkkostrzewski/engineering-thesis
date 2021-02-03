@@ -13,8 +13,6 @@ Czego brakuje na dzień 9.12.2020
     WIDOK DODAWANIA PROPERTY DLA PIĘTRA
 
 
-
-
 - TŁUMACZENIE ELEMENTÓW NA POLSKI
 - Opcja edycji rezerwacji i ogłoszeń dla właściciela danego elementu oraz adminów/floorAdminów
 - Zweryfikowanie kolorystyki i ogólne ułożenie elementów
@@ -30,8 +28,6 @@ Low priority:
 - usuwanie dowolnej rezerwacji przez admina wszędzie i przez floorAdmina na konkretnym piętrze
 - możliwe godziny wynajęcia w Property
 - Linkowanie artkułów między boardami przez floorAdmina, admina
-- Usunięcie wyświetlania stack trace'a na samej stronie podczas jakiegokolwiek błędu
-- przekazywanie do child componentów samego widoku zamiast repozytoriów?
 - kliknięcie na background notice'a powinno przechodzić do jego widoku zawartości
 
 
@@ -40,8 +36,8 @@ BUGI:
 	z MainView dlatego ze jest to ten sam widok
 - wielkości komponentów na telefonie są kompletnie nieprawidłowe
 - upload zdjęcia z telefonu nie działa (?)
-- dodanie nowego użytkownika nie działa z deploya (?) - gmail smtp blokuje heroku
 - przy usuwaniu piętra które ma jakieś zależności nie ma komunikatu informującego że dane piętro jest wykorzystywane
     (można tu dodać - czy na pewno chcesz usunąć i wywalić kaskadowo)
 - po zalogowaniu podświetla się 1st floor zamiast main floor
+- przycisk edycji posta ma na hoverze za duzy background
 

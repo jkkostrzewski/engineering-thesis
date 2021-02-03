@@ -160,9 +160,9 @@ public class SetupDataLoader implements
 //        comments2.add(comment4);
 
         Notice test_notice_one = Notice.builder().title("Ten jest z komentarzami").body(longArticle).creationDate(Instant.now())
-                .image(bFile).parentComments(comments).build();
+                .image(bFile).createdByUsername("admin").parentComments(comments).build();
         Notice test_notice_two = Notice.builder().title("Ten jest bez komentarzy").body(longArticle).creationDate(Instant.now())
-                .image(bFile).parentComments(comments2).build();
+                .image(bFile).createdByUsername("user").parentComments(comments2).build();
         noticeRepository.save(test_notice_one);
         noticeRepository.save(test_notice_two);
 

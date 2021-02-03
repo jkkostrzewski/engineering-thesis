@@ -31,6 +31,8 @@ public class Notice {
     private byte[] image;
 //    private String[] tags;
 
+    private String createdByUsername;
+
     @OneToMany(fetch = EAGER, cascade = CascadeType.ALL)
     @OrderBy(value = "id")
     @JoinTable(

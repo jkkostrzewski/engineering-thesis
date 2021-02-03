@@ -29,7 +29,18 @@ notice,
 }
 
 .truncate-text {
-  height: 8em;
-  width: 100%;
-  overflow: hidden;
+    height: 8em;
+    width: 100%;
+    overflow: hidden;
+}
+
+#header {
+}
+
+#edit-button {
+    position: absolute;
+    right: 0px;
+}
+
+#edit-button:hover {
 }

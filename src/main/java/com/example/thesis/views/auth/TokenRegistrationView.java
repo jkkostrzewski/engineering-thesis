@@ -13,6 +13,7 @@ import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.*;
+import com.vaadin.flow.server.VaadinSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -115,6 +116,7 @@ public class TokenRegistrationView extends VerticalLayout implements HasUrlParam
             userRepository.save(user);
 
             Notification.show("User registered successfully");
+            UI.getCurrent().navigate(LoginView.class);
         } else {
             Notification.show("Passwords don't match!");
         }

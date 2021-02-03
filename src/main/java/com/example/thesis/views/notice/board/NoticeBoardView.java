@@ -15,9 +15,16 @@ import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.OptionalParameter;
 import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.router.QueryParameters;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.RouteConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static com.example.thesis.backend.security.SecurityUtils.userHasRole;
 
@@ -58,17 +65,26 @@ public class NoticeBoardView extends VerticalLayout implements HasUrlParameter<S
         boardHeader.add(boardNameText);
         boardHeader.expand(boardNameText);
 
-        if (userHasRole(AddNoticeView.PRIVILEGE)) {
+        if (userHasRole(EditNoticeView.PRIVILEGE)) {
             Button addNotice = new Button("Add notice");
             addNotice.setId("add-notice-button");
-            addNotice.addClickListener(e -> UI.getCurrent().navigate(AddNoticeView.class, boardName));
+
+            String route = RouteConfiguration.forSessionScope().getUrl(EditNoticeView.class);
+            List<String> boardNameParameter = new ArrayList<>();
+            boardNameParameter.add(boardName);
+
+            Map<String, List<String>> parameterMap = new HashMap<>();
+            parameterMap.put("boardName", boardNameParameter);
+
+            QueryParameters parameters = new QueryParameters(parameterMap);
+            addNotice.addClickListener(e -> UI.getCurrent().navigate(route, parameters));
             boardHeader.add(addNotice);
         }
 
         add(boardHeader);
 
         for (Notice notice : noticeBoard.getNotices()) {
-            add(new NoticeComponent(notice));
+            add(new NoticeComponent(notice, noticeBoard.getName()));
         }
     }
 }

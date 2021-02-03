@@ -19,6 +19,7 @@ import com.vaadin.flow.component.upload.receivers.MemoryBuffer;
 import com.vaadin.flow.internal.MessageDigestUtil;
 import com.vaadin.flow.router.*;
 import com.vaadin.flow.server.StreamResource;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,16 +34,20 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 
-@Route(value = AddNoticeView.ROUTE, layout = MainView.class)
+@Route(value = EditNoticeView.ROUTE, layout = MainView.class)
 @PageTitle("Add notice")
 @CssImport("./styles/views/notice/board/add-notice.css")
-@Secured(AddNoticeView.PRIVILEGE)
-public class AddNoticeView extends VerticalLayout implements HasUrlParameter<String> {
+@Secured(EditNoticeView.PRIVILEGE)
+@Slf4j
+public class EditNoticeView extends VerticalLayout implements HasUrlParameter<String>{
 
     public static final String PRIVILEGE = "ADD_NOTICE_VIEW_PRIVILEGE";
-    public static final String ROUTE = "add-notice";
+    public static final String ROUTE = "edit-notice";
 
     private byte[] imageBytes;
     private TextField title;
@@ -54,7 +59,10 @@ public class AddNoticeView extends VerticalLayout implements HasUrlParameter<Str
 
     private NoticeBoard noticeBoard;
 
-    public AddNoticeView(NoticeService noticeService) {
+    private Notice notice;
+    private final Upload upload;
+
+    public EditNoticeView(NoticeService noticeService) {
         this.noticeService = noticeService;
         setId("add-notice");
 
@@ -64,7 +72,7 @@ public class AddNoticeView extends VerticalLayout implements HasUrlParameter<Str
         add(title);
 
         MemoryBuffer buffer = new MemoryBuffer();
-        Upload upload = new Upload(buffer);
+        upload = new Upload(buffer);
         Div output = new Div();
 
         upload.addSucceededListener(event -> {  //max 10 MB
@@ -85,15 +93,26 @@ public class AddNoticeView extends VerticalLayout implements HasUrlParameter<Str
                 Notification.show("You can't add a notice without content!");
                 return;
             }
-            ServiceResponse<Notice> response = noticeService.saveNotice(Notice.builder()
-                            .creationDate(Instant.now())
-                            .title(title.getValue())
-                            .body(body.getHtmlValue())
-                            .image(imageBytes).build(),
-                    noticeBoard);
+
+            ServiceResponse<Notice> response;
+
+            if (Objects.nonNull(notice)) {
+                notice.setTitle(title.getValue());
+                notice.setBody(body.getHtmlValue());
+                notice.setImage(imageBytes);
+
+                response = noticeService.saveNotice(notice);
+            } else {
+                response = noticeService.saveNotice(Notice.builder()
+                                .creationDate(Instant.now())
+                                .title(title.getValue())
+                                .body(body.getHtmlValue())
+                                .image(imageBytes).build(),
+                        noticeBoard);
+            }
 
 
-            if (response.getStatus() == HttpStatus.OK) {
+            if (Objects.nonNull(response) && response.getStatus() == HttpStatus.OK) {
                 Notification.show("Upload has been successful");
                 UI.getCurrent().navigate(NoticeBoardView.class, noticeBoard.getName());
             } else {
@@ -104,13 +123,25 @@ public class AddNoticeView extends VerticalLayout implements HasUrlParameter<Str
 
         add(body, confirm);
 
-        //TODO add logic to fields not being complete
         this.setAlignItems(Alignment.CENTER);
     }
 
     @Override
-    public void setParameter(BeforeEvent beforeEvent, @OptionalParameter String boardName) {
+    public void setParameter(BeforeEvent beforeEvent, @OptionalParameter String parameter) {
+        QueryParameters queryParameters = beforeEvent.getLocation().getQueryParameters();
+        Map<String, List<String>> parameters = queryParameters.getParameters();
+
+        String boardName = parameters.get("boardName").get(0);
         noticeBoard = noticeService.findByName(boardName.replace("%20", " "));
+
+        if (Objects.nonNull(parameters.get("noticeId"))) {
+            long noticeId = Long.parseLong(parameters.get("noticeId").get(0));
+            notice = noticeService.findById(noticeId).getContent();
+
+            title.setValue(notice.getTitle());
+            body.asHtml().setValue(notice.getBody());
+            //TODO add image?
+        }
     }
 
     private Component createComponent(String mimeType, String fileName,

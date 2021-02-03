@@ -6,7 +6,7 @@ import com.example.thesis.backend.security.auth.Role;
 import com.example.thesis.backend.security.auth.RoleRepository;
 import com.example.thesis.views.auth.UserManagementView;
 import com.example.thesis.views.floor.FloorManagementView;
-import com.example.thesis.views.notice.board.AddNoticeView;
+import com.example.thesis.views.notice.board.EditNoticeView;
 import com.example.thesis.views.notice.board.NoticeBoardView;
 import com.example.thesis.views.notice.board.NoticeView;
 import com.example.thesis.views.property.PropertyManagementView;
@@ -41,7 +41,7 @@ public class DefaultPrivilegeProvider {
 
         noticeView = createPrivilegeIfNotFound(NoticeView.PRIVILEGE);
         noticeBoardView = createPrivilegeIfNotFound(NoticeBoardView.PRIVILEGE);
-        addNoticeView = createPrivilegeIfNotFound(AddNoticeView.PRIVILEGE);
+        addNoticeView = createPrivilegeIfNotFound(EditNoticeView.PRIVILEGE);
         reservationView = createPrivilegeIfNotFound(ReservationView.PRIVILEGE);
         userManagementView = createPrivilegeIfNotFound(UserManagementView.PRIVILEGE);
         floorManagementView = createPrivilegeIfNotFound(FloorManagementView.PRIVILEGE);
