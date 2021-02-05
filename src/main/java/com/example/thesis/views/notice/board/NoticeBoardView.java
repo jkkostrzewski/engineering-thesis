@@ -26,7 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.example.thesis.backend.security.SecurityUtils.userHasRole;
+import static com.example.thesis.backend.security.SecurityUtils.userHasPrivilege;
 
 
 @Route(value = NoticeBoardView.ROUTE, layout = MainView.class)
@@ -65,7 +65,7 @@ public class NoticeBoardView extends VerticalLayout implements HasUrlParameter<S
         boardHeader.add(boardNameText);
         boardHeader.expand(boardNameText);
 
-        if (userHasRole(EditNoticeView.PRIVILEGE)) {
+        if (userHasPrivilege(EditNoticeView.PRIVILEGE)) {
             Button addNotice = new Button("Add notice");
             addNotice.setId("add-notice-button");
 

@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Component
-public class DefaultPrivilegeProvider {
+public class PrivilegeProvider {
 
     public static final String ADMIN_PRIVILEGE = "ADMIN_PRIVILEGE";
     public static final String FLOOR_ADMIN_PRIVILEGE = "FLOOR_ADMIN_PRIVILEGE";
@@ -42,8 +42,8 @@ public class DefaultPrivilegeProvider {
     private final Privilege userPrivilege;
     private final Privilege floorAdminPrivilege;
 
-    public DefaultPrivilegeProvider(PrivilegeRepository privilegeRepository,
-                                    RoleRepository roleRepository) {
+    public PrivilegeProvider(PrivilegeRepository privilegeRepository,
+                             RoleRepository roleRepository) {
         this.privilegeRepository = privilegeRepository;
         this.roleRepository = roleRepository;
 

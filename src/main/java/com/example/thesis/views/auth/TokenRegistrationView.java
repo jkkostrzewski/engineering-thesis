@@ -2,7 +2,7 @@ package com.example.thesis.views.auth;
 
 import com.example.thesis.backend.floor.FloorRepository;
 import com.example.thesis.backend.security.auth.*;
-import com.example.thesis.backend.security.utilities.DefaultPrivilegeProvider;
+import com.example.thesis.backend.security.utilities.PrivilegeProvider;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
@@ -12,8 +12,11 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.router.*;
-import com.vaadin.flow.server.VaadinSession;
+import com.vaadin.flow.router.BeforeEvent;
+import com.vaadin.flow.router.HasUrlParameter;
+import com.vaadin.flow.router.OptionalParameter;
+import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -36,7 +39,7 @@ public class TokenRegistrationView extends VerticalLayout implements HasUrlParam
     private final UserRepository userRepository;
     
     @Autowired
-    private final DefaultPrivilegeProvider defaultPrivilegeProvider;
+    private final PrivilegeProvider privilegeProvider;
 
     @Autowired
     private final FloorRepository floorRepository;
@@ -53,11 +56,11 @@ public class TokenRegistrationView extends VerticalLayout implements HasUrlParam
     private Token token;
     private TextField floor;
 
-    public TokenRegistrationView(TokenRepository tokenRepository, PasswordEncoder passwordEncoder, UserRepository userRepository, DefaultPrivilegeProvider defaultPrivilegeProvider, FloorRepository floorRepository) {
+    public TokenRegistrationView(TokenRepository tokenRepository, PasswordEncoder passwordEncoder, UserRepository userRepository, PrivilegeProvider privilegeProvider, FloorRepository floorRepository) {
         this.tokenRepository = tokenRepository;
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
-        this.defaultPrivilegeProvider = defaultPrivilegeProvider;
+        this.privilegeProvider = privilegeProvider;
         this.floorRepository = floorRepository;
 
         setId("token-registration");
@@ -127,13 +130,13 @@ public class TokenRegistrationView extends VerticalLayout implements HasUrlParam
         Role role;
         switch (roleString) {
             case "User":
-                role = defaultPrivilegeProvider.user(username.getValue());
+                role = privilegeProvider.user(username.getValue());
                 break;
             case "FloorAdmin":
-                role = defaultPrivilegeProvider.floorAdmin(username.getValue());
+                role = privilegeProvider.floorAdmin(username.getValue());
                 break;
             case "Admin":
-                role = defaultPrivilegeProvider.admin(username.getValue());
+                role = privilegeProvider.admin(username.getValue());
                 break;
             default:
                 throw new RuntimeException();

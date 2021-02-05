@@ -39,12 +39,11 @@ import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.theme.Theme;
 import com.example.thesis.views.auth.LoginView;
 import com.vaadin.flow.theme.material.Material;
-import io.vavr.control.Try;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import static com.example.thesis.backend.security.SecurityUtils.userHasRole;
+import static com.example.thesis.backend.security.SecurityUtils.userHasPrivilege;
 
 @JsModule("./styles/shared-styles.js")
 @Theme(value = Material.class, variant = Material.DARK)
@@ -128,23 +127,23 @@ public class MainView extends AppLayout {
             links.add(new RouterLink("Log in", LoginView.class));
         }
 
-        if (userHasRole(NoticeBoardView.PRIVILEGE)) {
+        if (userHasPrivilege(NoticeBoardView.PRIVILEGE)) {
             addBoardLinks(links);
         }
 
-        if (userHasRole(ReservationView.PRIVILEGE)) {
+        if (userHasPrivilege(ReservationView.PRIVILEGE)) {
             links.add(new RouterLink("Reservations", ReservationView.class));
         }
 
-        if (userHasRole(UserManagementView.PRIVILEGE)) {
+        if (userHasPrivilege(UserManagementView.PRIVILEGE)) {
             links.add(new RouterLink("User management", UserManagementView.class));
         }
 
-        if (userHasRole(FloorManagementView.PRIVILEGE)) {
+        if (userHasPrivilege(FloorManagementView.PRIVILEGE)) {
             links.add(new RouterLink("Floor management", FloorManagementView.class));
         }
 
-        if (userHasRole(PropertyManagementView.PRIVILEGE)) {
+        if (userHasPrivilege(PropertyManagementView.PRIVILEGE)) {
             links.add(new RouterLink("Property management", PropertyManagementView.class));
         }
 

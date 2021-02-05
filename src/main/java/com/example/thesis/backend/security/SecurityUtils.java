@@ -48,8 +48,8 @@ public class SecurityUtils {
         return authentication.getAuthorities();
     }
 
-    public static boolean userHasRole(String role) {
-        return getCurrentUserRoles().stream().anyMatch(e -> e.getAuthority().equals(role));
+    public static boolean userHasPrivilege(String privilege) {
+        return getCurrentUserRoles().stream().anyMatch(e -> e.getAuthority().equals(privilege));
     }
 
     public static String getLoggedUserUsername() {

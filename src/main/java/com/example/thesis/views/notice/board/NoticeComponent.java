@@ -2,6 +2,7 @@ package com.example.thesis.views.notice.board;
 
 import com.example.thesis.backend.notice.Notice;
 import com.example.thesis.backend.security.SecurityUtils;
+import com.example.thesis.backend.security.utilities.PrivilegeProvider;
 import com.example.thesis.views.utilities.HtmlUtil;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -17,12 +18,7 @@ import com.vaadin.flow.component.polymertemplate.Id;
 import com.vaadin.flow.router.QueryParameters;
 import com.vaadin.flow.router.RouteConfiguration;
 import com.vaadin.flow.server.StreamResource;
-import com.vaadin.flow.server.VaadinRequest;
-import com.vaadin.flow.server.VaadinService;
-import com.vaadin.flow.server.VaadinServletRequest;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.Size;
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -115,11 +111,17 @@ public class NoticeComponent extends VerticalLayout {
     private boolean userNotEligibleToEdit() {
         String loggedUsername = SecurityUtils.getLoggedUserUsername();
 
-        if (loggedUsername.equals("admin")) {
+        if (SecurityUtils.userHasPrivilege(PrivilegeProvider.ADMIN_PRIVILEGE)) {
             return false;
         }
 
-        return !loggedUsername.equals(notice.getCreatedByUsername());
+        //TODO user is floor admin and this is his floor -> return false
+
+        if (loggedUsername.equals(notice.getCreatedByUsername())) {
+            return false;
+        }
+
+        return true;
     }
 
     private void navigateToNoticeView() {

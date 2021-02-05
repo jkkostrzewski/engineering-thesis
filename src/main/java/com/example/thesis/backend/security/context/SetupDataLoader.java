@@ -2,15 +2,20 @@ package com.example.thesis.backend.security.context;
 
 import com.example.thesis.backend.floor.Floor;
 import com.example.thesis.backend.floor.FloorRepository;
-import com.example.thesis.backend.notice.*;
+import com.example.thesis.backend.notice.Comment;
+import com.example.thesis.backend.notice.CommentRepository;
+import com.example.thesis.backend.notice.Notice;
+import com.example.thesis.backend.notice.NoticeBoard;
+import com.example.thesis.backend.notice.NoticeBoardRepository;
+import com.example.thesis.backend.notice.NoticeRepository;
+import com.example.thesis.backend.notice.ParentComment;
 import com.example.thesis.backend.reservation.Property;
 import com.example.thesis.backend.reservation.PropertyRepository;
 import com.example.thesis.backend.reservation.Reservation;
 import com.example.thesis.backend.reservation.ReservationRepository;
-import com.example.thesis.backend.security.auth.Role;
 import com.example.thesis.backend.security.auth.User;
 import com.example.thesis.backend.security.auth.UserRepository;
-import com.example.thesis.backend.security.utilities.DefaultPrivilegeProvider;
+import com.example.thesis.backend.security.utilities.PrivilegeProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -20,9 +25,13 @@ import org.springframework.stereotype.Component;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.io.FileInputStream;
-import java.time.*;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.HashSet;
 
 @Component
 public class SetupDataLoader implements
@@ -36,7 +45,7 @@ public class SetupDataLoader implements
     private final PropertyRepository propertyRepository;
     private final ReservationRepository reservationRepository;
     private final PasswordEncoder passwordEncoder;
-    private final DefaultPrivilegeProvider privilegeProvider;
+    private final PrivilegeProvider privilegeProvider;
     private final NoticeBoardRepository noticeBoardRepository;
     private final CommentRepository commentRepository;
 
@@ -45,7 +54,7 @@ public class SetupDataLoader implements
     public SetupDataLoader(UserRepository userRepository, NoticeRepository noticeRepository,
                            FloorRepository floorRepository, PropertyRepository propertyRepository,
                            ReservationRepository reservationRepository, PasswordEncoder passwordEncoder,
-                           DefaultPrivilegeProvider privilegeProvider, NoticeBoardRepository noticeBoardRepository, CommentRepository commentRepository) {
+                           PrivilegeProvider privilegeProvider, NoticeBoardRepository noticeBoardRepository, CommentRepository commentRepository) {
         this.userRepository = userRepository;
         this.noticeRepository = noticeRepository;
         this.floorRepository = floorRepository;
