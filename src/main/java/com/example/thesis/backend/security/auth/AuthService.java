@@ -31,17 +31,14 @@ public class AuthService implements UserDetailsService {
         return new AuthUserDetails(user);
     }
 
-    public Collection<? extends GrantedAuthority> getAuthorities(Collection<Role> roles) {
-        return getGrantedAuthorities(getPrivileges(roles));
+    public Collection<? extends GrantedAuthority> getAuthorities(Role role) {
+        return getGrantedAuthorities(getPrivileges(role));
     }
 
-    private List<String> getPrivileges(Collection<Role> roles) {
+    private List<String> getPrivileges(Role role) {
 
         List<String> privileges = new ArrayList<>();
-        List<Privilege> collection = new ArrayList<>();
-        for (Role role : roles) {
-            collection.addAll(role.getPrivileges());
-        }
+        List<Privilege> collection = new ArrayList<>(role.getPrivileges());
         for (Privilege item : collection) {
             privileges.add(item.getName());
         }

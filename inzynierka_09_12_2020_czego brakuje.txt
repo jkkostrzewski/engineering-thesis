@@ -1,12 +1,5 @@
 Czego brakuje na dzień 9.12.2020
 
-- Opcja dodania nowego piętra przez administratora - DONE (odświeżyć menu po lewej - DONE)
-- Widok przypisania roli administratora piętra dla użytkownika (panel administratora do przypisywania)
-- Poprawne dodanie komentarzy przy ogłoszeniach - DONE
-- Tworzenie zakładek dla poszczególnych pięter tylko dla konkretnych użytkowników - DONE
-- Ogłoszenia piętra - DONE
-- dynamiczne przypisywanie privileges dla użytkowników - DONE
-
 - panel administracyjny administratora całego akademika -
     WIDOK DODAWANIA PROPERTY DLA MAINA / DODAWANIA PIETRA / PRZYPISYWANIE UZYTKOWNIKA DO PIETRA
 - panel administracyjny piętrowego -

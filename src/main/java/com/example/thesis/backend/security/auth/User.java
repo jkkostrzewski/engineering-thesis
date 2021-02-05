@@ -15,13 +15,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -70,14 +69,8 @@ public class User {
     @JsonIgnore
     private boolean credentialsNonExpired;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "users_roles",
-            joinColumns = @JoinColumn(
-                    name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(
-                    name = "role_id", referencedColumnName = "id"))
-    private List<Role> roles = new ArrayList<>();           //change to One Role only?
+    @ManyToOne
+    private Role role;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -107,10 +100,6 @@ public class User {
         return firstName + " " + lastName;
     }
 
-    public void addRole(Role role) {
-        roles.add(role);
-    }
-
     public void addFloor(Floor floor) {
         floors.add(floor);
     }
@@ -136,7 +125,7 @@ public class User {
                 ", lastName='" + lastName + '\'' +
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
-                ", roles=" + roles +
+                ", role=" + role +
                 ", floors=" + floors +
                 '}';
     }

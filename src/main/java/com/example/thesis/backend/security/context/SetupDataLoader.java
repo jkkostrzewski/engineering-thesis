@@ -74,10 +74,7 @@ public class SetupDataLoader implements
         admin.setAccountNonLocked(true);
         admin.setCredentialsNonExpired(true);
         admin.setEnabled(true);
-        List<Role> roles = new ArrayList<>();
-        roles.add(privilegeProvider.admin("admin"));
-        roles.add(privilegeProvider.user("admin"));
-        admin.setRoles(roles);
+        admin.setRole(privilegeProvider.admin("admin"));
         admin.setEnabled(true);
         userRepository.save(admin);
 
@@ -91,9 +88,7 @@ public class SetupDataLoader implements
         user.setAccountNonExpired(true);
         user.setCredentialsNonExpired(true);
         user.setEnabled(true);
-        List<Role> roles2 = new ArrayList<>();
-        roles2.add(privilegeProvider.user("user"));
-        user.setRoles(roles2);
+        user.setRole(privilegeProvider.user("user"));
         userRepository.save(user);
 
         File file = new File("testImage.jpg");

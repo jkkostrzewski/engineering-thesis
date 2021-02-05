@@ -45,7 +45,7 @@ public class PrivilegeManagementLayout extends FormLayout {
 
                 user = userService.findByUsername(username.getValue()).get();                 //TODO zamień get
                 privileges.setItems(userService.findAll());
-                privileges.select(getAlreadyUsedPrivileges());
+                privileges.select(user.getRole().getPrivileges());
                 confirm.setVisible(true);
             }
         });
@@ -67,7 +67,7 @@ public class PrivilegeManagementLayout extends FormLayout {
 //        user.getRoles().forEach(roleRepository::delete); //TODO delete previous role if not used
         Role newRole = updateRole(user.getEmail(), selected);
         userService.saveRole(newRole);
-        user.setRoles(Collections.singletonList(newRole));
+        user.setRole(newRole);
         userService.save(user);
 
         Notification.show("User privileges changed successfully");
@@ -75,14 +75,6 @@ public class PrivilegeManagementLayout extends FormLayout {
 
     private boolean userIsAdmin() {
         return user.getUsername().equalsIgnoreCase("admin");
-    }
-
-    private List<Privilege> getAlreadyUsedPrivileges() {
-        return user.getRoles()
-                .stream()
-                .map(Role::getPrivileges)
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
     }
 
     @Transactional

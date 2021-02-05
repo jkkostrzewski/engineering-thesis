@@ -15,7 +15,7 @@ public class AuthUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return new AuthService().getAuthorities(user.getRoles());
+        return new AuthService().getAuthorities(user.getRole());
     }
 
     @Override

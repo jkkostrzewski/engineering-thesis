@@ -138,7 +138,7 @@ public class TokenRegistrationView extends VerticalLayout implements HasUrlParam
             default:
                 throw new RuntimeException();
         }
-        user.addRole(role);
+        user.setRole(role);
     }
 
     private boolean passwordFieldsMatch() {
