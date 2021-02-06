@@ -67,7 +67,7 @@ public class PrivilegeProvider {
 
     public Role floorAdmin(String username) {
         List<Privilege> privileges = Arrays.asList(floorAdminPrivilege, noticeBoardView, noticeView,
-                reservationView, editNoticeView);
+                reservationView, editNoticeView, propertyManagementView);
         return createRoleIfNotFound(username, privileges);
     }
 

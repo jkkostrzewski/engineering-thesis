@@ -1,7 +1,5 @@
 package com.example.thesis.views.property;
 
-import com.example.thesis.backend.floor.FloorRepository;
-import com.example.thesis.backend.reservation.PropertyRepository;
 import com.example.thesis.backend.reservation.PropertyService;
 import com.example.thesis.views.main.MainView;
 import com.vaadin.flow.component.accordion.Accordion;
