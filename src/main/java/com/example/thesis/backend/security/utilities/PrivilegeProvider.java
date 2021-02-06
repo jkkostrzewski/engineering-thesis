@@ -33,7 +33,7 @@ public class PrivilegeProvider {
 
     private final Privilege noticeView;
     private final Privilege noticeBoardView;
-    private final Privilege addNoticeView;
+    private final Privilege editNoticeView;
     private final Privilege reservationView;
     private final Privilege userManagementView;
     private final Privilege floorManagementView;
@@ -53,7 +53,7 @@ public class PrivilegeProvider {
 
         noticeView = createPrivilegeIfNotFound(NoticeView.PRIVILEGE);
         noticeBoardView = createPrivilegeIfNotFound(NoticeBoardView.PRIVILEGE);
-        addNoticeView = createPrivilegeIfNotFound(EditNoticeView.PRIVILEGE);
+        editNoticeView = createPrivilegeIfNotFound(EditNoticeView.PRIVILEGE);
         reservationView = createPrivilegeIfNotFound(ReservationView.PRIVILEGE);
         userManagementView = createPrivilegeIfNotFound(UserManagementView.PRIVILEGE);
         floorManagementView = createPrivilegeIfNotFound(FloorManagementView.PRIVILEGE);
@@ -67,13 +67,13 @@ public class PrivilegeProvider {
 
     public Role floorAdmin(String username) {
         List<Privilege> privileges = Arrays.asList(floorAdminPrivilege, noticeBoardView, noticeView,
-                reservationView);
+                reservationView, editNoticeView);
         return createRoleIfNotFound(username, privileges);
     }
 
     public Role admin(String username) {
         List<Privilege> privileges = Arrays.asList(adminPrivilege, noticeBoardView, noticeView, reservationView,
-                addNoticeView, userManagementView, floorManagementView, propertyManagementView);
+                editNoticeView, userManagementView, floorManagementView, propertyManagementView);
         return createRoleIfNotFound(username, privileges);
     }
 

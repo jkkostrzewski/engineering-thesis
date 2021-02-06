@@ -3,6 +3,7 @@ package com.example.thesis.views.notice.board;
 import com.example.thesis.backend.notice.Notice;
 import com.example.thesis.backend.notice.NoticeBoard;
 import com.example.thesis.backend.notice.NoticeService;
+import com.example.thesis.backend.security.SecurityUtils;
 import com.example.thesis.views.main.MainView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -65,7 +66,7 @@ public class NoticeBoardView extends VerticalLayout implements HasUrlParameter<S
         boardHeader.add(boardNameText);
         boardHeader.expand(boardNameText);
 
-        if (userHasPrivilege(EditNoticeView.PRIVILEGE)) {
+        if (userHasWritePermissionsForBoard()) {
             Button addNotice = new Button("Add notice");
             addNotice.setId("add-notice-button");
 
@@ -88,5 +89,10 @@ public class NoticeBoardView extends VerticalLayout implements HasUrlParameter<S
                 add(new NoticeComponent(notice, noticeBoard.getName(), noticeService));
             }
         }
+    }
+
+    private boolean userHasWritePermissionsForBoard() {
+        return userHasPrivilege(EditNoticeView.PRIVILEGE)
+                || noticeBoard.isEligibleToEdit(SecurityUtils.getLoggedUserUsername());
     }
 }

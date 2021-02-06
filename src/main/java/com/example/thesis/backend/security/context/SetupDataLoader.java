@@ -100,6 +100,19 @@ public class SetupDataLoader implements
         user.setRole(privilegeProvider.user("user"));
         userRepository.save(user);
 
+        User floorAdmin = new User();
+        floorAdmin.setFirstName("floorAdmin");
+        floorAdmin.setLastName("floorAdmin");
+        floorAdmin.setEmail("sdad@Sadasd.com");
+        floorAdmin.setPassword(passwordEncoder.encode("password"));
+        floorAdmin.setUsername("floorAdmin");
+        floorAdmin.setAccountNonLocked(true);
+        floorAdmin.setAccountNonExpired(true);
+        floorAdmin.setCredentialsNonExpired(true);
+        floorAdmin.setEnabled(true);
+        floorAdmin.setRole(privilegeProvider.floorAdmin("floorAdmin"));
+        userRepository.save(floorAdmin);
+
         File file = new File("testImage.jpg");
         byte[] bFile = new byte[(int) file.length()];
         try {
@@ -180,16 +193,25 @@ public class SetupDataLoader implements
         admin.addFloor(main);
         admin.addFloor(floor);
 
+        floorAdmin.addFloor(main);
+        floorAdmin.addFloor(floor);
+        floorAdmin.addFloor(floor2);
+
         NoticeBoard mainBoard = new NoticeBoard("Main Board", main);
         mainBoard.addNotice(test_notice_one);
         mainBoard.addNotice(test_notice_two);
 
         NoticeBoard floorOneBoard = new NoticeBoard("1st Floor", floor);
+        floorOneBoard.addPermissionUser(floorAdmin);
 //        floorOneBoard.addNotice(test_notice_one);
 //        floorOneBoard.addNotice(test_notice_two);
 
+        NoticeBoard floorTwoBoard = new NoticeBoard("2nd Floor", floor2);
+        floorTwoBoard.addPermissionUser(floorAdmin);
+
         noticeBoardRepository.save(mainBoard);
         noticeBoardRepository.save(floorOneBoard);
+        noticeBoardRepository.save(floorTwoBoard);
 
 
         floorRepository.save(main);

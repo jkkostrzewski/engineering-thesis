@@ -4,6 +4,7 @@ import com.example.thesis.backend.ServiceResponse;
 import com.example.thesis.backend.notice.Notice;
 import com.example.thesis.backend.notice.NoticeBoard;
 import com.example.thesis.backend.notice.NoticeService;
+import com.example.thesis.backend.security.SecurityUtils;
 import com.example.thesis.views.main.MainView;
 import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.button.Button;
@@ -46,7 +47,7 @@ import java.util.Objects;
 @Slf4j
 public class EditNoticeView extends VerticalLayout implements HasUrlParameter<String>{
 
-    public static final String PRIVILEGE = "ADD_NOTICE_VIEW_PRIVILEGE";
+    public static final String PRIVILEGE = "EDIT_NOTICE_VIEW_PRIVILEGE";
     public static final String ROUTE = "edit-notice";
 
     private byte[] imageBytes;
@@ -99,7 +100,9 @@ public class EditNoticeView extends VerticalLayout implements HasUrlParameter<St
             if (Objects.nonNull(notice)) {
                 notice.setTitle(title.getValue());
                 notice.setBody(body.getHtmlValue());
-                notice.setImage(imageBytes);
+                if (Objects.nonNull(imageBytes)) {
+                    notice.setImage(imageBytes);
+                }
 
                 response = noticeService.saveNotice(notice);
             } else {
@@ -107,6 +110,8 @@ public class EditNoticeView extends VerticalLayout implements HasUrlParameter<St
                                 .creationDate(Instant.now())
                                 .title(title.getValue())
                                 .body(body.getHtmlValue())
+                                .active(true)
+                                .createdByUsername(SecurityUtils.getLoggedUserUsername())
                                 .image(imageBytes).build(),
                         noticeBoard);
             }
@@ -115,6 +120,7 @@ public class EditNoticeView extends VerticalLayout implements HasUrlParameter<St
             if (Objects.nonNull(response) && response.getStatus() == HttpStatus.OK) {
                 Notification.show("Upload has been successful");
                 UI.getCurrent().navigate(NoticeBoardView.class, noticeBoard.getName());
+                log.info("User: " + SecurityUtils.getLoggedUserUsername() + " has created/edited notice: " + response.getContent().getId());
             } else {
                 Notification.show("Something went wrong with the upload. Try again.");
             }

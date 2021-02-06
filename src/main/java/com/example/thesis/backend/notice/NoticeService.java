@@ -51,4 +51,8 @@ public class NoticeService {
     public void save(NoticeBoard board) {
         noticeBoardRepository.save(board);
     }
+
+    public boolean isUserEligibleToEdit(String boardName, String username) {
+        return noticeBoardRepository.findByName(boardName).isEligibleToEdit(username);
+    }
 }

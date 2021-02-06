@@ -16,12 +16,15 @@ Czego brakuje na dzień 9.12.2020
 - Optymalizacja i refactoring!
 
 DODATKOWE:
+- widok z informacjami o moim koncie
 - dodać edycje notice'ow dla floor admina w jego zakładce piętra
-- nazwa usera w artykule nie wyswietla sie w poprawnej wielkosci
+- nazwa usera w artykule nie wyswietla sie
 - wygasanie tokenów - obu
 - czyszczenie wygaśniętych tokenów z bazy?
 - widok moich rezerwacji (panel nadchodzące rezerwacje lub po prostu wszystkie)
 - ostrzeżenie przy rezerwacji na innym piętrze niż swoje
+- Widok dostępnych noticeBoardów i ich permission userów wraz z CRUD
+- dodanie powiększenia zdjęcia na kliknięciu
 
 Low priority:
 - usuwanie dowolnej rezerwacji przez admina wszędzie i przez floorAdmina na konkretnym piętrze
@@ -31,6 +34,10 @@ Low priority:
 - Dodanie zbyt długiego komentarza nie wyświetla komunikatu że jest za długi -
     po stronie serwera wywala wyjątek (dodać licznik znaków? - bind?)
 
+
+VERY LOW PRIORITY:
+- pomyśleć jakie wydarzenia powinienem dodawać do logów aplikacji
+- banowanie użytkowników z poziomu widoku zarządzania usera dla admina
 
 BUGI:
 - przejście z noticeboarda na inny noticeboard powoduje ze menu sie nie zamyka - wynika to z faktu ze nie wywoluje sie metoda afterNavigation

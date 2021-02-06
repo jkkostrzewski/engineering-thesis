@@ -37,6 +37,8 @@ public class NoticeComponent extends VerticalLayout {
 
     private final Notice notice;
 
+    private final String boardName;
+
     @Id("notice-title")
     private final Paragraph title;
 
@@ -59,6 +61,7 @@ public class NoticeComponent extends VerticalLayout {
         setId("notice");
         this.notice = notice;
         this.noticeService = noticeService;
+        this.boardName = boardName;
 
         header = new HorizontalLayout();
         header.setId("header");
@@ -146,7 +149,9 @@ public class NoticeComponent extends VerticalLayout {
             return false;
         }
 
-        //TODO user is floor admin and this is his floor -> return false
+        if (noticeService.isUserEligibleToEdit(boardName, loggedUsername)) {
+            return false;
+        }
 
         if (loggedUsername.equals(notice.getCreatedByUsername())) {
             return false;
