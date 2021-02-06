@@ -84,7 +84,9 @@ public class NoticeBoardView extends VerticalLayout implements HasUrlParameter<S
         add(boardHeader);
 
         for (Notice notice : noticeBoard.getNotices()) {
-            add(new NoticeComponent(notice, noticeBoard.getName()));
+            if (notice.isActive()) {
+                add(new NoticeComponent(notice, noticeBoard.getName(), noticeService));
+            }
         }
     }
 }

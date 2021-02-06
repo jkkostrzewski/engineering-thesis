@@ -5,24 +5,31 @@ Czego brakuje na dzień 9.12.2020
 - panel administracyjny piętrowego -
     WIDOK DODAWANIA PROPERTY DLA PIĘTRA
 
+- kontakt z piętrowymi - mieszkaniec wysyła zapytanie -> piętrowy, który wyświetli może kliknąć odpowiedz ->
+    otwiera się okno chatu wyłącznie już dla obu z nich
+
 
 - TŁUMACZENIE ELEMENTÓW NA POLSKI
 - Opcja edycji rezerwacji i ogłoszeń dla właściciela danego elementu oraz adminów/floorAdminów
 - Zweryfikowanie kolorystyki i ogólne ułożenie elementów
 - Wszelakie drobne poprawki TODO we wszystkich klasach
 - Optymalizacja i refactoring!
-- Usuwanie notice'ów
 
 DODATKOWE:
 - dodać edycje notice'ow dla floor admina w jego zakładce piętra
-- brak przypomnienia hasła w oknie logowania
 - nazwa usera w artykule nie wyswietla sie w poprawnej wielkosci
+- wygasanie tokenów - obu
+- czyszczenie wygaśniętych tokenów z bazy?
+- widok moich rezerwacji (panel nadchodzące rezerwacje lub po prostu wszystkie)
+- ostrzeżenie przy rezerwacji na innym piętrze niż swoje
 
 Low priority:
 - usuwanie dowolnej rezerwacji przez admina wszędzie i przez floorAdmina na konkretnym piętrze
 - możliwe godziny wynajęcia w Property
 - Linkowanie artkułów między boardami przez floorAdmina, admina
 - kliknięcie na background notice'a powinno przechodzić do jego widoku zawartości
+- Dodanie zbyt długiego komentarza nie wyświetla komunikatu że jest za długi -
+    po stronie serwera wywala wyjątek (dodać licznik znaków? - bind?)
 
 
 BUGI:

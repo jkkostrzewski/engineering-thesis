@@ -1,11 +1,13 @@
 package com.example.thesis.views.notice.board;
 
 import com.example.thesis.backend.notice.Notice;
+import com.example.thesis.backend.notice.NoticeService;
 import com.example.thesis.backend.security.SecurityUtils;
 import com.example.thesis.backend.security.utilities.PrivilegeProvider;
 import com.example.thesis.views.utilities.HtmlUtil;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.confirmdialog.ConfirmDialog;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
@@ -31,6 +33,8 @@ import static com.example.thesis.views.utilities.DateFormatters.STANDARD_DATE_TI
 @CssImport("./styles/views/notice/board/notice.css")
 public class NoticeComponent extends VerticalLayout {
 
+    private final NoticeService noticeService;
+
     private final Notice notice;
 
     @Id("notice-title")
@@ -51,9 +55,10 @@ public class NoticeComponent extends VerticalLayout {
     @Id("edit-button")
     private final Button editButton;
 
-    public NoticeComponent(Notice notice, String boardName) {
+    public NoticeComponent(Notice notice, String boardName, NoticeService noticeService) {
         setId("notice");
         this.notice = notice;
+        this.noticeService = noticeService;
 
         header = new HorizontalLayout();
         header.setId("header");
@@ -61,11 +66,21 @@ public class NoticeComponent extends VerticalLayout {
         title = new Paragraph(notice.getTitle());
         title.setId("notice-title");
 
+        HorizontalLayout customizationBar = new HorizontalLayout();
+        customizationBar.setId("customization-bar");
+
+        Button deleteButton = new Button(new Icon(VaadinIcon.CLOSE_CIRCLE));
+        deleteButton.setId("delete-button");
+        deleteButton.addClickListener(event -> {
+            ConfirmDialog dialog = new ConfirmDialog("Confirm deletion",
+                    "Are you sure you want to delete the article?",
+                    "Delete", this::onDelete,
+                    "Cancel", this::onCancel);
+            dialog.open();
+        });
+
         editButton = new Button(new Icon(VaadinIcon.EDIT));
         editButton.setId("edit-button");
-        if(userNotEligibleToEdit()) {
-            editButton.setVisible(false);
-        }
         editButton.addClickListener(event -> {
             String route = RouteConfiguration.forSessionScope().getUrl(EditNoticeView.class);
             List<String> boardNameParameter = new ArrayList<>();
@@ -81,7 +96,14 @@ public class NoticeComponent extends VerticalLayout {
             QueryParameters parameters = new QueryParameters(parameterMap);
             UI.getCurrent().navigate(route, parameters);
         });
-        header.add(title, editButton);
+
+        if(userNotEligibleToEdit()) {
+            editButton.setVisible(false);
+            deleteButton.setVisible(false);
+        }
+
+        customizationBar.add(deleteButton, editButton);
+        header.add(title, customizationBar);
 
         date = new Paragraph(STANDARD_DATE_TIME.format(notice.getCreationDate()));
 
@@ -106,6 +128,15 @@ public class NoticeComponent extends VerticalLayout {
 
         setSizeUndefined();
         add(body, readMore);
+    }
+
+    private void onCancel(ConfirmDialog.CancelEvent cancelEvent) {
+    }
+
+    private void onDelete(ConfirmDialog.ConfirmEvent confirmEvent) {
+        notice.deactivate();
+        noticeService.saveNotice(notice);
+        this.setVisible(false);
     }
 
     private boolean userNotEligibleToEdit() {

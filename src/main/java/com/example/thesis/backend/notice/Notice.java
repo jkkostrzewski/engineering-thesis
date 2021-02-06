@@ -1,8 +1,20 @@
 package com.example.thesis.backend.notice;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.Lob;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -29,9 +41,10 @@ public class Notice {
 
     @Lob
     private byte[] image;
-//    private String[] tags;
 
     private String createdByUsername;
+
+    private boolean active;
 
     @OneToMany(fetch = EAGER, cascade = CascadeType.ALL)
     @OrderBy(value = "id")
@@ -53,7 +66,10 @@ public class Notice {
                 .findFirst()
                 .orElseThrow(RuntimeException::new)
                 .addReply(comment);
-//                .forEach((parentComment) -> parentComment.addReply(comment));
+    }
+
+    public void deactivate() {
+        this.active = false;
     }
 }
 
