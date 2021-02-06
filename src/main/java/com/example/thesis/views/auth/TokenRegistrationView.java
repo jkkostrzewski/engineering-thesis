@@ -3,6 +3,7 @@ package com.example.thesis.views.auth;
 import com.example.thesis.backend.floor.FloorRepository;
 import com.example.thesis.backend.security.auth.*;
 import com.example.thesis.backend.security.utilities.PrivilegeProvider;
+import com.example.thesis.views.exception.NotFoundView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
@@ -53,7 +54,7 @@ public class TokenRegistrationView extends VerticalLayout implements HasUrlParam
     private Button register;
     private PasswordField confirmPassword;
 
-    private Token token;
+    private RegistrationToken registrationToken;
     private TextField floor;
 
     public TokenRegistrationView(TokenRepository tokenRepository, PasswordEncoder passwordEncoder, UserRepository userRepository, PrivilegeProvider privilegeProvider, FloorRepository floorRepository) {
@@ -71,10 +72,10 @@ public class TokenRegistrationView extends VerticalLayout implements HasUrlParam
 
     @Override
     public void setParameter(BeforeEvent event, @OptionalParameter String parameter) {
-        token = tokenRepository.findByUuid(UUID.fromString(parameter));
+        registrationToken = tokenRepository.findByUuid(UUID.fromString(parameter));
 
-        if (token.isDisabled()) {
-            UI.getCurrent().navigate("/token-register-error-page"); //TODO create default error page
+        if (registrationToken.isDisabled()) {
+            UI.getCurrent().navigate(NotFoundView.class);
         }
 
         info = new Label("Registration form");
@@ -82,10 +83,10 @@ public class TokenRegistrationView extends VerticalLayout implements HasUrlParam
         lastName = new TextField("Last name");
         username = new TextField("Username");
         email = new EmailField("Email");
-        email.setValue(token.getEmail());
+        email.setValue(registrationToken.getEmail());
         email.setEnabled(false);
         floor = new TextField("Floor");
-        floor.setValue(token.getMainFloor().getName());
+        floor.setValue(registrationToken.getMainFloor().getName());
         floor.setEnabled(false);
         password = new PasswordField("Password");
         confirmPassword = new PasswordField("Confirm password");
@@ -113,7 +114,7 @@ public class TokenRegistrationView extends VerticalLayout implements HasUrlParam
             );
 
             user.addFloor(floorRepository.findByName(MAIN_FLOOR_NAME)); //TODO przeniesc tą stałą do klasy konfiguracyjnej
-            user.addFloor(token.getMainFloor());
+            user.addFloor(registrationToken.getMainFloor());
 
             setRoleFromToken(user);
             userRepository.save(user);
@@ -126,7 +127,7 @@ public class TokenRegistrationView extends VerticalLayout implements HasUrlParam
     }
 
     private void setRoleFromToken(User user) { //TODO refactor
-        String roleString = token.getRole();
+        String roleString = registrationToken.getRole();
         Role role;
         switch (roleString) {
             case "User":

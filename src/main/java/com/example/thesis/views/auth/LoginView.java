@@ -35,10 +35,10 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
 
         login.setAction(ACTION);
         login.setForgotPasswordButtonVisible(true);
-        login.addLoginListener(e -> UI.getCurrent().navigate(NoticeBoardView.class, "Main Board"));
+        login.addLoginListener(event -> UI.getCurrent().navigate(NoticeBoardView.class, "Main Board"));
+        login.addForgotPasswordListener(event -> UI.getCurrent().navigate(ForgotPasswordView.class));
 
         add(new H1(TITLE));
-        //TODO forgotPasswordListener
         add(login);
     }
 

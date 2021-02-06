@@ -3,8 +3,7 @@ package com.example.thesis.views.auth;
 import com.example.thesis.backend.emails.EmailService;
 import com.example.thesis.backend.floor.Floor;
 import com.example.thesis.backend.floor.FloorService;
-import com.example.thesis.backend.security.auth.Token;
-import com.example.thesis.backend.security.auth.TokenService;
+import com.example.thesis.backend.security.auth.RegistrationToken;
 import com.example.thesis.backend.security.auth.UserService;
 import com.example.thesis.views.notice.board.NoticeBoardView;
 import com.vaadin.flow.component.UI;
@@ -46,11 +45,11 @@ public class UserRegistrationFormLayout extends FormLayout {
 
             if(!userService.existsByEmail(email)) {
                 String role = chooseDefaultRole.getOptionalValue().orElseThrow(RuntimeException::new);
-                Token token = new Token(role, emailField.getValue(), mainFloorSelector.getValue());      //TODO poszukaj istniejącego tokena - jesli istnieje i jest włączony to go przypisz
+                RegistrationToken registrationToken = new RegistrationToken(role, emailField.getValue(), mainFloorSelector.getValue());      //TODO poszukaj istniejącego tokena - jesli istnieje i jest włączony to go przypisz
                 //TODO it can send email without creating token
 
-                this.emailService.sendRegistrationEmail(email, token);
-                userService.saveToken(token);
+                this.emailService.sendRegistrationEmail(email, registrationToken);
+                userService.saveToken(registrationToken);
                 Notification.show("Invitation email sent successfully");
 
                 UI.getCurrent().navigate(NoticeBoardView.class, "Main Board");

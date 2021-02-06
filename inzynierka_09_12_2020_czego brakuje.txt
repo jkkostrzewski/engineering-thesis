@@ -14,7 +14,7 @@ Czego brakuje na dzień 9.12.2020
 - Usuwanie notice'ów
 
 DODATKOWE:
-- usuwanie artykułów wszystkich dla admina (userHasRole(admin)) / z piętra dla floorAdmina / pojedynczych dla usera
+- dodać edycje notice'ow dla floor admina w jego zakładce piętra
 - brak przypomnienia hasła w oknie logowania
 - nazwa usera w artykule nie wyswietla sie w poprawnej wielkosci
 

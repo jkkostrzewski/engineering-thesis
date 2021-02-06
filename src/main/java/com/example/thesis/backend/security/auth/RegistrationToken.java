@@ -13,7 +13,7 @@ import java.util.UUID;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Token {
+public class RegistrationToken {
 
     @Id
     private UUID uuid;
@@ -28,7 +28,7 @@ public class Token {
 
     private boolean enabled;
 
-    public Token(String role, String email, Floor mainFloor) {
+    public RegistrationToken(String role, String email, Floor mainFloor) {
         this.uuid = UUID.randomUUID();
         this.role = role;
         this.email = email;

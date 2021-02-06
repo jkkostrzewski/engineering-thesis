@@ -1,26 +1,32 @@
 package com.example.thesis.backend.security.auth;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class UserService {
 
     private final UserRepository userRepository;
     private final TokenRepository tokenRepository;
     private final PrivilegeRepository privilegeRepository;
     private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserService(UserRepository userRepository, TokenRepository tokenRepository,
-                       PrivilegeRepository privilegeRepository, RoleRepository roleRepository) {
+                       PrivilegeRepository privilegeRepository, RoleRepository roleRepository,
+                       PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.tokenRepository = tokenRepository;
         this.privilegeRepository = privilegeRepository;
         this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public Optional<User> findByUsername(String username) {
@@ -35,8 +41,8 @@ public class UserService {
         return userRepository.existsByUsername(email);
     }
 
-    public void saveToken(Token token) {
-        tokenRepository.save(token);
+    public void saveToken(RegistrationToken registrationToken) {
+        tokenRepository.save(registrationToken);
     }
 
     public boolean existsByUsername(String username) {
@@ -57,5 +63,14 @@ public class UserService {
 
     public void save(Role role) {
         roleRepository.save(role);
+    }
+
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    public void changePassword(User user, String password) {
+        user.setPassword(passwordEncoder.encode(password));
+        userRepository.save(user);
     }
 }

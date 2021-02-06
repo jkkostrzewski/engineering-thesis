@@ -1,12 +1,10 @@
 package com.example.thesis.backend.emails;
 
-import com.example.thesis.backend.security.auth.Token;
-import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.server.VaadinSession;
+import com.example.thesis.backend.security.auth.ForgotPasswordToken;
+import com.example.thesis.backend.security.auth.RegistrationToken;
 import io.vavr.control.Try;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -50,10 +48,21 @@ public class EmailService {
         javaMailSender.send(mail);
     }
 
-    public void sendRegistrationEmail(String email, Token token) {
+    public void sendRegistrationEmail(String email, RegistrationToken registrationToken) {
         String title = "Dorm administrator has invited you to dorm app!";
-        String description = "Register at: \n" + getBasePath() + "/token-registration/" + token.getUuid();
+        String description = "Register at: \n" + getBasePath() + "/token-registration/" + registrationToken.getUuid();
 
+        SendDefaultTemplateEmail(email, title, description);
+    }
+
+    public void sendForgotPasswordTokenEmail(String email, ForgotPasswordToken token) {
+        String title = "You have sent a request to reset your dorm app account password!";
+        String description = "Reset your password at: \n" + getBasePath() + "/reset-password/" + token.getUuid();
+
+        SendDefaultTemplateEmail(email, title, description);
+    }
+
+    private void SendDefaultTemplateEmail(String email, String title, String description) {
         Context context = new Context();
         context.setVariable("title", title);
         context.setVariable("description", description);
