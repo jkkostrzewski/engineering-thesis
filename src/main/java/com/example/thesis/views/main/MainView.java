@@ -14,6 +14,7 @@ import com.example.thesis.views.auth.UserManagementView;
 import com.example.thesis.views.exception.NotFoundView;
 import com.example.thesis.views.floor.FloorManagementView;
 import com.example.thesis.views.notice.board.NoticeBoardView;
+import com.example.thesis.views.profile.ProfileView;
 import com.example.thesis.views.property.PropertyManagementView;
 import com.example.thesis.views.reservation.ReservationView;
 import com.vaadin.flow.component.Component;
@@ -90,7 +91,11 @@ public class MainView extends AppLayout {
             logout.setId("logout-button");
             userInfo.add(logout);
         }
-        userInfo.add(new Paragraph(SecurityContextHolder.getContext().getAuthentication().getName()));
+
+        String usernameString = SecurityContextHolder.getContext().getAuthentication().getName();
+        Paragraph username = new Paragraph(usernameString);
+        username.addClickListener(event -> UI.getCurrent().navigate(ProfileView.class, usernameString));
+        userInfo.add(username);
 //        userInfo.add(new Image("images/user.svg", "Avatar"));
         layout.add(userInfo);
         return layout;
@@ -113,7 +118,7 @@ public class MainView extends AppLayout {
     }
 
     private Tabs createMenu() {
-        final Tabs tabs = new Tabs();
+        final Tabs tabs = new Tabs(false);
         tabs.setOrientation(Tabs.Orientation.VERTICAL);
         tabs.addThemeVariants(TabsVariant.MATERIAL_FIXED);
         tabs.setId("tabs");
@@ -177,15 +182,29 @@ public class MainView extends AppLayout {
     private void updateChrome() {
         Optional<Tab> tab = getTabWithCurrentRoute();
         tab.ifPresent(menu::setSelectedTab);
+        if (!tab.isPresent()) {
+            menu.setSelectedIndex(-1);
+        }
         viewTitle.setText(getCurrentPageTitle());
     }
 
     private Optional<Tab> getTabWithCurrentRoute() {
+        Optional<Tab> currentRouteTab;
         try {
             currentRoute = RouteConfiguration.forSessionScope().getUrl(getContent().getClass());
         } catch (NotFoundException exception) {
             UI.getCurrent().navigate(NotFoundView.class);
         }
+        currentRouteTab = getCurrentRouteTab();
+        if (currentRouteTab.isPresent()) {
+            return currentRouteTab;
+        } else {
+            currentRoute = getPathWithParameters().replace("%20", " ");
+            return getCurrentRouteTab();
+        }
+    }
+
+    private Optional<Tab> getCurrentRouteTab() {
         return menu.getChildren().filter(tab -> hasLink(tab, currentRoute)).findFirst().map(Tab.class::cast);
     }
 
@@ -196,5 +215,9 @@ public class MainView extends AppLayout {
 
     private String getCurrentPageTitle() {
         return getContent().getClass().getAnnotation(PageTitle.class).value();
+    }
+
+    private String getPathWithParameters() {
+        return UI.getCurrent().getInternals().getActiveViewLocation().getPath();
     }
 }

@@ -1,43 +1,36 @@
-Czego brakuje na dzień 9.12.2020
-
-- panel administracyjny administratora całego akademika -
-    WIDOK DODAWANIA PROPERTY DLA MAINA / DODAWANIA PIETRA / PRZYPISYWANIE UZYTKOWNIKA DO PIETRA
-- panel administracyjny piętrowego -
-    WIDOK DODAWANIA PROPERTY DLA PIĘTRA
 
 - kontakt z piętrowymi - mieszkaniec wysyła zapytanie -> piętrowy, który wyświetli może kliknąć odpowiedz ->
     otwiera się okno chatu wyłącznie już dla obu z nich
 
 
 - TŁUMACZENIE ELEMENTÓW NA POLSKI
-- Opcja edycji rezerwacji i ogłoszeń dla właściciela danego elementu oraz adminów/floorAdminów
+- Opcja edycji rezerwacji dla właściciela danego elementu oraz adminów/floorAdminów (przy edycji przez admina wysłać powiadomienie na maila?)
 - Zweryfikowanie kolorystyki i ogólne ułożenie elementów
 - Wszelakie drobne poprawki TODO we wszystkich klasach
 - Optymalizacja i refactoring!
+- Przycisk logout czasami się buguje i nie pozwala na wylogowanie (nie wiem dlaczego)
 
 DODATKOWE:
-- widok z informacjami o moim koncie
-- dodać edycje notice'ow dla floor admina w jego zakładce piętra
 - nazwa usera w artykule nie wyswietla sie
-- wygasanie tokenów - obu
-- czyszczenie wygaśniętych tokenów z bazy?
 - widok moich rezerwacji (panel nadchodzące rezerwacje lub po prostu wszystkie)
 - ostrzeżenie przy rezerwacji na innym piętrze niż swoje
-- Widok dostępnych noticeBoardów i ich permission userów wraz z CRUD
+- Widok dostępnych noticeBoardów i ich permission userów wraz z CRUD - w user management?
 - dodanie powiększenia zdjęcia na kliknięciu
+- user zwykły nie ma możliwości dodania/edytowania posta
 
 Low priority:
-- usuwanie dowolnej rezerwacji przez admina wszędzie i przez floorAdmina na konkretnym piętrze
 - możliwe godziny wynajęcia w Property
 - Linkowanie artkułów między boardami przez floorAdmina, admina
 - kliknięcie na background notice'a powinno przechodzić do jego widoku zawartości
 - Dodanie zbyt długiego komentarza nie wyświetla komunikatu że jest za długi -
     po stronie serwera wywala wyjątek (dodać licznik znaków? - bind?)
 
-
 VERY LOW PRIORITY:
 - pomyśleć jakie wydarzenia powinienem dodawać do logów aplikacji
 - banowanie użytkowników z poziomu widoku zarządzania usera dla admina
+- wygasanie tokenów - obu
+- czyszczenie wygaśniętych tokenów z bazy?
+- Powiadomienia na telefonie (przy zmianie terminu rezerwacji lub anulowaniu przez admina)
 
 BUGI:
 - przejście z noticeboarda na inny noticeboard powoduje ze menu sie nie zamyka - wynika to z faktu ze nie wywoluje sie metoda afterNavigation
@@ -46,6 +39,5 @@ BUGI:
 - upload zdjęcia z telefonu nie działa (?)
 - przy usuwaniu piętra które ma jakieś zależności nie ma komunikatu informującego że dane piętro jest wykorzystywane
     (można tu dodać - czy na pewno chcesz usunąć i wywalić kaskadowo)
-- po zalogowaniu podświetla się 1st floor zamiast main floor
 - przycisk edycji posta ma na hoverze za duzy background
 

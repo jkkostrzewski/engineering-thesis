@@ -73,4 +73,10 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(password));
         userRepository.save(user);
     }
+
+    public void changeUserEmail(String lastEmail, String newEmail) {
+        User user = userRepository.findByEmail(lastEmail);
+        user.setEmail(newEmail);
+        userRepository.save(user);
+    }
 }

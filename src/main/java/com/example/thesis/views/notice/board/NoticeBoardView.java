@@ -29,7 +29,6 @@ import java.util.Map;
 
 import static com.example.thesis.backend.security.SecurityUtils.userHasPrivilege;
 
-
 @Route(value = NoticeBoardView.ROUTE, layout = MainView.class)
 @PageTitle("Notice board")
 @CssImport("./styles/views/notice/board/notice-board.css")

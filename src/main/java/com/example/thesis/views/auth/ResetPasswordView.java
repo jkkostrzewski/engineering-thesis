@@ -3,6 +3,7 @@ package com.example.thesis.views.auth;
 import com.example.thesis.backend.security.auth.TokenService;
 import com.example.thesis.backend.security.auth.User;
 import com.example.thesis.backend.security.auth.UserService;
+import com.example.thesis.views.profile.ProfileView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
@@ -60,8 +61,13 @@ public class ResetPasswordView extends VerticalLayout implements HasUrlParameter
     }
 
     @Override
-    public void setParameter(BeforeEvent beforeEvent, String uuid) {
-        String email = tokenService.findByTokenId(UUID.fromString(uuid)).getEmail();
+    public void setParameter(BeforeEvent beforeEvent, String parameter) {
+        String email;
+        if (parameter.contains("@")) {
+            email = parameter;
+        } else {
+            email = tokenService.findByTokenId(UUID.fromString(parameter)).getEmail();
+        }
         user = userService.findByEmail(email);
     }
 

@@ -76,7 +76,7 @@ public class SetupDataLoader implements
         User admin = new User();
         admin.setFirstName("admin");
         admin.setLastName("admin");
-        admin.setEmail("sdad@Sadasd.com");
+        admin.setEmail("sdaasdd@Sadasd.com");
         admin.setPassword(passwordEncoder.encode("password"));
         admin.setUsername("admin");
         admin.setAccountNonExpired(true);
@@ -90,7 +90,7 @@ public class SetupDataLoader implements
         User user = new User();
         user.setFirstName("user");
         user.setLastName("user");
-        user.setEmail("sdad@Sadasd.com");
+        user.setEmail("sdad123@Sadasd.com");
         user.setPassword(passwordEncoder.encode("password"));
         user.setUsername("user");
         user.setAccountNonLocked(true);
@@ -103,7 +103,7 @@ public class SetupDataLoader implements
         User floorAdmin = new User();
         floorAdmin.setFirstName("floorAdmin");
         floorAdmin.setLastName("floorAdmin");
-        floorAdmin.setEmail("sdad@Sadasd.com");
+        floorAdmin.setEmail("sdaaaaaaad@Sadasd.com");
         floorAdmin.setPassword(passwordEncoder.encode("password"));
         floorAdmin.setUsername("floorAdmin");
         floorAdmin.setAccountNonLocked(true);

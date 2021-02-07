@@ -9,6 +9,7 @@ import com.example.thesis.views.floor.FloorManagementView;
 import com.example.thesis.views.notice.board.EditNoticeView;
 import com.example.thesis.views.notice.board.NoticeBoardView;
 import com.example.thesis.views.notice.board.NoticeView;
+import com.example.thesis.views.profile.ProfileView;
 import com.example.thesis.views.property.PropertyManagementView;
 import com.example.thesis.views.reservation.ReservationView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,7 @@ public class PrivilegeProvider {
     private final Privilege adminPrivilege;
     private final Privilege userPrivilege;
     private final Privilege floorAdminPrivilege;
+    private final Privilege profileView;
 
     public PrivilegeProvider(PrivilegeRepository privilegeRepository,
                              RoleRepository roleRepository) {
@@ -58,22 +60,24 @@ public class PrivilegeProvider {
         userManagementView = createPrivilegeIfNotFound(UserManagementView.PRIVILEGE);
         floorManagementView = createPrivilegeIfNotFound(FloorManagementView.PRIVILEGE);
         propertyManagementView = createPrivilegeIfNotFound(PropertyManagementView.PRIVILEGE);
+        profileView = createPrivilegeIfNotFound(ProfileView.PRIVILEGE);
     }
 
     public Role user(String username) {
-        List<Privilege> privileges = Arrays.asList(userPrivilege, noticeBoardView, noticeView, reservationView);
+        List<Privilege> privileges = Arrays.asList(userPrivilege, noticeBoardView, noticeView, reservationView,
+                profileView);
         return createRoleIfNotFound(username, privileges);
     }
 
     public Role floorAdmin(String username) {
         List<Privilege> privileges = Arrays.asList(floorAdminPrivilege, noticeBoardView, noticeView,
-                reservationView, editNoticeView, propertyManagementView);
+                reservationView, editNoticeView, propertyManagementView, profileView);
         return createRoleIfNotFound(username, privileges);
     }
 
     public Role admin(String username) {
         List<Privilege> privileges = Arrays.asList(adminPrivilege, noticeBoardView, noticeView, reservationView,
-                editNoticeView, userManagementView, floorManagementView, propertyManagementView);
+                editNoticeView, userManagementView, floorManagementView, propertyManagementView, profileView);
         return createRoleIfNotFound(username, privileges);
     }
 
