@@ -9,7 +9,7 @@
 - Optymalizacja i refactoring!
 
 DODATKOWE:
-- widok moich rezerwacji (panel nadchodzące rezerwacje lub po prostu wszystkie)
+- widok moich rezerwacji (panel nadchodzące rezerwacje lub po prostu wszystkie - checkbox dla show history reservations)
 - ostrzeżenie przy rezerwacji na innym piętrze niż swoje
 - Widok dostępnych noticeBoardów i ich permission userów wraz z CRUD - w user management?
 - dodanie powiększenia zdjęcia na kliknięciu

@@ -1,18 +1,60 @@
 #reservation-view {
 }
 
-#chooseFloorBox {
-    width: 26.5em;
+#choose-floor-box {
 }
 
-#choosePropertyBox {
-    width: 26.5em;
+#choose-property-box {
 }
 
-#dateTimePicker {
-    width: 20em;
+#date-time-picker {
 }
 
 #confirm-button {
     margin-top: 2.35em;
+}
+
+/*###Desktops, big landscape tablets and laptops(Large, Extra large)####*/
+@media screen and (min-width: 1024px){
+    #choose-floor-box {
+        width: 35%;
+    }
+
+    #choose-property-box {
+        width: 35%;
+    }
+
+    #duration-selector {
+        width: 35%;
+    }
+}
+
+/*###Tablet(medium)###*/
+@media screen and (min-width : 768px) and (max-width : 1023px){
+    #choose-floor-box {
+        width: 75%;
+    }
+
+    #choose-property-box {
+        width: 75%;
+    }
+
+    #duration-selector {
+        width: 75%;
+    }
+}
+
+/*### Smartphones (portrait and landscape)(small)### */
+@media screen and (min-width : 0px) and (max-width : 767px){
+    #choose-floor-box {
+        width: 100%;
+    }
+
+    #choose-property-box {
+        width: 100%;
+    }
+
+    #duration-selector {
+        width: 100%;
+    }
 }
