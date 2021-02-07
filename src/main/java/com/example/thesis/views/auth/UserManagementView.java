@@ -40,11 +40,10 @@ public class UserManagementView extends VerticalLayout {
         UserRegistrationFormLayout userRegistration = new UserRegistrationFormLayout(userService, this.emailService, floorService);
         accordion.add("User registration", userRegistration);
 
-//        if (SecurityUtils.userHasRole(PrivilegeManagementLayout.PRIVILEGE)) {       //TODO DODAC DLA WSZYSTKICH
-            PrivilegeManagementLayout privilegeManagement = new PrivilegeManagementLayout(userService);
-            accordion.add("Privilege management", privilegeManagement);
-//        }
+        PrivilegeManagementLayout privilegeManagement = new PrivilegeManagementLayout(userService);
+        accordion.add("Privilege management", privilegeManagement);
 
         add(accordion);
+        setAlignItems(Alignment.CENTER);
     }
 }

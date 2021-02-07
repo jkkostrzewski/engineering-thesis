@@ -4,9 +4,13 @@ import com.example.thesis.backend.reservation.PropertyService;
 import com.example.thesis.backend.reservation.ReservationService;
 import com.example.thesis.backend.security.auth.UserService;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 public class MyReservationsTab extends VerticalLayout {
+
+    public static final String SHOW_HISTORIC_RESERVATIONS = "Show historic reservations";
+    public static final String HIDE_HISTORIC_RESERVATIONS = "Hide historic reservations";
 
     private final UserService userService;
     private final ReservationService reservationService;
@@ -18,9 +22,15 @@ public class MyReservationsTab extends VerticalLayout {
         this.reservationService = reservationService;
         this.propertyService = propertyService;
 
-        Button showHistoricReservations = new Button("Show historic reservations");
+        HorizontalLayout historic = new HorizontalLayout();
+        Button showHistoric = new Button(SHOW_HISTORIC_RESERVATIONS);
+        showHistoric.addClickListener(event -> {
+            showHistoric.setText(showHistoric.getText().equals(SHOW_HISTORIC_RESERVATIONS) ?
+                    HIDE_HISTORIC_RESERVATIONS : SHOW_HISTORIC_RESERVATIONS);
+        });
+        historic.add(showHistoric);
 
-        add(showHistoricReservations);
+        add(historic);
         setAlignItems(Alignment.CENTER);
     }
 }
