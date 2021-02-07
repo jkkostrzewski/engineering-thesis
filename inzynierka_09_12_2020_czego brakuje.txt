@@ -8,7 +8,6 @@
 - Zweryfikowanie kolorystyki i ogólne ułożenie elementów
 - Wszelakie drobne poprawki TODO we wszystkich klasach
 - Optymalizacja i refactoring!
-- Przycisk logout czasami się buguje i nie pozwala na wylogowanie (nie wiem dlaczego)
 
 DODATKOWE:
 - nazwa usera w artykule nie wyswietla sie
@@ -22,8 +21,6 @@ Low priority:
 - możliwe godziny wynajęcia w Property
 - Linkowanie artkułów między boardami przez floorAdmina, admina
 - kliknięcie na background notice'a powinno przechodzić do jego widoku zawartości
-- Dodanie zbyt długiego komentarza nie wyświetla komunikatu że jest za długi -
-    po stronie serwera wywala wyjątek (dodać licznik znaków? - bind?)
 
 VERY LOW PRIORITY:
 - pomyśleć jakie wydarzenia powinienem dodawać do logów aplikacji
@@ -40,4 +37,4 @@ BUGI:
 - przy usuwaniu piętra które ma jakieś zależności nie ma komunikatu informującego że dane piętro jest wykorzystywane
     (można tu dodać - czy na pewno chcesz usunąć i wywalić kaskadowo)
 - przycisk edycji posta ma na hoverze za duzy background
-
+- Przycisk logout czasami się buguje i nie pozwala na wylogowanie (nie wiem dlaczego)

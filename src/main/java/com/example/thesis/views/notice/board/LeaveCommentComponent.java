@@ -6,9 +6,12 @@ import com.example.thesis.views.utilities.CommentBroadcaster;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
+import com.vaadin.flow.data.value.ValueChangeMode;
 
 import java.time.Instant;
 
@@ -17,8 +20,10 @@ public class LeaveCommentComponent extends VerticalLayout {
 
     private final NoticeView noticeView;
     private TextArea commentBox;
-    private Button submit;
     private Div innerBox;
+    private HorizontalLayout footer;
+    private Paragraph characterCounter;
+    private Button submit;
 
     public LeaveCommentComponent(NoticeView noticeView) {
         innerBox = new Div();
@@ -69,11 +74,23 @@ public class LeaveCommentComponent extends VerticalLayout {
         commentBox = new TextArea();
         commentBox.setPlaceholder("Leave a comment...");
         commentBox.setId("comment-box");
+        commentBox.setValueChangeMode(ValueChangeMode.EAGER);
+        commentBox.addValueChangeListener(event -> {
+            characterCounter.setText(commentBox.getValue().length() + "/350");
+        });
+        commentBox.setMaxLength(350);
+
+        footer = new HorizontalLayout();
+        footer.setId("footer");
+
+        characterCounter = new Paragraph("0/350");
+        footer.expand(characterCounter);
 
         submit = new Button("Submit");
         submit.setId("submit-button");
+        footer.add(characterCounter, submit);
 
-        innerBox.add(commentBox, submit);
+        innerBox.add(commentBox, footer);
         add(innerBox);
     }
 

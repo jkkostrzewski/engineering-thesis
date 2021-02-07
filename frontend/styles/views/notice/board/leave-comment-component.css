@@ -26,6 +26,11 @@
     padding-top: 0;
 }
 
+#footer {
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
 #submit-button {
     width: 8em;
     float: right;
