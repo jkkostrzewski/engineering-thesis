@@ -12,7 +12,7 @@ notice,
 }
 
 #notice-title {
-    font: var(--material-font-family)
+    font: var(--material-font-family);
     font-size: var(--material-h5-font-size);
     margin-bottom: 0;
 }

@@ -177,9 +177,9 @@ public class SetupDataLoader implements
 //        comments2.add(comment4);
 
         Notice test_notice_one = Notice.builder().title("Ten jest z komentarzami").body(longArticle).creationDate(Instant.now())
-                .image(bFile).createdByUsername("admin").parentComments(comments).active(true).build();
+                .image(bFile).createdByUsername("admin").authorFullName(admin.getFullName()).parentComments(comments).active(true).build();
         Notice test_notice_two = Notice.builder().title("Ten jest bez komentarzy").body(longArticle).creationDate(Instant.now())
-                .image(bFile).createdByUsername("user").parentComments(comments2).active(true).build();
+                .image(bFile).createdByUsername("user").authorFullName(user.getFullName()).parentComments(comments2).active(true).build();
         noticeRepository.save(test_notice_one);
         noticeRepository.save(test_notice_two);
 

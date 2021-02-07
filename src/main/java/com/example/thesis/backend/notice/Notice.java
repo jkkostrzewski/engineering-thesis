@@ -1,9 +1,12 @@
 package com.example.thesis.backend.notice;
 
+import com.example.thesis.backend.security.auth.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,7 +16,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -36,6 +41,8 @@ public class Notice {
     private Instant creationDate;
     private String title;
 
+    private String authorFullName;
+
     @Column(length = 10000)
     private String body;
 
@@ -43,7 +50,6 @@ public class Notice {
     private byte[] image;
 
     private String createdByUsername;
-
     private boolean active;
 
     @OneToMany(fetch = EAGER, cascade = CascadeType.ALL)

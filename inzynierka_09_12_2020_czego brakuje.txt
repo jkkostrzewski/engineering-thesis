@@ -2,7 +2,6 @@
 - kontakt z piętrowymi - mieszkaniec wysyła zapytanie -> piętrowy, który wyświetli może kliknąć odpowiedz ->
     otwiera się okno chatu wyłącznie już dla obu z nich
 
-
 - TŁUMACZENIE ELEMENTÓW NA POLSKI
 - Opcja edycji rezerwacji dla właściciela danego elementu oraz adminów/floorAdminów (przy edycji przez admina wysłać powiadomienie na maila?)
 - Zweryfikowanie kolorystyki i ogólne ułożenie elementów
@@ -10,12 +9,13 @@
 - Optymalizacja i refactoring!
 
 DODATKOWE:
-- nazwa usera w artykule nie wyswietla sie
 - widok moich rezerwacji (panel nadchodzące rezerwacje lub po prostu wszystkie)
 - ostrzeżenie przy rezerwacji na innym piętrze niż swoje
 - Widok dostępnych noticeBoardów i ich permission userów wraz z CRUD - w user management?
 - dodanie powiększenia zdjęcia na kliknięciu
 - user zwykły nie ma możliwości dodania/edytowania posta
+- Opcja dodawania tytułów notice'ów zarówno w języku angielskim jak i polskim (jeśli nie ma jednego to wyświetla się jeden
+        podany w obu wersjach językowych)
 
 Low priority:
 - możliwe godziny wynajęcia w Property

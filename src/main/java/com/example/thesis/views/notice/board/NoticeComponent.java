@@ -108,9 +108,12 @@ public class NoticeComponent extends VerticalLayout {
         customizationBar.add(deleteButton, editButton);
         header.add(title, customizationBar);
 
+        HorizontalLayout authorAndDate = new HorizontalLayout();
+        Paragraph author = new Paragraph("Author: " + notice.getAuthorFullName());
         date = new Paragraph(STANDARD_DATE_TIME.format(notice.getCreationDate()));
+        authorAndDate.add(author, date);
 
-        add(header, date);
+        add(header, authorAndDate);
 
         if (Objects.nonNull(notice.getImage())) {
             StreamResource imageResource = new StreamResource("noticeImage.jpg", () -> new ByteArrayInputStream(notice
