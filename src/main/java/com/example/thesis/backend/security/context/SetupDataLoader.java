@@ -2,13 +2,11 @@ package com.example.thesis.backend.security.context;
 
 import com.example.thesis.backend.floor.Floor;
 import com.example.thesis.backend.floor.FloorRepository;
-import com.example.thesis.backend.notice.Comment;
 import com.example.thesis.backend.notice.CommentRepository;
 import com.example.thesis.backend.notice.Notice;
 import com.example.thesis.backend.notice.NoticeBoard;
 import com.example.thesis.backend.notice.NoticeBoardRepository;
 import com.example.thesis.backend.notice.NoticeRepository;
-import com.example.thesis.backend.notice.ParentComment;
 import com.example.thesis.backend.reservation.Property;
 import com.example.thesis.backend.reservation.PropertyRepository;
 import com.example.thesis.backend.reservation.Reservation;
@@ -30,8 +28,6 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
-import java.util.HashSet;
 
 @Component
 public class SetupDataLoader implements
@@ -74,9 +70,9 @@ public class SetupDataLoader implements
             return;
 
         User admin = new User();
-        admin.setFirstName("admin");
-        admin.setLastName("admin");
-        admin.setEmail("sdaasdd@Sadasd.com");
+        admin.setFirstName("Jan");
+        admin.setLastName("Adminowski");
+        admin.setEmail("admin@dormapp.com");
         admin.setPassword(passwordEncoder.encode("password"));
         admin.setUsername("admin");
         admin.setAccountNonExpired(true);
@@ -88,9 +84,9 @@ public class SetupDataLoader implements
         userRepository.save(admin);
 
         User user = new User();
-        user.setFirstName("user");
-        user.setLastName("user");
-        user.setEmail("sdad123@Sadasd.com");
+        user.setFirstName("Krzysztof");
+        user.setLastName("Userski");
+        user.setEmail("user@dormapp.com");
         user.setPassword(passwordEncoder.encode("password"));
         user.setUsername("user");
         user.setAccountNonLocked(true);
@@ -101,9 +97,9 @@ public class SetupDataLoader implements
         userRepository.save(user);
 
         User floorAdmin = new User();
-        floorAdmin.setFirstName("floorAdmin");
-        floorAdmin.setLastName("floorAdmin");
-        floorAdmin.setEmail("sdaaaaaaad@Sadasd.com");
+        floorAdmin.setFirstName("Zdzisław");
+        floorAdmin.setLastName("Piętrowy");
+        floorAdmin.setEmail("floorAdmin@dormapp.com");
         floorAdmin.setPassword(passwordEncoder.encode("password"));
         floorAdmin.setUsername("floorAdmin");
         floorAdmin.setAccountNonLocked(true);
@@ -113,7 +109,7 @@ public class SetupDataLoader implements
         floorAdmin.setRole(privilegeProvider.floorAdmin("floorAdmin"));
         userRepository.save(floorAdmin);
 
-        File file = new File("testImage.jpg");
+        File file = new File("src/main/resources/META-INF/resources/images/testImage.jpg");
         byte[] bFile = new byte[(int) file.length()];
         try {
             FileInputStream fileInputStream = new FileInputStream(file);
@@ -123,63 +119,40 @@ public class SetupDataLoader implements
             e.printStackTrace();
         }
 
-        String longArticle = "\"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, " +
-                "totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae" +
-                " dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, " +
-                "sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam" +
-                " est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius " +
-                "modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam," +
-                " quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? " +
-                "Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel" +
-                " illum qui dolorem eum fugiat quo voluptas nulla pariatur?\"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, tv";
+        File file2 = new File("src/main/resources/META-INF/resources/images/testImage2.jpg");
+        byte[] bFile2 = new byte[(int) file.length()];
+        try {
+            FileInputStream fileInputStream = new FileInputStream(file2);
+            fileInputStream.read(bFile2);
+            fileInputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        String longArticle = "Przyznane dofinansowania mają być przeznaczone na doskonalenie jakości kształcenia i prowadzenie badań. Projekt ma wspierać międzynarodową współpracę szkół doktorskich.\n" +
+                "\n" +
+                "\n" +
+                "PŁ w ramach programu STER zrealizuje projekt „Curriculum for advanced doctoral education & training – CADET Academy of Lodz Univeristy of Technology”. Zakłada on stypendia dla najlepszych doktorantów realizujących prace doktorskie na poziomie międzynarodowym. Ma rozwijać mobilność międzynarodową doktorantów oraz organizację wykładów prowadzonych gościnnie przez światowej klasy specjalistów z różnych dziedzin nauki.\n" +
+                "\n" +
+                " \n" +
+                "Uczelnia planuje, w ramach projektu, opracowanie materiałów promocyjno-informacyjnych na temat kształcenia w Interdyscyplinarnej Szkole Doktorskiej PŁ oraz badań prowadzonych przez zespoły młodych, wybitnych naukowców. Projekt potrawa 3 lata, do końca 2023 roku.\n" +
+                "\n" +
+                "\n" +
+                "Obecnie w Interdyscyplinarnej Szkole Doktorskiej PŁ kształci się 203 doktorantów. W tej grupie jest 26 cudzoziemców z 14 krajów europejskich (Ukraina, Białoruś, Włochy, Rosja, Serbia, Mołdawia) i położonych w innych zakątkach świata (Egipt, Indie, Meksyk, Etiopia, Nigeria, Pakistan, Chiny oraz Iran).";
+
+        String longArticle2 = "- Pierwsza dziesiątka została, tradycyjnie, zdominowana przez uczelnie amerykańskie. Podium należy do University of Washington, Cornell University i Johns Hopkins University. Polska czołówka to Uniwersytet Jagielloński, Uniwersytet Warszawski oraz Akademia Górniczo-Hutnicza. Politechnika Łódzka znacznie awansowała. W poprzedniej edycji było to miejsce 2037. na świecie i 35. w Polsce - wyjaśnia Justyna Kopańska z Centrum Współpracy Międzynarodowej PŁ. - Ranking jest tworzony na podstawie wskaźników bibliometrycznych i webometrycznych, przy czym do tych drugich nawiązuje jego nazwa i te właśnie wskaźniki eksponuje się w opisach i komentarzach tego rankingu najczęściej.\n" +
+                "\n" +
+                "\n" +
+                "Ranking Webometrics to największy ranking światowy, klasyfikowane są w nim wszystkie uczelnie, nie tylko te najlepsze. Uwzględnia się w nim obecność i rozpoznawalność uczelni w sieci. Po raz pierwszy ranking Webometrics został opublikowany w 2004 roku. Jego celem jest zwiększenie obecności instytucji akademickich i badawczych w Internecie i promowanie publikacji w sieci, a także wspieranie wszelkich przedsięwzięć typu Open Access, elektronicznego dostępu do publikacji naukowych i innych materiałów akademickich.\n" +
+                "\n" +
+                "\n" +
+                "Ranking jest publikowany przez Cybermetrics Lab, grupę badawczą hiszpańskiej Najwyższej Rady Badań Naukowych (Consejo Superior de Investigaciones Científicas, CSIC) z siedzibą w Madrycie. Jest to największa publiczna instytucja zajmująca się badaniami naukowymi w Hiszpanii, która podlega Ministerstwu Nauki, Innowacji i Szkolnictwa Wyższego.";
 
 
-        ParentComment comment1 = new ParentComment(user, Instant.now().minus(5, ChronoUnit.HOURS), "ParentComment");
-        Comment comment2 = new Comment(user, Instant.now(), "Reply1");
-        commentRepository.save(comment2);
-        comment1.addReply(comment2);
-        Comment comment3 = new Comment(user, Instant.now(), "Reply2");
-        commentRepository.save(comment3);
-        comment1.addReply(comment3);
-        Comment comment8 = new Comment(user, Instant.now(), "Reply3");
-        commentRepository.save(comment8);
-        comment1.addReply(comment8);
-        Comment comment9 = new Comment(user, Instant.now(), "Reply4");
-        commentRepository.save(comment9);
-        comment1.addReply(comment9);
-        Comment comment10 = new Comment(user, Instant.now(), "Reply5");
-        commentRepository.save(comment10);
-        comment1.addReply(comment10);
-        Comment comment11 = new Comment(user, Instant.now(), "Reply6");
-        commentRepository.save(comment11);
-        comment1.addReply(comment11);
-
-        commentRepository.save(comment1);
-
-
-        ParentComment comment4 = new ParentComment(user, Instant.now(), "ParentComment2nd");
-        commentRepository.save(comment4);
-        Comment comment5 = new Comment(user, Instant.now(), "Reply1-2nd");
-        commentRepository.save(comment5);
-        comment4.addReply(comment5);
-        Comment comment6 = new Comment(user, Instant.now(), "Reply2-2nd");
-        commentRepository.save(comment6);
-        comment4.addReply(comment6);
-        Comment comment7 = new Comment(user, Instant.now(), "Reply3-2nd");
-        commentRepository.save(comment7);
-        comment4.addReply(comment7);
-
-        HashSet<ParentComment> comments = new HashSet<>();
-        comments.add(comment1);
-        comments.add(comment4);
-
-        HashSet<ParentComment> comments2 = new HashSet<>();
-//        comments2.add(comment4);
-
-        Notice test_notice_one = Notice.builder().title("Ten jest z komentarzami").body(longArticle).creationDate(Instant.now())
-                .image(bFile).createdByUsername("admin").authorFullName(admin.getFullName()).parentComments(comments).active(true).build();
-        Notice test_notice_two = Notice.builder().title("Ten jest bez komentarzy").body(longArticle).creationDate(Instant.now())
-                .image(bFile).createdByUsername("user").authorFullName(user.getFullName()).parentComments(comments2).active(true).build();
+        Notice test_notice_one = Notice.builder().title("PŁ OTRZYMA 2,2 MLN ZŁ NA INTERNACJONALIZACJĘ SZKOŁY DOKTORSKIEJ").body(longArticle).creationDate(Instant.now())
+                .image(bFile).createdByUsername("admin").authorFullName(admin.getFullName()).active(true).build();
+        Notice test_notice_two = Notice.builder().title("POLITECHNIKA ŁÓDZKA AWANSOWAŁA W RANKINGU WEBOMETRICS").body(longArticle2).creationDate(Instant.now())
+                .image(bFile2).createdByUsername("user").authorFullName(user.getFullName()).active(true).build();
         noticeRepository.save(test_notice_one);
         noticeRepository.save(test_notice_two);
 
@@ -203,8 +176,6 @@ public class SetupDataLoader implements
 
         NoticeBoard floorOneBoard = new NoticeBoard("1st Floor", floor);
         floorOneBoard.addPermissionUser(floorAdmin);
-//        floorOneBoard.addNotice(test_notice_one);
-//        floorOneBoard.addNotice(test_notice_two);
 
         NoticeBoard floorTwoBoard = new NoticeBoard("2nd Floor", floor2);
         floorTwoBoard.addPermissionUser(floorAdmin);
@@ -224,44 +195,7 @@ public class SetupDataLoader implements
         propertyRepository.save(property);
         propertyRepository.save(property2);
         propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
-        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
-        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
-        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
-        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
-        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
-        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
-        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
-        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
-        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
-        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
-        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
-        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
-        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
-        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
-        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
-        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
-        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
-        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
-        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
-        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
-        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
-        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
-        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
-        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
-        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
-        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
-        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
-        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
-        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
-        propertyRepository.save(Property.builder().name("Laundry Room").owner(floor2).build());
 
-        propertyRepository.save(Property.builder().name("Silownia").owner(main).build());
-        propertyRepository.save(Property.builder().name("Silownia").owner(main).build());
-        propertyRepository.save(Property.builder().name("Silownia").owner(main).build());
-        propertyRepository.save(Property.builder().name("Silownia").owner(main).build());
-        propertyRepository.save(Property.builder().name("Silownia").owner(main).build());
-        propertyRepository.save(Property.builder().name("Silownia").owner(main).build());
-        propertyRepository.save(Property.builder().name("Silownia").owner(main).build());
         propertyRepository.save(Property.builder().name("Silownia").owner(main).build());
 
         Reservation reservation = Reservation.builder().start(LocalDateTime.now()).duration(Duration.ofHours(1)).property(property).user(user).creationTime(Instant.now()).build();
