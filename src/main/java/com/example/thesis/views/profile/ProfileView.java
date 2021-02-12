@@ -42,12 +42,15 @@ public class ProfileView extends VerticalLayout implements HasUrlParameter<Strin
         this.userService = userService;
 
         firstName = new TextField("First Name");
+        firstName.setId("first-name");
         firstName.setEnabled(false);
 
         lastName = new TextField("Last Name");
+        lastName.setId("last-name");
         lastName.setEnabled(false);
 
         username = new TextField("Username");
+        username.setId("username");
         username.setEnabled(false);
 
         HorizontalLayout emailChange = new HorizontalLayout();
