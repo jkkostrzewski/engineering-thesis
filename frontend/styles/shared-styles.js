@@ -8,6 +8,10 @@ $_documentContainer.innerHTML = `
   <style>
     html {
     }
+
+    vaadin-devmode-gizmo {
+        visibility: hidden;
+      }
   </style>
 </custom-style>
 
@@ -18,6 +22,10 @@ $_documentContainer.innerHTML = `
       overflow: hidden;
       font: var(--material-font-family);
     }
+
+    vaadin-devmode-gizmo {
+        visibility: hidden;
+      }
   </style>
 </custom-style>
 

@@ -1,6 +1,7 @@
 package com.example.thesis.backend.reservation;
 
 import com.example.thesis.backend.floor.Floor;
+import com.example.thesis.backend.security.auth.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,4 +11,5 @@ import java.util.Collection;
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
     Collection<Reservation> findByPropertyOwnerAndPropertyAndStartBetweenOrderByStartAsc(Floor owner, Property property, LocalDateTime start, LocalDateTime end);
+    Collection<Reservation> findByUserOrderByStartAsc(User user);
 }

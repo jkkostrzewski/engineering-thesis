@@ -68,6 +68,4 @@ public class ReservationView extends VerticalLayout {
         add(tabs, tabsContent);
         setAlignItems(Alignment.CENTER);
     }
-
-
 }

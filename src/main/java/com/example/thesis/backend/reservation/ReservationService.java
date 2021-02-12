@@ -1,6 +1,7 @@
 package com.example.thesis.backend.reservation;
 
 import com.example.thesis.backend.floor.Floor;
+import com.example.thesis.backend.security.auth.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,10 @@ public class ReservationService {
 
     public Collection<Reservation> findByPropertyOwnerAndPropertyAndStartBetweenOrderByStartAsc(Floor chosenFloor, Property value, LocalDateTime startDayTime, LocalDateTime dayTimeEnd) {
         return reservationRepository.findByPropertyOwnerAndPropertyAndStartBetweenOrderByStartAsc(chosenFloor, value, startDayTime, dayTimeEnd);
+    }
+
+    public Collection<Reservation> findByUserOrderByStartAsc(User user) {
+        return reservationRepository.findByUserOrderByStartAsc(user);
     }
 
     public void delete(Reservation reservation) {

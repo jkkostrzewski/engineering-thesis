@@ -18,9 +18,7 @@ import com.vaadin.flow.component.details.DetailsVariant;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.polymertemplate.Id;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.Duration;
@@ -140,7 +138,7 @@ public class ReserveTab extends VerticalLayout {
 
             reservationService.save(reservation);
 
-            log.info("Reservation saved" + reservation.toString());
+            log.info("Reservation saved " + reservation.toString());
             Notification.show("Reservation added successfully");
             refreshAccordionValues();
         });
