@@ -37,6 +37,7 @@ public class UserManagementView extends VerticalLayout {
         log.info("User " + SecurityUtils.getLoggedUserUsername() + " has entered the view", UserManagementView.class);
 
         Accordion accordion = new Accordion();
+        accordion.setWidthFull();
         UserRegistrationFormLayout userRegistration = new UserRegistrationFormLayout(userService, this.emailService, floorService);
         accordion.add("User registration", userRegistration);
 
@@ -44,6 +45,5 @@ public class UserManagementView extends VerticalLayout {
         accordion.add("Privilege management", privilegeManagement);
 
         add(accordion);
-        setAlignItems(Alignment.CENTER);
     }
 }

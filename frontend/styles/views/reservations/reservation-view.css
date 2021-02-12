@@ -27,6 +27,10 @@
     #duration-selector {
         width: 35%;
     }
+
+    #date-time-picker {
+        width: 35%;
+    }
 }
 
 /*###Tablet(medium)###*/
@@ -42,6 +46,10 @@
     #duration-selector {
         width: 75%;
     }
+
+    #date-time-picker {
+        width: 75%;
+    }
 }
 
 /*### Smartphones (portrait and landscape)(small)### */
@@ -55,6 +63,10 @@
     }
 
     #duration-selector {
+        width: 100%;
+    }
+
+    #date-time-picker {
         width: 100%;
     }
 }
