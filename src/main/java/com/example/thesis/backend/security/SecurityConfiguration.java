@@ -1,5 +1,6 @@
 package com.example.thesis.backend.security;
 
+import com.example.thesis.views.auth.ForgotPasswordView;
 import com.example.thesis.views.auth.TokenRegistrationView;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,6 +41,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .requestCache().requestCache(new CustomRequestCache())
                 .and().authorizeRequests()
                 .antMatchers(TokenRegistrationView.ROUTE + "/**").permitAll()
+                .antMatchers(ForgotPasswordView.ROUTE + "/**").permitAll()
                 .requestMatchers(SecurityUtils::isFrameworkInternalRequest).permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin().loginPage(LOGIN_URL).permitAll()
