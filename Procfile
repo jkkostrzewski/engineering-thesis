@@ -1,1 +1,0 @@
-web: java -jar target/bsc-thesis-project-1.0-SNAPSHOT.jar $PORT

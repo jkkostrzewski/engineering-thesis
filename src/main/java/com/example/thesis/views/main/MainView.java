@@ -47,7 +47,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import static com.example.thesis.backend.security.SecurityUtils.userHasPrivilege;
 
 @JsModule("./styles/shared-styles.js")
-@Theme(value = Material.class, variant = Material.DARK)
 @CssImport("./styles/views/main/main-view.css")
 public class MainView extends AppLayout {
 

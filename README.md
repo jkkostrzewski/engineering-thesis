@@ -1,33 +1,24 @@
-Notatki:
+# Dorm Coordinator
+
+## Prerequisites
+
+- Maven (tested with version 3.6.3)
+- Java 8 (or later)
+
+## How to run
+
+Start the tomcat server by running maven command:
+```
+mvn spring-boot:run
+```
+
+Maven will download all the required dependencies and the server will start at port 8080.
+
+If you encounter exception
+```
+Pnpm install has exited with non zero status. Some dependencies are not installed. Check pnpm command output
+```
+close the server and run above maven command again.
 
 
-Role:
-- ADMIN, DORM_ADMIN, BOARD_MEMBER, FLOOR_ADMIN, INHABITANT
-
-Role daja podstawowe dostepy, które mozna rozszerzac lub zmniejszac
-przez panel administratora/dorm_admina
-
-ADMIN:
-- Dostep do wszystkiego i wszystkich - godmode
-
-DORM_ADMIN:
-- Dodawanie nowych mieszkancow
-- Zmiana permisji dla roznych rol
-- Wszystkie dostepy mniejszych rol
-
-BOARD_MEMBER:
-- Dodawanie ogloszen ogolnych dla wszystkich mieszkancow
-
-FLOOR_ADMIN:
-- Dodawanie ogloszen dla konkretnego pietra
-- Banowanie czasowe mieszkancow z uzywania panelu kontaktu
-
-INHABITANT:
-- Komentowanie ogloszen
-- Rezerwacja sal/pralni
-- Pisanie wiadomosci do pietrowego
-
-Minusy developmentu:
-- brak prawdziwego hot reloada - po zmianie w javie trzeba czekac na przekompilowanie
-    
-    
+You can now access the web application by going to http://localhost:8080/ in your browser.
